@@ -14,4 +14,4 @@ xcuserdata/
 Pods/
 *.jks
 *yarn.lock
-/home/elyahou/IdeaProjects/KMPLog/gradle.properties
+gradle.properties
