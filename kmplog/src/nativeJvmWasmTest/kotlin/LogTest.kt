@@ -1,5 +1,4 @@
-package com.kdroid.kmplog
-
+import com.kdroid.kmplog.*
 import com.kdroid.kmplog.Log.isLoggable
 import com.kdroid.kmplog.Log.setLogLevel
 import kotlin.test.BeforeTest
@@ -12,7 +11,7 @@ class LogTest {
 
     @BeforeTest
     fun setup() {
-        setLogLevel( Log.DEBUG)
+        setLogLevel(Log.DEBUG)
     }
 
     @Test
@@ -24,7 +23,7 @@ class LogTest {
 
     @Test
     fun testVerboseLog() {
-        setLogLevel( Log.VERBOSE)
+        setLogLevel(Log.VERBOSE)
         assertTrue(isLoggable( tag, Log.VERBOSE), "VERBOSE level should be loggable after level change")
     }
 
@@ -36,7 +35,7 @@ class LogTest {
 
     @Test
     fun testChangeLogLevel() {
-        setLogLevel( Log.ERROR)
+        setLogLevel(Log.ERROR)
         assertFalse(isLoggable(tag, Log.WARN), "WARN level should not be loggable when log level is set to ERROR")
         assertTrue(isLoggable(tag, Log.ERROR), "ERROR level should be loggable when log level is set to ERROR")
     }

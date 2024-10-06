@@ -8,10 +8,17 @@ KMPLog is a Kotlin Multiplatform logging library that replicates the functionali
 - Mimics the Android Log API for familiar usage
 - Configurable log levels
 - Platform-specific implementations
+- Available on Maven Central
 
 ## Installation
 
-[Add installation instructions here, e.g., Gradle dependencies]
+Add the following dependency to your `build.gradle.kts` file:
+
+```kotlin
+implementation("io.github.kdroidfilter:kmplog:version")
+```
+
+KMPLog is available on Maven Central, ensuring easy integration into your projects.
 
 ## Usage
 
@@ -49,9 +56,6 @@ if (Log.isLoggable("MyTag", Log.DEBUG)) {
 - `Log.wtf(tag: String, msg: String)`: Log a WTF (What a Terrible Failure) message
 - `Log.println(priority: Int, tag: String, msg: String)`: Log a message with custom priority
 
-## Platform-Specific Details
-
-[Add any platform-specific implementation details or usage notes here]
 
 ## Contributing
 
@@ -59,4 +63,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-[Add your chosen license here]
+KMPLog is released under the MIT License. See the [LICENSE](LICENSE) file for details.

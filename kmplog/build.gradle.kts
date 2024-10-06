@@ -1,18 +1,18 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
-    id("convention.publication")
-    id("maven-publish")
-
+    id("com.vanniktech.maven.publish") version "0.29.0"
 }
 
 group = "com.kdroid.kmplog"
-version = "0.1.0"
+version = "0.1.1"
 
 
 kotlin {
+
     jvmToolchain(11)
     androidTarget {
         publishLibraryVariants("release")
@@ -82,6 +82,7 @@ kotlin {
             dependsOn(commonMain.get())
         }
 
+
         linuxX64Main {
             dependsOn(nativeJvmWasmMain)
         }
@@ -109,8 +110,41 @@ kotlin {
         jvmMain {
             dependsOn(nativeJvmWasmMain)
         }
-    }
 
+        val nativeJvmWasmTest by creating {
+            dependsOn(commonTest.get())
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+        linuxX64Test {
+            dependsOn(nativeJvmWasmTest)
+        }
+        mingwX64Test {
+            dependsOn(nativeJvmWasmTest)
+        }
+        macosX64Test {
+            dependsOn(nativeJvmWasmTest)
+        }
+        macosArm64Test {
+            dependsOn(nativeJvmWasmTest)
+        }
+        iosX64Test {
+            dependsOn(nativeJvmWasmTest)
+        }
+        iosArm64Test {
+            dependsOn(nativeJvmWasmTest)
+        }
+        iosSimulatorArm64Test {
+            dependsOn(nativeJvmWasmTest)
+        }
+        wasmJsTest {
+            dependsOn(nativeJvmWasmTest)
+        }
+        jvmTest {
+            dependsOn(nativeJvmWasmTest)
+        }
+    }
 
 
     //https://kotlinlang.org/docs/native-objc-interop.html#export-of-kdoc-comments-to-generated-objective-c-headers
@@ -129,3 +163,49 @@ android {
     }
 }
 
+mavenPublishing {
+    coordinates(
+        groupId = "io.github.kdroidfilter",
+        artifactId = "kmplog",
+        version = version.toString()
+    )
+
+    // Configure POM metadata for the published artifact
+    pom {
+        name.set("KMPLog")
+        description.set("Logging library that replicates the functionality of Android's Log library")
+        inceptionYear.set("2024")
+        url.set("https://github.com/kdroidFilter/KMPLog")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+
+        // Specify developers information
+        developers {
+            developer {
+                id.set("kdroidfilter")
+                name.set("Elyahou Hadass")
+                email.set("elyahou.hadass@gmail.com")
+            }
+        }
+
+        // Specify SCM information
+        scm {
+            url.set("https://github.com/kdroidFilter/KMPLog ")
+        }
+    }
+
+    // Configure publishing to Maven Central
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    
+    // Enable GPG signing for all publications
+    signAllPublications()
+}
+
+
+task("testClasses") {}
