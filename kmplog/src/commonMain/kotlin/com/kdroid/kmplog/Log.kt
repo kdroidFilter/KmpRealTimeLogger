@@ -9,13 +9,18 @@ object Log {
     const val ASSERT = 7
 
     private var logLevel = DEBUG
+    private var isDevelopmentMode = false
 
     fun isLoggable(tag: String, level: Int): Boolean {
-        return level >= logLevel
+        return isDevelopmentMode && level >= logLevel
     }
 
     fun setLogLevel(level: Int) {
         logLevel = level
+    }
+
+    fun setDevelopmentMode(isDevelopment: Boolean) {
+        isDevelopmentMode = isDevelopment
     }
 }
 
@@ -26,3 +31,4 @@ expect fun Log.w(tag: String, msg: String)
 expect fun Log.e(tag: String, msg: String)
 expect fun Log.wtf(tag: String, msg: String)
 expect fun Log.println(priority: Int, tag: String, msg: String)
+

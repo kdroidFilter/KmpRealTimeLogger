@@ -4,11 +4,11 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
-    id("com.vanniktech.maven.publish") version "0.29.0"
+    id("com.vanniktech.maven.publish") version "0.30.0"
 }
 
 group = "com.kdroid.kmplog"
-version = "0.1.1"
+version = "0.2.0"
 
 
 kotlin {
