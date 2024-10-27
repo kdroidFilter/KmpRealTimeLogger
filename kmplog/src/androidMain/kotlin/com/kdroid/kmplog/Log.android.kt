@@ -16,9 +16,14 @@ actual fun Log.w(tag: String, msg: String) {
     if (isLoggable(tag, WARN)) android.util.Log.w(tag, msg)
 }
 
-actual fun Log.e(tag: String, msg: String) {
-    if (isLoggable(tag, ERROR)) android.util.Log.e(tag, msg)
-
+actual fun Log.e(tag: String, msg: String, throwable: Throwable?) {
+    if (isLoggable(tag, ERROR)) {
+        if (throwable != null) {
+            android.util.Log.e(tag, msg, throwable)
+        } else {
+            android.util.Log.e(tag, msg)
+        }
+    }
 }
 
 actual fun Log.wtf(tag: String, msg: String) {

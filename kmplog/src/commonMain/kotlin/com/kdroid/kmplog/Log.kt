@@ -28,7 +28,7 @@ expect fun Log.v(tag: String, msg: String)
 expect fun Log.d(tag: String, msg: String)
 expect fun Log.i(tag: String, msg: String)
 expect fun Log.w(tag: String, msg: String)
-expect fun Log.e(tag: String, msg: String)
+expect fun Log.e(tag: String, msg: String, throwable: Throwable? = null)
 expect fun Log.wtf(tag: String, msg: String)
 expect fun Log.println(priority: Int, tag: String, msg: String)
 

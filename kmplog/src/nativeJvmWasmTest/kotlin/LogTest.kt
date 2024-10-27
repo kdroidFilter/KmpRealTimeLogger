@@ -12,6 +12,7 @@ class LogTest {
     @BeforeTest
     fun setup() {
         setLogLevel(Log.DEBUG)
+        Log.setDevelopmentMode(true)
     }
 
     @Test

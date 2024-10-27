@@ -52,11 +52,17 @@ actual fun Log.w(tag: String, msg: String) {
     }
 }
 
-actual fun Log.e(tag: String, msg: String) {
+actual fun Log.e(tag: String, msg: String, throwable: Throwable?) {
     if (isLoggable(tag, ERROR)) {
-        printLog(ERROR, tag, msg)
+        val logMessage = if (throwable != null) {
+            "$msg\n${throwable.stackTraceToString()}"
+        } else {
+            msg
+        }
+        printLog(ERROR, tag, logMessage)
     }
 }
+
 
 actual fun Log.wtf(tag: String, msg: String) {
     if (isLoggable(tag, ASSERT)) {

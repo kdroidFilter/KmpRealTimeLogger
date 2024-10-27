@@ -6,8 +6,6 @@ import com.kdroid.kmplog.Log.ERROR
 import com.kdroid.kmplog.Log.INFO
 import com.kdroid.kmplog.Log.VERBOSE
 import com.kdroid.kmplog.Log.WARN
-import kotlinx.browser.window
-import kotlin.js.Date
 
 private fun getColor(priority: Int): String {
     val isDark = isDarkMode()
@@ -23,13 +21,14 @@ private fun getColor(priority: Int): String {
     }
 }
 
-private fun printLog(priority: Int, tag: String, msg: String) {
+private fun printLog(priority: Int, tag: String, msg: String, throwable: Throwable? = null) {
     val style = getColor(priority)
     val priorityChar = getPriorityChar(priority)
     val timestamp = getCurrentDateTime()
 
     // Assemble the final message
-    val formattedMsg = "%c$timestamp  $tag  $priorityChar  $msg"
+    val throwableMsg = throwable?.let { "\n${it.stackTraceToString()}" } ?: ""
+    val formattedMsg = "%c$timestamp  $tag  $priorityChar  $msg$throwableMsg"
     when (priority) {
         VERBOSE, DEBUG, INFO -> console.log(formattedMsg, style)
         WARN -> console.warn(formattedMsg, style)
@@ -62,9 +61,9 @@ actual fun Log.w(tag: String, msg: String) {
     }
 }
 
-actual fun Log.e(tag: String, msg: String) {
-    if (isLoggable( tag, ERROR)) {
-        printLog(ERROR, tag, msg)
+actual fun Log.e(tag: String, msg: String, throwable: Throwable?) {
+    if (isLoggable(tag, ERROR)) {
+        printLog(ERROR, tag, msg, throwable)
     }
 }
 
