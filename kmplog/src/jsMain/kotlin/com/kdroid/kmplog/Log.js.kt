@@ -21,42 +21,63 @@ private fun getColor(priority: Int): String {
     }
 }
 
+private fun formatTag(tag: String, maxLength: Int = MAX_TAG_LENGTH): String {
+    return if (tag.length > maxLength) {
+        tag.substring(0, maxLength)
+    } else {
+        tag.padEnd(maxLength)
+    }
+}
+
+private fun formatMessage(msg: String, maxLength: Int = MAX_MSG_LENGTH): String {
+    return if (msg.length > maxLength) {
+        msg.substring(0, maxLength - 3) + "..."
+    } else {
+        msg
+    }
+}
+
 private fun printLog(priority: Int, tag: String, msg: String, throwable: Throwable? = null) {
     val style = getColor(priority)
     val priorityChar = getPriorityChar(priority)
     val timestamp = getCurrentDateTime()
 
-    // Assemble the final message
+    val formattedTag = formatTag(tag)
+    val formattedMsg = formatMessage(msg)
     val throwableMsg = throwable?.let { "\n${it.stackTraceToString()}" } ?: ""
-    val formattedMsg = "%c$timestamp  $tag  $priorityChar  $msg$throwableMsg"
+
+    // Assemble the final message with formatted tag and message
+    val logMessage = "$timestamp  $formattedTag  $priorityChar  $formattedMsg$throwableMsg"
+    val formattedLogMessage = "%c$logMessage"
+
     when (priority) {
-        VERBOSE, DEBUG, INFO -> console.log(formattedMsg, style)
-        WARN -> console.warn(formattedMsg, style)
-        ERROR, ASSERT -> console.error(formattedMsg, style)
-        else -> console.log(formattedMsg, style)
+        VERBOSE, DEBUG, INFO -> console.log(formattedLogMessage, style)
+        WARN -> console.warn(formattedLogMessage, style)
+        ERROR, ASSERT -> console.error(formattedLogMessage, style)
+        else -> console.log(formattedLogMessage, style)
     }
 }
 
 actual fun Log.v(tag: String, msg: String) {
-    if (isLoggable( tag, VERBOSE)) {
+    if (isLoggable(tag, VERBOSE)) {
         printLog(VERBOSE, tag, msg)
     }
 }
 
 actual fun Log.d(tag: String, msg: String) {
-    if (isLoggable( tag, DEBUG)) {
+    if (isLoggable(tag, DEBUG)) {
         printLog(DEBUG, tag, msg)
     }
 }
 
 actual fun Log.i(tag: String, msg: String) {
-    if (isLoggable( tag, INFO)) {
+    if (isLoggable(tag, INFO)) {
         printLog(INFO, tag, msg)
     }
 }
 
 actual fun Log.w(tag: String, msg: String) {
-    if (isLoggable( tag, WARN)) {
+    if (isLoggable(tag, WARN)) {
         printLog(WARN, tag, msg)
     }
 }
@@ -68,13 +89,13 @@ actual fun Log.e(tag: String, msg: String, throwable: Throwable?) {
 }
 
 actual fun Log.wtf(tag: String, msg: String) {
-    if (isLoggable( tag, ASSERT)) {
+    if (isLoggable(tag, ASSERT)) {
         printLog(ASSERT, tag, msg)
     }
 }
 
 actual fun Log.println(priority: Int, tag: String, msg: String) {
-    if (isLoggable( tag, priority)) {
+    if (isLoggable(tag, priority)) {
         printLog(priority, tag, msg)
     }
 }

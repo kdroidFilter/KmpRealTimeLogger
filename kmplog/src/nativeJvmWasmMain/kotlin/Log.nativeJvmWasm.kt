@@ -8,6 +8,7 @@ private const val YELLOW = "\u001B[33m"
 private const val RED = "\u001B[31m"
 private const val MAGENTA = "\u001B[35m"
 
+
 private fun getColor(priority: Int): String {
     return when (priority) {
         Log.VERBOSE -> GRAY
@@ -20,10 +21,28 @@ private fun getColor(priority: Int): String {
     }
 }
 
+private fun formatTag(tag: String, maxLength: Int = MAX_TAG_LENGTH): String {
+    return if (tag.length > maxLength) {
+        tag.substring(0, maxLength)
+    } else {
+        tag.padEnd(maxLength)
+    }
+}
+
+private fun formatMessage(msg: String, maxLength: Int = MAX_MSG_LENGTH): String {
+    return if (msg.length > maxLength) {
+        msg.substring(0, maxLength - 3) + "..."
+    } else {
+        msg
+    }
+}
+
 private fun printLog(priority: Int, tag: String, msg: String) {
     val timestamp = getCurrentDateTime()
     val priorityChar = getPriorityChar(priority)
-    val logMessage = "$timestamp  $tag  $priorityChar  $msg"
+    val formattedTag = formatTag(tag)
+    val formattedMsg = formatMessage(msg)
+    val logMessage = "$timestamp  $formattedTag  $priorityChar  $formattedMsg"
     val color = getColor(priority)
     println("$color$logMessage$RESET")
 }
@@ -62,7 +81,6 @@ actual fun Log.e(tag: String, msg: String, throwable: Throwable?) {
         printLog(ERROR, tag, logMessage)
     }
 }
-
 
 actual fun Log.wtf(tag: String, msg: String) {
     if (isLoggable(tag, ASSERT)) {

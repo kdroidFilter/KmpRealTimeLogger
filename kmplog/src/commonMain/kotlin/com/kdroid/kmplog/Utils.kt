@@ -10,6 +10,8 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
+const val MAX_TAG_LENGTH = 20
+const val MAX_MSG_LENGTH = 100
 
 internal fun getCurrentDateTime(): String {
     val now = Clock.System.now()
