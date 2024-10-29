@@ -1,13 +1,10 @@
+@file:OptIn(ExperimentalJsExport::class)
+
 package com.kdroid.kmplog
 
-import com.kdroid.kmplog.Log.ASSERT
-import com.kdroid.kmplog.Log.DEBUG
-import com.kdroid.kmplog.Log.ERROR
-import com.kdroid.kmplog.Log.INFO
-import com.kdroid.kmplog.Log.VERBOSE
-import com.kdroid.kmplog.Log.WARN
+import com.kdroid.kmplog.core.*
 
-private fun getColor(priority: Int): String {
+private fun getHtmlColor(priority: Int): String {
     val isDark = isDarkMode()
 
     return when (priority) {
@@ -21,24 +18,8 @@ private fun getColor(priority: Int): String {
     }
 }
 
-private fun formatTag(tag: String, maxLength: Int = MAX_TAG_LENGTH): String {
-    return if (tag.length > maxLength) {
-        tag.substring(0, maxLength)
-    } else {
-        tag.padEnd(maxLength)
-    }
-}
-
-private fun formatMessage(msg: String, maxLength: Int = MAX_MSG_LENGTH): String {
-    return if (msg.length > maxLength) {
-        msg.substring(0, maxLength - 3) + "..."
-    } else {
-        msg
-    }
-}
-
-private fun printLog(priority: Int, tag: String, msg: String, throwable: Throwable? = null) {
-    val style = getColor(priority)
+private fun printJsLog(priority: Int, tag: String, msg: String, throwable: Throwable? = null) {
+    val style = getHtmlColor(priority)
     val priorityChar = getPriorityChar(priority)
     val timestamp = getCurrentDateTime()
 
@@ -58,44 +39,53 @@ private fun printLog(priority: Int, tag: String, msg: String, throwable: Throwab
     }
 }
 
+@JsExport
 actual fun Log.v(tag: String, msg: String) {
     if (isLoggable(tag, VERBOSE)) {
-        printLog(VERBOSE, tag, msg)
+        printJsLog(VERBOSE, tag, msg)
     }
 }
-
+@JsExport
 actual fun Log.d(tag: String, msg: String) {
     if (isLoggable(tag, DEBUG)) {
-        printLog(DEBUG, tag, msg)
+        printJsLog(DEBUG, tag, msg)
     }
 }
-
+@JsExport
 actual fun Log.i(tag: String, msg: String) {
     if (isLoggable(tag, INFO)) {
-        printLog(INFO, tag, msg)
+        printJsLog(INFO, tag, msg)
     }
 }
-
+@JsExport
 actual fun Log.w(tag: String, msg: String) {
     if (isLoggable(tag, WARN)) {
-        printLog(WARN, tag, msg)
+        printJsLog(WARN, tag, msg)
     }
 }
-
+@JsExport
 actual fun Log.e(tag: String, msg: String, throwable: Throwable?) {
     if (isLoggable(tag, ERROR)) {
-        printLog(ERROR, tag, msg, throwable)
+        printJsLog(ERROR, tag, msg, throwable)
     }
 }
-
+@JsExport
 actual fun Log.wtf(tag: String, msg: String) {
     if (isLoggable(tag, ASSERT)) {
-        printLog(ASSERT, tag, msg)
+        printJsLog(ASSERT, tag, msg)
+    }
+}
+@JsExport
+actual fun Log.println(priority: Int, tag: String, msg: String) {
+    if (isLoggable(tag, priority)) {
+        printJsLog(priority, tag, msg)
     }
 }
 
-actual fun Log.println(priority: Int, tag: String, msg: String) {
-    if (isLoggable(tag, priority)) {
-        printLog(priority, tag, msg)
-    }
-}
+
+//Not Available on JS
+actual fun printAndSendLog(priority: Int, tag: String, msg: String) {}
+actual fun startServer() {}
+
+//TODO
+actual suspend fun sendMessageToWebSocket(logMessage: LogMessage) {}

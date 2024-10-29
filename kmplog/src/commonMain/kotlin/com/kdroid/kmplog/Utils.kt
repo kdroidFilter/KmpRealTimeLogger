@@ -1,17 +1,9 @@
 package com.kdroid.kmplog
 
-import com.kdroid.kmplog.Log.ASSERT
-import com.kdroid.kmplog.Log.DEBUG
-import com.kdroid.kmplog.Log.ERROR
-import com.kdroid.kmplog.Log.INFO
-import com.kdroid.kmplog.Log.VERBOSE
-import com.kdroid.kmplog.Log.WARN
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-const val MAX_TAG_LENGTH = 20
-const val MAX_MSG_LENGTH = 100
 
 internal fun getCurrentDateTime(): String {
     val now = Clock.System.now()
@@ -34,14 +26,3 @@ internal fun getCurrentDateTime(): String {
     }
 }
 
-internal fun getPriorityChar(priority: Int): String {
-    return when (priority) {
-        VERBOSE -> "[V]"
-        DEBUG -> "[D]"
-        INFO -> "[I]"
-        WARN -> "[W]"
-        ERROR -> "[E]"
-        ASSERT -> "[A]"
-        else -> "[U]"
-    }
-}

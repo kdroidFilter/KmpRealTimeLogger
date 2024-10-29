@@ -1,17 +1,11 @@
 package com.kdroid.kmplog
 
-@Suppress("OPT_IN_USAGE")
+import com.kdroid.kmplog.core.*
+
 object Log {
     init {
-      startServer()
+        startServer()
     }
-
-    const val VERBOSE = 2
-    const val DEBUG = 3
-    const val INFO = 4
-    const val WARN = 5
-    const val ERROR = 6
-    const val ASSERT = 7
 
     private var logLevel = DEBUG
     private var isDevelopmentMode = false
@@ -29,6 +23,22 @@ object Log {
     }
 }
 
+
+fun printAndGetLocalLog(priority: Int, tag: String, message: String) : LogMessage {
+    val timestamp = getCurrentDateTime()
+    val priorityChar = getPriorityChar(priority)
+    val formattedTag = formatTag(tag)
+    val formattedMsg = formatMessage(message)
+    val formatedLogMessage = "${getCurrentDateTime()}  $formattedTag  $priorityChar  $formattedMsg"
+    val color = getColor(priority)
+    println("$color$formatedLogMessage$RESET")
+    return LogMessage(timestamp = timestamp, priority = priority, tag = tag, message = message)
+}
+
+expect fun printAndSendLog(priority: Int, tag: String, msg: String)
+
+expect fun startServer()
+
 expect fun Log.v(tag: String, msg: String)
 expect fun Log.d(tag: String, msg: String)
 expect fun Log.i(tag: String, msg: String)
@@ -37,3 +47,4 @@ expect fun Log.e(tag: String, msg: String, throwable: Throwable? = null)
 expect fun Log.wtf(tag: String, msg: String)
 expect fun Log.println(priority: Int, tag: String, msg: String)
 
+expect suspend fun sendMessageToWebSocket(logMessage: LogMessage)

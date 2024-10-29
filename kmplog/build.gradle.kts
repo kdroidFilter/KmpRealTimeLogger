@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.kdroid.kmplog"
-version = "0.4.5"
+version = "0.4.6"
 
 
 kotlin {
@@ -21,20 +21,20 @@ kotlin {
 
     jvm()
 
-//    js {
-//        browser {
-//            webpackTask {
-//                mainOutputFileName = "kmplog.js"
-//            }
-//        }
-//        binaries.executable()
-//    }
+    js {
+       browser {
+           webpackTask {
+                mainOutputFileName = "kmplog.js"
+            }
+       }
+        binaries.executable()
+   }
 
     @OptIn(ExperimentalWasmDsl::class)
-//    wasmJs {
-//        browser()
-//        binaries.executable()
-//    }
+    wasmJs {
+        browser()
+       binaries.executable()
+       }
 
     listOf(
         iosX64(),
@@ -75,14 +75,16 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.protobuf)
+
+            implementation(project(":core"))
+
             //Ktor
             implementation(libs.ktor.server.core)
-            implementation(libs.ktor.server.cio)
             implementation(libs.ktor.server.websockets)
             implementation(libs.ktor.server.cors)
             implementation(libs.ktor.serialization.kotlinx.protobuf)
+            implementation(libs.ktor.server.content.negotiation)
 
-//            implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3")
         }
 
         commonTest.dependencies {
@@ -92,6 +94,16 @@ kotlin {
         jvmMain.dependencies {
             implementation(libs.slf4j.simple)
         }
+        nativeMain.dependencies {
+        }
+
+        val nativeJvmAndroidMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+                implementation(libs.ktor.server.cio)
+
+            }
+        }
 
         val nativeJvmWasmMain by creating {
             dependsOn(commonMain.get())
@@ -99,33 +111,82 @@ kotlin {
             }
         }
 
+        val jvmAndroidMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+
+            }
+        }
+
+        val nativeWasmMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+            }
+        }
+
+        val nativeMain by getting {
+            dependsOn(commonMain.get())
+            dependencies {
+
+            }
+        }
+
+        androidMain {
+            dependsOn(nativeJvmAndroidMain)
+            dependsOn(jvmAndroidMain)
+        }
+
+
         linuxX64Main {
             dependsOn(nativeJvmWasmMain)
+            dependsOn(nativeJvmAndroidMain)
+            dependsOn(nativeWasmMain)
+            dependsOn(nativeMain)
         }
         mingwX64Main {
             dependsOn(nativeJvmWasmMain)
+            dependsOn(nativeJvmAndroidMain)
+            dependsOn(nativeWasmMain)
+            dependsOn(nativeMain)
         }
         macosX64Main {
             dependsOn(nativeJvmWasmMain)
-
+            dependsOn(nativeJvmAndroidMain)
+            dependsOn(nativeWasmMain)
+            dependsOn(nativeMain)
         }
         macosArm64Main {
             dependsOn(nativeJvmWasmMain)
+            dependsOn(nativeJvmAndroidMain)
+            dependsOn(nativeWasmMain)
+            dependsOn(nativeMain)
         }
         iosX64Main {
             dependsOn(nativeJvmWasmMain)
+            dependsOn(nativeJvmAndroidMain)
+            dependsOn(nativeWasmMain)
+            dependsOn(nativeMain)
         }
         iosArm64Main {
             dependsOn(nativeJvmWasmMain)
+            dependsOn(nativeJvmAndroidMain)
+            dependsOn(nativeWasmMain)
+            dependsOn(nativeMain)
         }
         iosSimulatorArm64Main() {
             dependsOn(nativeJvmWasmMain)
+            dependsOn(nativeJvmAndroidMain)
+            dependsOn(nativeWasmMain)
+            dependsOn(nativeMain)
         }
-//        wasmJsMain {
-//            dependsOn(nativeJvmWasmMain)
-//        }
+        wasmJsMain {
+           dependsOn(nativeJvmWasmMain)
+            dependsOn(nativeWasmMain)
+       }
         jvmMain {
             dependsOn(nativeJvmWasmMain)
+            dependsOn(nativeJvmAndroidMain)
+            dependsOn(jvmAndroidMain)
         }
 
         val nativeJvmWasmTest by creating {
@@ -155,9 +216,10 @@ kotlin {
         iosSimulatorArm64Test {
             dependsOn(nativeJvmWasmTest)
         }
-//        wasmJsTest {
-//            dependsOn(nativeJvmWasmTest)
-//        }
+        wasmJsTest {
+            dependsOn(nativeJvmWasmTest)
+        }
+
         jvmTest {
             dependsOn(nativeJvmWasmTest)
         }

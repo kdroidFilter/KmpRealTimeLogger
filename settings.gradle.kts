@@ -30,4 +30,6 @@ dependencyResolutionManagement {
 }
 includeBuild("convention-plugins")
 include(":kmplog")
+include(":client")
+include(":core")
 

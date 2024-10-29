@@ -1,4 +1,5 @@
-import com.kdroid.kmplog.*
+package com.kdroid.kmplog
+
 import javax.swing.JButton
 import javax.swing.JFrame
 
