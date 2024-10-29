@@ -4,11 +4,12 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
-    id("com.vanniktech.maven.publish") version "0.30.0"
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.maven.publish)
 }
 
 group = "com.kdroid.kmplog"
-version = "0.4.0"
+version = "0.4.5"
 
 
 kotlin {
@@ -20,20 +21,20 @@ kotlin {
 
     jvm()
 
-    js {
-        browser {
-            webpackTask {
-                mainOutputFileName = "kmplog.js"
-            }
-        }
-        binaries.executable()
-    }
+//    js {
+//        browser {
+//            webpackTask {
+//                mainOutputFileName = "kmplog.js"
+//            }
+//        }
+//        binaries.executable()
+//    }
 
     @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-        binaries.executable()
-    }
+//    wasmJs {
+//        browser()
+//        binaries.executable()
+//    }
 
     listOf(
         iosX64(),
@@ -72,16 +73,31 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.serialization.protobuf)
+            //Ktor
+            implementation(libs.ktor.server.core)
+            implementation(libs.ktor.server.cio)
+            implementation(libs.ktor.server.websockets)
+            implementation(libs.ktor.server.cors)
+            implementation(libs.ktor.serialization.kotlinx.protobuf)
+
+//            implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3")
         }
 
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
 
-        val nativeJvmWasmMain by creating {
-            dependsOn(commonMain.get())
+        jvmMain.dependencies {
+            implementation(libs.slf4j.simple)
         }
 
+        val nativeJvmWasmMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+            }
+        }
 
         linuxX64Main {
             dependsOn(nativeJvmWasmMain)
@@ -91,6 +107,7 @@ kotlin {
         }
         macosX64Main {
             dependsOn(nativeJvmWasmMain)
+
         }
         macosArm64Main {
             dependsOn(nativeJvmWasmMain)
@@ -104,9 +121,9 @@ kotlin {
         iosSimulatorArm64Main() {
             dependsOn(nativeJvmWasmMain)
         }
-        wasmJsMain {
-            dependsOn(nativeJvmWasmMain)
-        }
+//        wasmJsMain {
+//            dependsOn(nativeJvmWasmMain)
+//        }
         jvmMain {
             dependsOn(nativeJvmWasmMain)
         }
@@ -138,9 +155,9 @@ kotlin {
         iosSimulatorArm64Test {
             dependsOn(nativeJvmWasmTest)
         }
-        wasmJsTest {
-            dependsOn(nativeJvmWasmTest)
-        }
+//        wasmJsTest {
+//            dependsOn(nativeJvmWasmTest)
+//        }
         jvmTest {
             dependsOn(nativeJvmWasmTest)
         }

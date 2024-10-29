@@ -1,6 +1,11 @@
 package com.kdroid.kmplog
 
+@Suppress("OPT_IN_USAGE")
 object Log {
+    init {
+      startServer()
+    }
+
     const val VERBOSE = 2
     const val DEBUG = 3
     const val INFO = 4

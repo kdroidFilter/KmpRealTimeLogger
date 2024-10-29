@@ -1,13 +1,24 @@
 [versions]
 
-kotlin = "2.0.20"
+kotlin = "2.0.21"
 agp = "8.6.0-alpha07"
+kotlinxCoroutinesCore = "1.9.0"
 kotlinxDatetime = "0.6.0"
+kotlinxSerializationProtobuf = "1.7.3"
+ktor = "3.0.0"
 testng = "7.1.0"
 junitKtx = "1.2.1"
 
 [libraries]
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinxSerializationProtobuf" }
+ktor-serialization-kotlinx-protobuf = { module = "io.ktor:ktor-serialization-kotlinx-protobuf", version.ref = "ktor" }
+ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
+ktor-server-websockets = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version = "2.0.16" }
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }
 junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 
@@ -16,3 +27,5 @@ junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "ju
 
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+maven-publish = { id = "com.vanniktech.maven.publish", version = "0.30.0" }
