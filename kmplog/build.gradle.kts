@@ -114,7 +114,7 @@ kotlin {
         val jvmAndroidMain by creating {
             dependsOn(commonMain.get())
             dependencies {
-                implementation("org.jmdns:jmdns:3.5.12")
+                implementation(libs.jmdns)
 
             }
         }

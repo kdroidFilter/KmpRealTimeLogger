@@ -86,18 +86,26 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
-                implementation(project(":kmplog-core"))
-                implementation(compose.components.resources)
 
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(project(":kmplog-core"))
+            implementation(compose.components.resources)
+        }
+
+        val desktopAndroidMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+                implementation(libs.jmdns)
             }
         }
+
         val desktopMain by getting {
+            dependsOn(commonMain.get())
+            dependsOn(desktopAndroidMain)
             dependencies {
                 implementation(compose.desktop.currentOs) {
                     exclude(group = "org.jetbrains.compose.material")
@@ -113,6 +121,8 @@ kotlin {
             }
         }
         val androidMain by getting {
+            dependsOn(commonMain.get())
+            dependsOn(desktopAndroidMain)
             dependencies {
                 implementation(libs.activity.ktx)
                 implementation(libs.androidx.appcompat)
@@ -120,6 +130,7 @@ kotlin {
             }
         }
         val wasmJsMain by getting {
+            dependsOn(commonMain.get())
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -127,6 +138,8 @@ kotlin {
                 implementation(compose.ui)
             }
         }
+
+
     }
 
 }
