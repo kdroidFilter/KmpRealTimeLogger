@@ -98,6 +98,8 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+
 
             //Koin
             implementation(project.dependencies.platform(libs.koin.bom))
@@ -126,6 +128,7 @@ kotlin {
                 implementation(compose.desktop.currentOs) {
                     exclude(group = "org.jetbrains.compose.material")
                 }
+                implementation(libs.androidx.ui.tooling.preview.desktop)
                 implementation(libs.slf4j.simple)
                 implementation(libs.jsystemthemedetector)
                 implementation(libs.kotlinx.coroutines.swing)
@@ -148,6 +151,8 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonMain.get())
             dependencies {
+                implementation(libs.androidx.ui.tooling.preview.android)
+
                 implementation(libs.activity.ktx)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
@@ -169,6 +174,9 @@ kotlin {
 
 
     }
+
+}
+dependencies {
 
 }
 
