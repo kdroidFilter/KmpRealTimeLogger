@@ -29,6 +29,7 @@ dependencyResolutionManagement {
         maven("https://packages.jetbrains.team/maven/p/kpm/public/")
         maven("https://www.jetbrains.com/intellij-repository/releases")
         maven("https://www.jetbrains.com/intellij-repository/snapshots")
+        maven("https://jitpack.io")
     }
 }
 include(":kmplog")

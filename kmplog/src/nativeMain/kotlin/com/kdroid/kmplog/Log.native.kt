@@ -13,3 +13,7 @@ actual fun printAndSendLog(priority: Int, tag: String, msg: String) {
         sendMessageToWebSocket(logMessage)
     }
 }
+
+actual fun publishMdnsService() {
+    //TODO
+}

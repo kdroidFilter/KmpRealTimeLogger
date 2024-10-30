@@ -86,6 +86,6 @@ actual fun Log.println(priority: Int, tag: String, msg: String) {
 //Not Available on JS
 actual fun printAndSendLog(priority: Int, tag: String, msg: String) {}
 actual fun startServer() {}
-
+actual fun publishMdnsService() {}
 //TODO
 actual suspend fun sendMessageToWebSocket(logMessage: LogMessage) {}

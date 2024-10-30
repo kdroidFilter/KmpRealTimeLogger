@@ -23,7 +23,10 @@ object Log {
 
     fun enableBroadcastingMode() {
         isBroadcastingMode = true
-        if (!isServerRunning) startServer()
+        if (!isServerRunning) {
+            startServer()
+            publishMdnsService()
+        }
         isServerRunning = true
     }
 
@@ -54,3 +57,5 @@ expect fun Log.wtf(tag: String, msg: String)
 expect fun Log.println(priority: Int, tag: String, msg: String)
 
 expect suspend fun sendMessageToWebSocket(logMessage: LogMessage)
+
+expect fun publishMdnsService()

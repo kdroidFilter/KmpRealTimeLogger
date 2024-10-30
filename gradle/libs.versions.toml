@@ -1,6 +1,7 @@
 [versions]
 
 jmdns = "3.5.12"
+jsystemthemedetector = "3.7"
 kotlin = "2.0.21"
 agp = "8.6.0-alpha07"
 kotlinxCoroutinesCore = "1.9.0"
@@ -25,6 +26,7 @@ jewel-icons = "242.23339.11"
 
 [libraries]
 jmdns = { module = "org.jmdns:jmdns", version.ref = "jmdns" }
+jsystemthemedetector = { module = "com.github.Dansoftowner:jSystemThemeDetector", version.ref = "jsystemthemedetector" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinxSerializationProtobuf" }

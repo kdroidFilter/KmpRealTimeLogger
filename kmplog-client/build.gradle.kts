@@ -94,6 +94,8 @@ kotlin {
             implementation(compose.ui)
             implementation(project(":kmplog-core"))
             implementation(compose.components.resources)
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+
         }
 
         val desktopAndroidMain by creating {
@@ -110,6 +112,8 @@ kotlin {
                 implementation(compose.desktop.currentOs) {
                     exclude(group = "org.jetbrains.compose.material")
                 }
+                implementation(libs.slf4j.simple)
+                implementation(libs.jsystemthemedetector)
                 implementation(libs.jewel)
                 implementation(libs.jewel.decorated)
                 implementation(libs.jewel.markdown.core)

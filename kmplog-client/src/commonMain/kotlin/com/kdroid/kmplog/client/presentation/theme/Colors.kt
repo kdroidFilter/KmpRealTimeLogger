@@ -1,4 +1,4 @@
-package com.kdroid.composenotification.demo.presentation.theme
+package com.kdroid.kmplog.client.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 import com.kdroid.kmplog.core.*

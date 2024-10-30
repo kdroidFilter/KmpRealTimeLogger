@@ -4,10 +4,11 @@ package com.kdroid.kmplog.core
 const val MAX_TAG_LENGTH = 20
 const val MAX_MSG_LENGTH = 100
 const val SERVICE_TYPE = "_websocket._tcp.local."
+const val ANDROID_SERVICE_TYPE = "_websocket._tcp."
 const val SERVICE_NAME = "KmpLog"
 const val SERVICE_PORT = 8080
 const val SERVICE_PATH = "/log"
-
+const val SERICE_DESCRIPTION = "KmpLog Websocket Service"
 
 //Priority
 const val VERBOSE = 2
