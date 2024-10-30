@@ -88,32 +88,36 @@ kotlin {
     sourceSets {
 
         commonMain.dependencies {
+            implementation(project(":kmplog-core"))
+            implementation(libs.kotlinx.coroutines.core)
+
+            //Compose
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
-            implementation(project(":kmplog-core"))
             implementation(compose.components.resources)
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+
+            //Koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.viewmodel.navigation)
+            implementation(libs.koin.compose)
 
         }
 
-        val desktopAndroidMain by creating {
-            dependsOn(commonMain.get())
-            dependencies {
-                implementation(libs.jmdns)
-            }
-        }
 
         val desktopMain by getting {
             dependsOn(commonMain.get())
-            dependsOn(desktopAndroidMain)
             dependencies {
                 implementation(compose.desktop.currentOs) {
                     exclude(group = "org.jetbrains.compose.material")
                 }
                 implementation(libs.slf4j.simple)
                 implementation(libs.jsystemthemedetector)
+
+                //Jewel
                 implementation(libs.jewel)
                 implementation(libs.jewel.decorated)
                 implementation(libs.jewel.markdown.core)
@@ -122,15 +126,19 @@ kotlin {
                 implementation(libs.jewel.markdown.extension.gfmalerts)
                 implementation(libs.jewel.foundation)
                 implementation(libs.jewel.icons)
+                //
+                implementation(libs.jmdns)
+
             }
         }
         val androidMain by getting {
             dependsOn(commonMain.get())
-            dependsOn(desktopAndroidMain)
             dependencies {
                 implementation(libs.activity.ktx)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
+                implementation(libs.koin.androidx.compose)
+                implementation(libs.koin.androidx.compose.navigation)
             }
         }
         val wasmJsMain by getting {

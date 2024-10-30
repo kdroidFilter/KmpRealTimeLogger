@@ -10,17 +10,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import org.koin.java.KoinJavaComponent.inject
 import java.util.concurrent.Executors
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-actual suspend fun getIpService(context: Any?): String? {
+actual suspend fun getIpService(): String? {
+    val context : Context by inject(Context::class.java)
     return withContext(Dispatchers.IO) {
         suspendCoroutine { continuation ->
-            if (context !is Context) {
-                continuation.resume(null)
-                return@suspendCoroutine
-            }
 
             val nsdManager = context.getSystemService(Context.NSD_SERVICE) as? NsdManager
             if (nsdManager == null) {

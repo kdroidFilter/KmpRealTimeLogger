@@ -8,7 +8,7 @@ import javax.jmdns.JmDNS
 import javax.jmdns.ServiceEvent
 import javax.jmdns.ServiceListener
 
-actual suspend fun getIpService(context : Any?): String? {
+actual suspend fun getIpService(): String? {
     var ipAddress: String? = null
     withContext(Dispatchers.IO) {
 
@@ -51,3 +51,4 @@ actual suspend fun getIpService(context : Any?): String? {
     }
     return ipAddress
 }
+

@@ -1,3 +1,4 @@
 package com.kdroid.kmplog.client.data.network
 
-expect suspend fun getIpService(context : Any? = null) : String?
+expect suspend fun getIpService() : String?
+

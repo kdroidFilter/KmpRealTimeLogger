@@ -10,11 +10,11 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 
 @Composable
-fun App(context : Any? = null) {
+fun App() {
     var ipAddress by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
-        ipAddress = getIpService(context)
+        ipAddress = getIpService()
     }
 
     Scaffold {
