@@ -1,5 +1,4 @@
 import com.vanniktech.maven.publish.SonatypeHost
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -30,7 +29,6 @@ kotlin {
         binaries.executable()
    }
 
-    @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
        binaries.executable()

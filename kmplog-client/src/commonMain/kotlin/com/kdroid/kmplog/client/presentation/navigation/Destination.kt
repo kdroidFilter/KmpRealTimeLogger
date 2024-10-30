@@ -2,11 +2,11 @@ package com.kdroid.kmplog.client.presentation.navigation
 
 import kotlinx.serialization.Serializable
 
-sealed class MainNavGraph {
+sealed class Destination {
 
     @Serializable
-    data object Home : MainNavGraph()
+    data object Home : Destination()
 
     @Serializable
-    data object Settings : MainNavGraph()
+    data object Settings : Destination()
 }

@@ -19,12 +19,20 @@ import com.kdroid.kmplog.core.formatMessage
 import com.kdroid.kmplog.core.formatTag
 import com.kdroid.kmplog.core.getPriorityChar
 import kotlinx.coroutines.launch
+import org.koin.compose.viewmodel.koinViewModel
+
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel){
+fun Home() {
+    val homeViewModel: HomeViewModel = koinViewModel()
+    HomeScreen(homeState = rememberHomeScreenState(homeViewModel = homeViewModel),)
+}
+
+@Composable
+fun HomeScreen(homeState: HomeState){
     var size by remember { mutableStateOf(IntSize.Zero) }
 
-    val logMessages = viewModel.logMessages
+    val logMessages = homeState.logMessages
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberLazyListState()
 
@@ -36,6 +44,7 @@ fun HomeScreen(viewModel: HomeViewModel){
             }
         }
     }
+
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             state = scrollState,
@@ -69,6 +78,5 @@ fun HomeScreen(viewModel: HomeViewModel){
             }
         }
     }
-
 }
 
