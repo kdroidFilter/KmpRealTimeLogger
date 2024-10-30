@@ -99,7 +99,17 @@ kotlin {
         }
         val desktopMain by getting {
             dependencies {
-                implementation(compose.desktop.currentOs)
+                implementation(compose.desktop.currentOs) {
+                    exclude(group = "org.jetbrains.compose.material")
+                }
+                implementation(libs.jewel)
+                implementation(libs.jewel.decorated)
+                implementation(libs.jewel.markdown.core)
+                implementation(libs.jewel.markdown.intUiStandaloneStyling)
+                implementation(libs.jewel.markdown.extension.autolink)
+                implementation(libs.jewel.markdown.extension.gfmalerts)
+                implementation(libs.jewel.foundation)
+                implementation(libs.jewel.icons)
             }
         }
         val androidMain by getting {

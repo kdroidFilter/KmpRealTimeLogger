@@ -19,7 +19,8 @@ runtimeAndroid = "1.7.4"
 core = "1.13.1"
 runtime = "1.7.0"
 lifecycleProcess = "2.8.6"
-
+jewel = "0.26.2"
+jewel-icons = "242.23339.11"
 
 [libraries]
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
@@ -42,7 +43,14 @@ androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
 androidx-runtime-desktop = { group = "androidx.compose.runtime", name = "runtime-desktop", version.ref = "runtime" }
 runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "runtime" }
-
+jewel = { group = "org.jetbrains.jewel", name = "jewel-int-ui-standalone-242", version.ref = "jewel" }
+jewel-decorated = { group = "org.jetbrains.jewel", name = "jewel-int-ui-decorated-window-242", version.ref = "jewel" }
+jewel-markdown-core = { group = "org.jetbrains.jewel", name = "jewel-markdown-core-242", version.ref = "jewel" }
+jewel-markdown-intUiStandaloneStyling = { group = "org.jetbrains.jewel", name = "jewel-markdown-int-ui-standalone-styling-242", version.ref = "jewel" }
+jewel-markdown-extension-autolink = { group =  "org.jetbrains.jewel", name ="jewel-markdown-extension-autolink-242", version.ref = "jewel"}
+jewel-markdown-extension-gfmalerts = { group =  "org.jetbrains.jewel", name ="jewel-markdown-extension-gfm-alerts-242", version.ref = "jewel"}
+jewel-foundation = { group =  "org.jetbrains.jewel", name ="jewel-foundation-242", version.ref = "jewel"}
+jewel-icons = { module = "com.jetbrains.intellij.platform:icons", version.ref = "jewel-icons" }
 
 [plugins]
 

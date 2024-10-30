@@ -5,7 +5,7 @@ import javax.swing.JFrame
 
 fun main() {
     Log.setDevelopmentMode(true)
-
+    Log.enableBroadcastingMode()
     // Create the main window
     val frame = JFrame("Logger Example")
     frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE

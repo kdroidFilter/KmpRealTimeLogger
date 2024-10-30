@@ -3,12 +3,11 @@ package com.kdroid.kmplog
 import com.kdroid.kmplog.core.*
 
 object Log {
-    init {
-        startServer()
-    }
 
     private var logLevel = DEBUG
     private var isDevelopmentMode = false
+    private var isBroadcastingMode = false
+    private var isServerRunning = false
 
     fun isLoggable(tag: String, level: Int): Boolean {
         return isDevelopmentMode && level >= logLevel
@@ -21,6 +20,13 @@ object Log {
     fun setDevelopmentMode(isDevelopment: Boolean) {
         isDevelopmentMode = isDevelopment
     }
+
+    fun enableBroadcastingMode() {
+        isBroadcastingMode = true
+        if (!isServerRunning) startServer()
+        isServerRunning = true
+    }
+
 }
 
 
