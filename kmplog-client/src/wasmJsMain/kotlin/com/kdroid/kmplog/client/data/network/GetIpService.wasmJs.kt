@@ -1,10 +1,14 @@
 package com.kdroid.kmplog.client.data.network
 
-import com.kdroid.kmplog.core.SERVICE_NAME
+import io.ktor.client.engine.*
+import io.ktor.client.engine.js.*
 import kotlinx.browser.window
 import org.w3c.dom.url.URLSearchParams
 
+actual val engine: HttpClientEngine
+    get() = Js.create()
+
 actual suspend fun getIpService(): String? {
-    return URLSearchParams(window.location.search.toJsString()).get(SERVICE_NAME)
+    return URLSearchParams(window.location.search.toJsString()).get("host")
 }
 

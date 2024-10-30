@@ -6,6 +6,8 @@ import android.net.nsd.NsdServiceInfo
 import android.os.Build
 import com.kdroid.kmplog.core.ANDROID_SERVICE_TYPE
 import com.kdroid.kmplog.core.SERVICE_NAME
+import io.ktor.client.engine.*
+import io.ktor.client.engine.cio.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -14,6 +16,10 @@ import org.koin.java.KoinJavaComponent.inject
 import java.util.concurrent.Executors
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+
+actual val engine: HttpClientEngine
+    get() = CIO.create()
 
 actual suspend fun getIpService(): String? {
     val context : Context by inject(Context::class.java)

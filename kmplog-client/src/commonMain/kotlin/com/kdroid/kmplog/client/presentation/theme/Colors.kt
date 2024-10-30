@@ -3,7 +3,7 @@ package com.kdroid.kmplog.client.presentation.theme
 import androidx.compose.ui.graphics.Color
 import com.kdroid.kmplog.core.*
 
-//Compose Colors
+//Log Terminal
 
 val ResetColor = Color(0xFF000000) //
 val GrayColor = Color(0xFF888888) // Gris

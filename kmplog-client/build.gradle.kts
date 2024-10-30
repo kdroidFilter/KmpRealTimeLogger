@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.serialization)
 
 }
 
@@ -105,6 +106,17 @@ kotlin {
             implementation(libs.koin.compose.viewmodel.navigation)
             implementation(libs.koin.compose)
 
+            //Ktor client
+            implementation(libs.ktor.client.websockets)
+            implementation(libs.ktor.ktor.client.core)
+
+            implementation(libs.kotlinx.serialization.protobuf)
+
+            //Navigation
+            implementation(libs.navigation.compose)
+
+
+
         }
 
 
@@ -116,6 +128,7 @@ kotlin {
                 }
                 implementation(libs.slf4j.simple)
                 implementation(libs.jsystemthemedetector)
+                implementation(libs.kotlinx.coroutines.swing)
 
                 //Jewel
                 implementation(libs.jewel)
@@ -128,6 +141,7 @@ kotlin {
                 implementation(libs.jewel.icons)
                 //
                 implementation(libs.jmdns)
+                implementation(libs.ktor.client.cio)
 
             }
         }
@@ -139,6 +153,7 @@ kotlin {
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.koin.androidx.compose)
                 implementation(libs.koin.androidx.compose.navigation)
+                implementation(libs.ktor.client.cio)
             }
         }
         val wasmJsMain by getting {
@@ -148,6 +163,7 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.ui)
+                implementation(libs.ktor.client.js)
             }
         }
 

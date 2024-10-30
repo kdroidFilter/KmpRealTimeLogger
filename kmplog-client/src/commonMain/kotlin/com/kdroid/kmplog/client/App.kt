@@ -1,29 +1,17 @@
-@file:OptIn(ExperimentalResourceApi::class)
-
 package com.kdroid.kmplog.client
 
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import com.kdroid.kmplog.client.data.network.getIpService
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import androidx.compose.runtime.Composable
+import com.kdroid.kmplog.client.presentation.navigation.MainNavHost
+import com.kdroid.kmplog.client.presentation.screens.home.HomeScreen
+import com.kdroid.kmplog.client.presentation.screens.home.HomeViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
 fun App() {
-    var ipAddress by remember { mutableStateOf<String?>(null) }
-
-    LaunchedEffect(Unit) {
-        ipAddress = getIpService()
-    }
-
-    Scaffold {
-        if (ipAddress != null) {
-            Text(text = "Adresse IP du service trouvé : $ipAddress")
-        } else {
-            Text(text = "Recherche du service...")
-        }
-    }
+    MainNavHost()
+    val viewModel = koinViewModel<HomeViewModel>()
+    HomeScreen(viewModel)
 }
 
 
