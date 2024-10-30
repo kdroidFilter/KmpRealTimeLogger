@@ -4,16 +4,21 @@ import android.app.Application
 import com.kdroid.kmplog.client.framework.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.GlobalContext.startKoin
+import org.koin.core.context.startKoin
 
 class MainApplication : Application() {
     override fun onCreate() {
         startKoin {
+            // Log Koin into Android logger
             androidLogger()
+            // Reference Android context
             androidContext(this@MainApplication)
-            appModule
+            // Load modules
+            modules(appModule)
         }
+       // initKoin()
         super.onCreate()
+
     }
 
 }
