@@ -2,11 +2,11 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.serialization)
-
+    alias(libs.plugins.maven.publish)
 }
 
 group = "com.kdroid.kmplog.core"
-version = "0.5"
+version = "0.5.0"
 
 kotlin {
     jvmToolchain(11)

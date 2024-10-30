@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.kdroid.kmplog"
-version = "0.4.6"
+version = "0.4.7"
 
 
 kotlin {
@@ -76,7 +76,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.protobuf)
 
-            implementation(project(":core"))
+            implementation(project(":kmplog-core"))
 
             //Ktor
             implementation(libs.ktor.server.core)
@@ -114,15 +114,11 @@ kotlin {
         val jvmAndroidMain by creating {
             dependsOn(commonMain.get())
             dependencies {
+                implementation("org.jmdns:jmdns:3.5.12")
 
             }
         }
 
-        val nativeWasmMain by creating {
-            dependsOn(commonMain.get())
-            dependencies {
-            }
-        }
 
         val nativeMain by getting {
             dependsOn(commonMain.get())
@@ -130,6 +126,8 @@ kotlin {
 
             }
         }
+
+
 
         androidMain {
             dependsOn(nativeJvmAndroidMain)
@@ -140,48 +138,40 @@ kotlin {
         linuxX64Main {
             dependsOn(nativeJvmWasmMain)
             dependsOn(nativeJvmAndroidMain)
-            dependsOn(nativeWasmMain)
             dependsOn(nativeMain)
         }
         mingwX64Main {
             dependsOn(nativeJvmWasmMain)
             dependsOn(nativeJvmAndroidMain)
-            dependsOn(nativeWasmMain)
             dependsOn(nativeMain)
         }
         macosX64Main {
             dependsOn(nativeJvmWasmMain)
             dependsOn(nativeJvmAndroidMain)
-            dependsOn(nativeWasmMain)
             dependsOn(nativeMain)
         }
         macosArm64Main {
             dependsOn(nativeJvmWasmMain)
             dependsOn(nativeJvmAndroidMain)
-            dependsOn(nativeWasmMain)
             dependsOn(nativeMain)
         }
         iosX64Main {
             dependsOn(nativeJvmWasmMain)
             dependsOn(nativeJvmAndroidMain)
-            dependsOn(nativeWasmMain)
             dependsOn(nativeMain)
         }
         iosArm64Main {
             dependsOn(nativeJvmWasmMain)
             dependsOn(nativeJvmAndroidMain)
-            dependsOn(nativeWasmMain)
             dependsOn(nativeMain)
         }
         iosSimulatorArm64Main() {
             dependsOn(nativeJvmWasmMain)
             dependsOn(nativeJvmAndroidMain)
-            dependsOn(nativeWasmMain)
             dependsOn(nativeMain)
         }
         wasmJsMain {
            dependsOn(nativeJvmWasmMain)
-            dependsOn(nativeWasmMain)
        }
         jvmMain {
             dependsOn(nativeJvmWasmMain)

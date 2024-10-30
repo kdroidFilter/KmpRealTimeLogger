@@ -28,8 +28,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-includeBuild("convention-plugins")
 include(":kmplog")
-include(":client")
-include(":core")
+include(":kmplog-client")
+include(":kmplog-core")
 

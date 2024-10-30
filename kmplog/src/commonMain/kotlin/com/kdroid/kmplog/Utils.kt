@@ -26,3 +26,4 @@ internal fun getCurrentDateTime(): String {
     }
 }
 
+expect fun getLocalIpAddress(): String?
