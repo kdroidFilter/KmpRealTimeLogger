@@ -39,7 +39,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun Home() {
     val homeViewModel: HomeViewModel = koinViewModel()
-    HomeScreen(homeState = rememberHomeScreenState(homeViewModel = homeViewModel))
+    HomeScreen(homeState = rememberHomeScreenState(vm = homeViewModel))
 }
 
 @Composable

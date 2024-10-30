@@ -100,11 +100,11 @@ data class HomeState(
 
 @Composable
 fun rememberHomeScreenState(
-    homeViewModel: HomeViewModel,
+    vm: HomeViewModel,
 ): HomeState {
     return HomeState(
-        connectionStatus = homeViewModel.isConnected.collectAsStateWithLifecycle().value,
-        fontSize = 14,
-        logMessages = homeViewModel.logMessages
+        connectionStatus = vm.isConnected.collectAsStateWithLifecycle().value,
+        fontSize = vm.fontSize.collectAsStateWithLifecycle().value,
+        logMessages = vm.logMessages
     )
 }

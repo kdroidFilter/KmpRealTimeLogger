@@ -7,4 +7,6 @@ sealed class HomeEvents {
     data class onSearch(val searchText: String) : HomeEvents()
     data class onSearchClear(val searchText: String) : HomeEvents()
     data object onClearLogs : HomeEvents()
+
+    data object onSettingsClick : HomeEvents()
 }
