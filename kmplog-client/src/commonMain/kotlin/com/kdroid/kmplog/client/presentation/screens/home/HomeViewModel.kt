@@ -69,6 +69,17 @@ class HomeViewModel(engine: HttpClientEngine) : ViewModel() {
         }
     }
 
+    fun onEvent(events: HomeEvents) {
+        when (events) {
+            HomeEvents.onClearLogs -> TODO()
+            HomeEvents.onResetZoom -> TODO()
+            is HomeEvents.onSearch -> TODO()
+            is HomeEvents.onSearchClear -> TODO()
+            HomeEvents.onZoomIn -> TODO()
+            HomeEvents.onZoomOut -> TODO()
+        }
+    }
+
 
     override fun onCleared() {
         super.onCleared()

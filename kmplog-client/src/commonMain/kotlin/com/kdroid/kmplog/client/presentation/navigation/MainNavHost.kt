@@ -17,6 +17,7 @@ fun MainNavHost() {
     val navigator = koinInject<Navigator>()
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
         ObserveAsEvents(flow = navigator.navigationActions) { action ->
             when (action) {
                 is NavigationAction.Navigate -> navController.navigate(
@@ -24,7 +25,6 @@ fun MainNavHost() {
                 ) {
                     action.navOptions(this)
                 }
-
                 NavigationAction.NavigateUp -> navController.navigateUp()
             }
         }
