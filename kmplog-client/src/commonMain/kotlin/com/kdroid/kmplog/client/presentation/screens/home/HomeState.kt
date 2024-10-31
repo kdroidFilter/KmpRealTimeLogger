@@ -1,6 +1,7 @@
 package com.kdroid.kmplog.client.presentation.screens.home
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kdroid.kmplog.core.*
 
@@ -104,7 +105,7 @@ fun rememberHomeScreenState(
 ): HomeState {
     return HomeState(
         connectionStatus = vm.isConnected.collectAsStateWithLifecycle().value,
-        fontSize = vm.fontSize.collectAsStateWithLifecycle().value,
+        fontSize = vm.fontSize.collectAsState().value,
         logMessages = vm.logMessages
     )
 }

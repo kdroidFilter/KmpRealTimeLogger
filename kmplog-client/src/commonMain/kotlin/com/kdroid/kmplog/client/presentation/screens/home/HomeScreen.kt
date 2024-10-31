@@ -1,28 +1,16 @@
 package com.kdroid.kmplog.client.presentation.screens.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -32,25 +20,25 @@ import com.kdroid.kmplog.core.formatMessage
 import com.kdroid.kmplog.core.formatTag
 import com.kdroid.kmplog.core.getPriorityChar
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.viewmodel.koinViewModel
+import org.koin.compose.koinInject
 
 
 @Composable
 fun Home() {
-    val homeViewModel: HomeViewModel = koinViewModel()
+    val homeViewModel: HomeViewModel = koinInject()
     HomeScreen(homeState = rememberHomeScreenState(vm = homeViewModel))
 }
 
 @Composable
-fun HomeScreen(homeState: HomeState){
+fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit = {}){
     var size by remember { mutableStateOf(IntSize.Zero) }
 
     val logMessages = homeState.logMessages
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberLazyListState()
+    val fontSize = homeState.fontSize
 
-    // Défiler vers le bas automatiquement chaque fois que la liste de messages change
+        // Défiler vers le bas automatiquement chaque fois que la liste de messages change
     LaunchedEffect(logMessages.size) {
         if (logMessages.isNotEmpty()) {
             coroutineScope.launch {
@@ -59,7 +47,7 @@ fun HomeScreen(homeState: HomeState){
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxWidth()) {
         LazyColumn(
             state = scrollState,
             modifier = Modifier
@@ -86,7 +74,7 @@ fun HomeScreen(homeState: HomeState){
                         text = "${logMessage.timestamp} $formatedTag ${getPriorityChar(logMessage.priority)} $formatedMsg",
                         color = getDarkColor(logMessage.priority),
                         fontFamily = FontFamily.Monospace,
-                        fontSize = TextStyle(fontSize = homeState.fontSize.sp).fontSize,
+                        fontSize = fontSize.sp,
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -95,8 +83,3 @@ fun HomeScreen(homeState: HomeState){
     }
 }
 
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen(homeState = HomeState.previewState)
-}

@@ -7,15 +7,14 @@ import com.kdroid.kmplog.client.presentation.navigation.Navigator
 import com.kdroid.kmplog.client.presentation.screens.home.HomeViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
     single<Navigator> {
         DefaultNavigator(startDestination = Destination.Home)
     }
-    viewModel {
-        HomeViewModel(engine)
+    single {
+        HomeViewModel(engine, navigator= get())
     }
 
 }

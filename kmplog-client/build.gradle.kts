@@ -145,6 +145,7 @@ kotlin {
                 //
                 implementation(libs.jmdns)
                 implementation(libs.ktor.client.cio)
+                implementation(libs.androidx.material.icons.extended)
 
             }
         }
@@ -159,6 +160,8 @@ kotlin {
                 implementation(libs.koin.androidx.compose)
                 implementation(libs.koin.androidx.compose.navigation)
                 implementation(libs.ktor.client.cio)
+                implementation(libs.androidx.material.icons.extended)
+
             }
         }
         val wasmJsMain by getting {

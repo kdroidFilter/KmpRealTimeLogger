@@ -3,11 +3,12 @@
 jmdns = "3.5.12"
 jsystemthemedetector = "3.7"
 kotlin = "2.0.21"
-agp = "8.6.1"
+agp = "8.6.0-alpha07"
 kotlinxCoroutinesCore = "1.9.0"
 kotlinxDatetime = "0.6.0"
 kotlinxSerializationProtobuf = "1.7.3"
 ktor = "3.0.0"
+materialIconsExtended = "1.7.4"
 navigationCompose = "2.8.0-alpha10"
 testng = "7.1.0"
 junitKtx = "1.2.1"
@@ -28,10 +29,11 @@ koin-bom = "4.0.0"
 kotlinx-coroutines = "1.9.0"
 adaptiveNavigationSuite = "1.3.1"
 adaptiveNavigation = "1.0.0"
-uiToolingPreviewAndroid = "1.7.4"
+uiToolingPreviewAndroid = "1.7.5"
 uiToolingPreviewDesktop = "1.7.0"
 
 [libraries]
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 jmdns = { module = "org.jmdns:jmdns", version.ref = "jmdns" }
 jsystemthemedetector = { module = "com.github.Dansoftowner:jSystemThemeDetector", version.ref = "jsystemthemedetector" }

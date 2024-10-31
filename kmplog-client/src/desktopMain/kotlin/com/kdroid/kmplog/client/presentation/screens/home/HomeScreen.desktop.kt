@@ -1,5 +1,9 @@
 package com.kdroid.kmplog.client.presentation.screens.home
 
-import io.ktor.client.engine.*
-import io.ktor.client.engine.cio.*
+import androidx.compose.runtime.Composable
 
+@androidx.compose.desktop.ui.tooling.preview.Preview
+@Composable
+fun HomeScreenPreview() {
+    HomeScreen(homeState = HomeState.previewState)
+}

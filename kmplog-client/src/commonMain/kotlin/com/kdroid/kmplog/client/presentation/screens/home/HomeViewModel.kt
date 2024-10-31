@@ -86,8 +86,10 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator) 
             HomeEvents.onResetZoom -> _fontSize.value = 14
             is HomeEvents.onSearch -> TODO()
             is HomeEvents.onSearchClear -> TODO()
-            HomeEvents.onZoomIn -> _fontSize.value++
-            HomeEvents.onZoomOut -> _fontSize.value--
+            HomeEvents.onZoomIn -> {
+                _fontSize.value++
+            }
+            HomeEvents.onZoomOut ->{ _fontSize.value--}
             HomeEvents.onSettingsClick -> navigateToSettings()
 
         }
