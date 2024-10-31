@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">KmpLog Client</string>
+    <string name="zoom_in">Zoom In</string>
+    <string name="zoom_out">Zoom Out</string>
+    <string name="clear_logs">Clear logs</string>
+    <string name="settings">Settings</string>
+
 </resources>

@@ -117,6 +117,10 @@ kotlin {
             //Navigation
             implementation(libs.navigation.compose)
 
+            //Data store
+            implementation("com.russhwolf:multiplatform-settings-no-arg:1.2.0")
+
+            implementation("com.composables:core:1.19.1")
 
 
         }
@@ -147,10 +151,16 @@ kotlin {
                 implementation(libs.ktor.client.cio)
                 implementation(libs.androidx.material.icons.extended)
 
+
             }
         }
+        val androidWasmMain by creating {
+            dependsOn(commonMain.get())
+        }
+
         val androidMain by getting {
             dependsOn(commonMain.get())
+            dependsOn(androidWasmMain)
             dependencies {
                 implementation(libs.androidx.ui.tooling.preview.android)
 
@@ -166,6 +176,7 @@ kotlin {
         }
         val wasmJsMain by getting {
             dependsOn(commonMain.get())
+            dependsOn(androidWasmMain)
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)

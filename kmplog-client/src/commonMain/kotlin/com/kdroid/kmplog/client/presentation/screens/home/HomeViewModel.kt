@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kdroid.kmplog.client.data.network.getIpService
+import com.kdroid.kmplog.client.domain.PreferencesRepository
 import com.kdroid.kmplog.client.presentation.navigation.Destination
 import com.kdroid.kmplog.client.presentation.navigation.Navigator
 import com.kdroid.kmplog.core.LogMessage
@@ -23,7 +24,7 @@ import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
 
 
-class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator) : ViewModel() {
+class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, private val preferencesRepository: PreferencesRepository) : ViewModel() {
 
     init {
         startWebSocket()
@@ -39,8 +40,9 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator) 
     private var _isConnected = MutableStateFlow(false)
     val isConnected = _isConnected.asStateFlow()
 
-    private var _fontSize = MutableStateFlow(14)
+    private var _fontSize = MutableStateFlow(preferencesRepository.getFontSize())
     val fontSize = _fontSize.asStateFlow()
+
 
     @OptIn(ExperimentalSerializationApi::class)
     private fun startWebSocket() {
@@ -82,18 +84,32 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator) 
 
     fun onEvent(events: HomeEvents) {
         when (events) {
-            HomeEvents.onClearLogs -> _messages.clear()
-            HomeEvents.onResetZoom -> _fontSize.value = 14
+            HomeEvents.clearLogs -> _messages.clear()
+            HomeEvents.onResetZoom ->  setFontSize(14)
             is HomeEvents.onSearch -> TODO()
             is HomeEvents.onSearchClear -> TODO()
-            HomeEvents.onZoomIn -> {
-                _fontSize.value++
-            }
-            HomeEvents.onZoomOut ->{ _fontSize.value--}
+            HomeEvents.zoomIn -> incrementFontSize()
+            HomeEvents.zoomOut -> decrementFontSize()
             HomeEvents.onSettingsClick -> navigateToSettings()
 
         }
     }
+
+    private fun setFontSize(size: Int) {
+        _fontSize.value = size
+        preferencesRepository.saveFontSize(size) // Sauvegarde automatique
+    }
+
+    // Incrémente la taille de police
+    private fun incrementFontSize() {
+        setFontSize(_fontSize.value + 1)
+    }
+
+    // Décrémente la taille de police
+    private fun decrementFontSize() {
+        setFontSize(_fontSize.value - 1)
+    }
+
 
     override fun onCleared() {
         super.onCleared()

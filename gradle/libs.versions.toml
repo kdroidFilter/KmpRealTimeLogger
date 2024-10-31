@@ -31,6 +31,7 @@ adaptiveNavigationSuite = "1.3.1"
 adaptiveNavigation = "1.0.0"
 uiToolingPreviewAndroid = "1.7.5"
 uiToolingPreviewDesktop = "1.7.0"
+datastoreVersion = "1.1.1"
 
 [libraries]
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
@@ -82,8 +83,9 @@ androidx-compose-material3-adaptive-navigation = { module = "androidx.compose.ma
 androidx-compose-material3-adaptive-navigation-suite = { module = "androidx.compose.material3:material3-adaptive-navigation-suite", version.ref = "adaptiveNavigationSuite" }
 androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
 androidx-ui-tooling-preview-desktop = { group = "androidx.compose.ui", name = "ui-tooling-preview-desktop", version.ref = "uiToolingPreviewDesktop" }
-
-
+#Data store
+datastore-core = { module = "androidx.datastore:datastore", version.ref = "datastoreVersion" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastoreVersion" }
 
 
 [plugins]
