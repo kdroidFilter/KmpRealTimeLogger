@@ -41,7 +41,7 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
         }
     }
     compileOptions {
@@ -91,6 +91,7 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":kmplog-core"))
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.datetime)
 
             //Compose
             implementation(compose.runtime)
@@ -118,11 +119,11 @@ kotlin {
             implementation(libs.navigation.compose)
 
             //Data store
-            implementation("com.russhwolf:multiplatform-settings-no-arg:1.2.0")
+            implementation(libs.multiplatform.settings.no.arg)
 
-            implementation("com.composables:core:1.19.1")
-
-
+            //UI
+            implementation(libs.composables.core)
+            implementation("io.github.dokar3:sonner:0.3.8")
         }
 
 
@@ -170,7 +171,6 @@ kotlin {
                 implementation(libs.koin.androidx.compose)
                 implementation(libs.koin.androidx.compose.navigation)
                 implementation(libs.ktor.client.cio)
-                implementation(libs.androidx.material.icons.extended)
 
             }
         }
@@ -183,6 +183,11 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.ui)
                 implementation(libs.ktor.client.js)
+            }
+        }
+        getByName("commonMain") {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
             }
         }
 

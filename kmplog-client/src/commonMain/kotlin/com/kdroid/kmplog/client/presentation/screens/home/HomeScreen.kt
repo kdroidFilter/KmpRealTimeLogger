@@ -21,6 +21,7 @@ import com.composables.core.ScrollAreaScope
 import com.composables.core.rememberScrollAreaState
 import com.kdroid.kmplog.client.presentation.theme.backgroundColor
 import com.kdroid.kmplog.client.presentation.theme.getTerminalTextColor
+import com.kdroid.kmplog.client.presentation.toast.UiMessageToaster
 import com.kdroid.kmplog.core.formatMessage
 import com.kdroid.kmplog.core.formatTag
 import com.kdroid.kmplog.core.getPriorityChar
@@ -103,6 +104,10 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
             }
         }
     }
+    UiMessageToaster(
+        messages = homeState.uiState.uiMessages,
+        onRemoveMessage = {onEvent(HomeEvents.removeUiMessageById(it))}
+    )
 }
 
 @Composable
@@ -110,3 +115,7 @@ expect fun ControlsRow(modifier: Modifier = Modifier, onEvent: (HomeEvents) -> U
 
 @Composable
 expect fun  ScrollAreaScope.Scrollbar(modifier: Modifier, scrollbarState: LazyListState)
+
+
+
+

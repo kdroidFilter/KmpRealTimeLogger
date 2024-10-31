@@ -3,17 +3,20 @@ package com.kdroid.kmplog.client.presentation.screens.home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kdroid.kmplog.client.presentation.toast.UiState
 import com.kdroid.kmplog.core.*
 
 data class HomeState(
     val connectionStatus : Boolean,
     val logMessages: List<LogMessage>,
-    val fontSize : Int
+    val fontSize : Int,
+    val uiState: UiState
     ) {
     companion object {
         val previewState = HomeState(
             connectionStatus = true,
             fontSize = 14,
+            uiState = UiState.preview,
             logMessages = listOf(
                 LogMessage(
                     priority = INFO,
@@ -106,6 +109,8 @@ fun rememberHomeScreenState(
     return HomeState(
         connectionStatus = vm.isConnected.collectAsStateWithLifecycle().value,
         fontSize = vm.fontSize.collectAsState().value,
-        logMessages = vm.logMessages
+        logMessages = vm.logMessages,
+        uiState = vm.uiState.collectAsStateWithLifecycle().value
     )
 }
+

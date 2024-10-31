@@ -1,5 +1,6 @@
 [versions]
 
+coreVersion = "1.19.1"
 jmdns = "3.5.12"
 jsystemthemedetector = "3.7"
 kotlin = "2.0.21"
@@ -9,6 +10,7 @@ kotlinxDatetime = "0.6.0"
 kotlinxSerializationProtobuf = "1.7.3"
 ktor = "3.0.0"
 materialIconsExtended = "1.7.4"
+multiplatformSettingsNoArg = "1.2.0"
 navigationCompose = "2.8.0-alpha10"
 testng = "7.1.0"
 junitKtx = "1.2.1"
@@ -35,6 +37,7 @@ datastoreVersion = "1.1.1"
 
 [libraries]
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
+composables-core = { module = "com.composables:core", version.ref = "coreVersion" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 jmdns = { module = "org.jmdns:jmdns", version.ref = "jmdns" }
 jsystemthemedetector = { module = "com.github.Dansoftowner:jSystemThemeDetector", version.ref = "jsystemthemedetector" }
@@ -58,6 +61,7 @@ ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negoti
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktor-server-websockets = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
+multiplatform-settings-no-arg = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatformSettingsNoArg" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version = "2.0.16" }
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }

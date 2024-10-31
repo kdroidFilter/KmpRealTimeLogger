@@ -1,34 +1,23 @@
 package com.kdroid.kmplog.client.presentation.screens.home
 
 import androidx.compose.runtime.mutableStateListOf
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kdroid.kmplog.client.data.network.getIpService
+import com.kdroid.kmplog.client.data.network.WebSocketManager
 import com.kdroid.kmplog.client.domain.PreferencesRepository
 import com.kdroid.kmplog.client.presentation.navigation.Destination
 import com.kdroid.kmplog.client.presentation.navigation.Navigator
+import com.kdroid.kmplog.client.presentation.toast.ToastViewModel
 import com.kdroid.kmplog.core.LogMessage
-import com.kdroid.kmplog.core.SERVICE_PATH
-import com.kdroid.kmplog.core.SERVICE_PORT
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.websocket.*
-import io.ktor.http.*
-import io.ktor.websocket.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromByteArray
-import kotlinx.serialization.protobuf.ProtoBuf
 
 
-class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, private val preferencesRepository: PreferencesRepository) : ViewModel() {
-
-    init {
-        startWebSocket()
-    }
+class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, private val preferencesRepository: PreferencesRepository) : ToastViewModel() {
 
     private val client = HttpClient(engine) {
         install(WebSockets)
@@ -37,40 +26,26 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
     private val _messages = mutableStateListOf<LogMessage>()
     val logMessages: List<LogMessage> get() = _messages
 
-    private var _isConnected = MutableStateFlow(false)
-    val isConnected = _isConnected.asStateFlow()
+    val isConnected: StateFlow<Boolean> get() = WebSocketManager.isConnected
 
     private var _fontSize = MutableStateFlow(preferencesRepository.getFontSize())
     val fontSize = _fontSize.asStateFlow()
 
-
-    @OptIn(ExperimentalSerializationApi::class)
-    private fun startWebSocket() {
+    private fun observeMessages() {
         viewModelScope.launch {
-            val host = getIpService()
-            while (true) {
-                try {
-                    client.webSocket(
-                        method = HttpMethod.Get,
-                        host = host,
-                        port = SERVICE_PORT,
-                        path = SERVICE_PATH
-                    ) {
-                        _isConnected.value = true
-                        for (frame in incoming) {
-                            if (frame is Frame.Binary) {
-                                try {
-                                    val logMessage = ProtoBuf.decodeFromByteArray<LogMessage>(frame.readBytes())
-                                    _messages.add(logMessage)
-                                } catch (e: Exception) {
-                                    println(e.message)
-                                }
-                            }
-                        }
-                    }
-                } catch (e: Exception) {
-                    _isConnected.value = false
-                    delay(3000)
+            WebSocketManager.messages.collect { message ->
+                _messages.add(message)
+            }
+        }
+    }
+
+    private fun observeConnection() {
+        viewModelScope.launch {
+            isConnected.collect { connected ->
+                if (!connected) {
+                    loadToFailure()
+                } else {
+                    loadToSuccess()
                 }
             }
         }
@@ -91,7 +66,7 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
             HomeEvents.zoomIn -> incrementFontSize()
             HomeEvents.zoomOut -> decrementFontSize()
             HomeEvents.onSettingsClick -> navigateToSettings()
-
+            is HomeEvents.removeUiMessageById -> removeUiMessageById(events.id)
         }
     }
 
@@ -114,5 +89,11 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
     override fun onCleared() {
         super.onCleared()
         client.close()
+    }
+
+    init {
+        WebSocketManager.startWebSocket()
+        observeMessages()
+        observeConnection()
     }
 }
