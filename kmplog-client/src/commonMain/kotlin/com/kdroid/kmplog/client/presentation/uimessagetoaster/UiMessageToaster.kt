@@ -1,4 +1,4 @@
-package com.kdroid.kmplog.client.presentation.toast
+package com.kdroid.kmplog.client.presentation.uimessagetoaster
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -6,34 +6,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import com.dokar.sonner.*
-import com.kdroid.kmplog.client.domain.UiMessage
+import com.kdroid.kmplog.client.domain.UiMessageToaster
 import com.kdroid.kmplog.client.presentation.theme.isSystemInDarkTheme
-import kotlin.time.Duration
 
- data class UiState(
-    val isLoading: Boolean = false,
-    val uiMessages: List<UiMessage> = emptyList(),
-) {
-     companion object {
-         val preview = UiState(
-             isLoading = false,
-             uiMessages = listOf(
-                 UiMessage.Error(
-                     id = 1,
-                     message = "Error message"
-                 ),
-                 UiMessage.Success(
-                     id = 2,
-                     message = "Success message"
-                 )
-             )
-         )
-     }
- }
 
 @Composable
 fun UiMessageToaster(
-    messages: List<UiMessage>,
+    messages: List<UiMessageToaster>,
     onRemoveMessage: (id: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -55,26 +34,27 @@ fun UiMessageToaster(
     Toaster(
         state = toaster,
         modifier = modifier,
-        richColors = true,
-        showCloseButton = true,
+        richColors = false,
+        showCloseButton = showCloseButton,
         darkTheme = isSystemInDarkTheme()
     )
 }
 
-private fun UiMessage.toToast(onDismiss: (toast: Toast) -> Unit): Toast = when (this) {
-    is UiMessage.Error -> Toast(
+expect val showCloseButton: Boolean
+
+private fun UiMessageToaster.toToast(onDismiss: (toast: Toast) -> Unit): Toast = when (this) {
+    is UiMessageToaster.Error -> Toast(
         id = id,
         message = message,
         type = ToastType.Error,
-        duration = Duration.INFINITE,
-        action = TextToastAction(text = "Dismiss", onClick = onDismiss),
+        action = errorOnDissmissAction { onDismiss(it) },
     )
 
-    is UiMessage.Success -> Toast(
+    is UiMessageToaster.Success -> Toast(
         id = id,
         message = message,
         type = ToastType.Success,
-        action = TextToastAction(text = "Dismiss", onClick = onDismiss),
     )
 }
 
+expect fun errorOnDissmissAction(onDismiss: (toast: Toast) -> Unit) : Any?

@@ -21,7 +21,7 @@ import com.composables.core.ScrollAreaScope
 import com.composables.core.rememberScrollAreaState
 import com.kdroid.kmplog.client.presentation.theme.backgroundColor
 import com.kdroid.kmplog.client.presentation.theme.getTerminalTextColor
-import com.kdroid.kmplog.client.presentation.toast.UiMessageToaster
+import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToaster
 import com.kdroid.kmplog.core.formatMessage
 import com.kdroid.kmplog.core.formatTag
 import com.kdroid.kmplog.core.getPriorityChar
@@ -48,8 +48,9 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
         modifier = Modifier.fillMaxSize(),
         topBar = {
             ControlsRow(onEvent = { onEvent(it) }, modifier = Modifier.fillMaxWidth())
-        }
-    ) { innerPadding ->
+        },
+        contentWindowInsets = WindowInsets(0),
+        ) { innerPadding ->
         // Défiler vers le bas automatiquement chaque fois que la liste de messages change
         LaunchedEffect(logMessages.size) {
             if (logMessages.isNotEmpty()) {
@@ -105,7 +106,7 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
         }
     }
     UiMessageToaster(
-        messages = homeState.uiState.uiMessages,
+        messages = homeState.uiMessageToasterState.uiMessageToasters,
         onRemoveMessage = {onEvent(HomeEvents.removeUiMessageById(it))}
     )
 }

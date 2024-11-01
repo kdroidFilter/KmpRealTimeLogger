@@ -6,7 +6,7 @@ import com.kdroid.kmplog.client.data.network.WebSocketManager
 import com.kdroid.kmplog.client.domain.PreferencesRepository
 import com.kdroid.kmplog.client.presentation.navigation.Destination
 import com.kdroid.kmplog.client.presentation.navigation.Navigator
-import com.kdroid.kmplog.client.presentation.toast.ToastViewModel
+import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToasterViewModel
 import com.kdroid.kmplog.core.LogMessage
 import io.ktor.client.*
 import io.ktor.client.engine.*
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
-class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, private val preferencesRepository: PreferencesRepository) : ToastViewModel() {
+class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, private val preferencesRepository: PreferencesRepository) : UiMessageToasterViewModel() {
 
     private val client = HttpClient(engine) {
         install(WebSockets)
@@ -27,6 +27,7 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
     val logMessages: List<LogMessage> get() = _messages
 
     val isConnected: StateFlow<Boolean> get() = WebSocketManager.isConnected
+    private var wasConnectedPreviously: Boolean = false
 
     private var _fontSize = MutableStateFlow(preferencesRepository.getFontSize())
     val fontSize = _fontSize.asStateFlow()
@@ -42,10 +43,12 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
     private fun observeConnection() {
         viewModelScope.launch {
             isConnected.collect { connected ->
-                if (!connected) {
-                    loadToFailure()
-                } else {
+                if (connected) {
                     loadToSuccess()
+                    wasConnectedPreviously = true
+                } else if (wasConnectedPreviously) {
+                    loadToFailure()
+                    wasConnectedPreviously = false
                 }
             }
         }
@@ -72,15 +75,13 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
 
     private fun setFontSize(size: Int) {
         _fontSize.value = size
-        preferencesRepository.saveFontSize(size) // Sauvegarde automatique
+        preferencesRepository.saveFontSize(size)
     }
 
-    // Incrémente la taille de police
     private fun incrementFontSize() {
         setFontSize(_fontSize.value + 1)
     }
 
-    // Décrémente la taille de police
     private fun decrementFontSize() {
         setFontSize(_fontSize.value - 1)
     }

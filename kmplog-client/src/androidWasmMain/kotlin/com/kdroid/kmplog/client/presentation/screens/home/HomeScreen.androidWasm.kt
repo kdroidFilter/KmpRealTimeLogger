@@ -4,22 +4,22 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.composables.core.*
+import com.composables.core.Icon
+import com.composables.core.ScrollAreaScope
+import com.composables.core.Thumb
+import com.composables.core.ThumbVisibility
+import com.composables.core.VerticalScrollbar
 import com.kdroid.kmplog.client.data.network.WebSocketManager
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.*
 import com.kdroid.kmplog.client.presentation.icons.*
@@ -48,6 +48,11 @@ actual fun ScrollAreaScope.Scrollbar(
     }
 }
 
+@Composable
+fun appBarBackgroundColor(): Color {
+    return if (isSystemInDarkTheme()) Color.DarkGray else Color(0xFFf6f8fa)
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 actual fun ControlsRow(
@@ -55,7 +60,20 @@ actual fun ControlsRow(
     onEvent: (HomeEvents) -> Unit
 ) {
     TopAppBar(
-        title = { Text(stringResource(Res.string.app_name)) },
+        colors = TopAppBarDefaults.topAppBarColors().copy(
+            containerColor = appBarBackgroundColor()
+        ),
+        windowInsets = WindowInsets(0),
+        expandedHeight = 48.dp,
+        title = {
+
+            Text(
+                text = stringResource(Res.string.app_name),
+                fontFamily = FontFamily.Monospace,
+                fontSize = 16.sp,
+                modifier = Modifier.padding(start = 16.dp),
+            )
+        },
         navigationIcon = {
             ConnexionStatusIcon(WebSocketManager.isConnected.collectAsStateWithLifecycle().value)
         },

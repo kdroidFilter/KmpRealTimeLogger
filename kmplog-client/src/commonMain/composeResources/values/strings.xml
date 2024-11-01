@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">KmpLog Client</string>
+    <!--Top App Bar-->
     <string name="zoom_in">Zoom In</string>
     <string name="zoom_out">Zoom Out</string>
     <string name="clear_logs">Clear logs</string>
     <string name="settings">Settings</string>
-
+    <!--Toast Message-->
+    <string name="connected_successfully">Connected successfully</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="dismiss">Dismiss</string>
 </resources>
