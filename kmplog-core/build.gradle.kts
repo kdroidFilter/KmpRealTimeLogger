@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.serialization)
-    alias(libs.plugins.maven.publish)
+    alias(libs.plugins.vannitktech.maven.publish)
 }
 
 group = "com.kdroid.kmplog.core"

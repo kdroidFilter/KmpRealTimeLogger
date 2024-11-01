@@ -51,15 +51,16 @@ android {
     buildFeatures {
         compose = true
     }
-    dependencies {
-        debugImplementation(compose.uiTooling)
-    }
+
 }
 
+dependencies {
+    debugImplementation(compose.uiTooling)
+}
 
 kotlin {
     jvm("desktop")
-    jvmToolchain(17)
+  //  jvmToolchain(17)
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
@@ -133,7 +134,6 @@ kotlin {
                 implementation(compose.desktop.currentOs) {
                     exclude(group = "org.jetbrains.compose.material")
                 }
-                implementation(libs.androidx.ui.tooling.preview.desktop)
                 implementation(libs.slf4j.simple)
                 implementation(libs.jsystemthemedetector)
                 implementation(libs.kotlinx.coroutines.swing)
@@ -150,7 +150,6 @@ kotlin {
                 //
                 implementation(libs.jmdns)
                 implementation(libs.ktor.client.cio)
-                implementation(libs.androidx.material.icons.extended)
 
 
             }
@@ -163,8 +162,6 @@ kotlin {
             dependsOn(commonMain.get())
             dependsOn(androidWasmMain)
             dependencies {
-                implementation(libs.androidx.ui.tooling.preview.android)
-
                 implementation(libs.activity.ktx)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.androidx.activity.compose)
@@ -185,17 +182,8 @@ kotlin {
                 implementation(libs.ktor.client.js)
             }
         }
-        getByName("commonMain") {
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-            }
-        }
-
 
     }
-
-}
-dependencies {
 
 }
 
@@ -205,11 +193,9 @@ compose.desktop {
         mainClass = "com.kdroid.kmplog.client.MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.kdroid.kmplog.client"
-            packageVersion = appVersion
-            description = "KmpLog Client"
-            copyright = "© 2024 KdroidFilter. All rights reserved."
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "com.kdroid.kmplog.client.MainKt"
+            packageVersion = "1.0.0"
         }
     }
 }

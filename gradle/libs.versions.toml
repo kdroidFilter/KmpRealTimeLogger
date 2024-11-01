@@ -1,6 +1,6 @@
 [versions]
 
-coreVersion = "1.19.1"
+composablecore = "1.19.1"
 jmdns = "3.5.12"
 jsystemthemedetector = "3.7"
 kotlin = "2.0.21"
@@ -9,7 +9,6 @@ kotlinxCoroutinesCore = "1.9.0"
 kotlinxDatetime = "0.6.0"
 kotlinxSerializationProtobuf = "1.7.3"
 ktor = "3.0.0"
-materialIconsExtended = "1.7.4"
 multiplatformSettingsNoArg = "1.2.0"
 navigationCompose = "2.8.0-alpha10"
 testng = "7.1.0"
@@ -21,23 +20,16 @@ android-minSdk = "24"
 android-targetSdk = "34"
 activityKtx = "1.9.3"
 appcompat = "1.7.0"
-runtimeAndroid = "1.7.5"
-core = "1.15.0"
 runtime = "1.7.0"
-lifecycleProcess = "2.8.7"
 jewel = "0.26.2"
 jewel-icons = "242.23339.11"
 koin-bom = "4.0.0"
 kotlinx-coroutines = "1.9.0"
-adaptiveNavigationSuite = "1.3.1"
-adaptiveNavigation = "1.0.0"
 uiToolingPreviewAndroid = "1.7.5"
 uiToolingPreviewDesktop = "1.7.0"
-datastoreVersion = "1.1.1"
 
 [libraries]
-androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
-composables-core = { module = "com.composables:core", version.ref = "coreVersion" }
+composables-core = { module = "com.composables:core", version.ref = "composablecore" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 jmdns = { module = "org.jmdns:jmdns", version.ref = "jmdns" }
 jsystemthemedetector = { module = "com.github.Dansoftowner:jSystemThemeDetector", version.ref = "jsystemthemedetector" }
@@ -65,15 +57,10 @@ multiplatform-settings-no-arg = { module = "com.russhwolf:multiplatform-settings
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version = "2.0.16" }
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }
-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
-core = { group = "androidx.core", name = "core", version.ref = "core" }
+
 activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
-androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
-androidx-runtime-desktop = { group = "androidx.compose.runtime", name = "runtime-desktop", version.ref = "runtime" }
-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "runtime" }
 jewel = { group = "org.jetbrains.jewel", name = "jewel-int-ui-standalone-242", version.ref = "jewel" }
 jewel-decorated = { group = "org.jetbrains.jewel", name = "jewel-int-ui-decorated-window-242", version.ref = "jewel" }
 jewel-markdown-core = { group = "org.jetbrains.jewel", name = "jewel-markdown-core-242", version.ref = "jewel" }
@@ -82,14 +69,9 @@ jewel-markdown-extension-autolink = { group =  "org.jetbrains.jewel", name ="jew
 jewel-markdown-extension-gfmalerts = { group =  "org.jetbrains.jewel", name ="jewel-markdown-extension-gfm-alerts-242", version.ref = "jewel"}
 jewel-foundation = { group =  "org.jetbrains.jewel", name ="jewel-foundation-242", version.ref = "jewel"}
 jewel-icons = { module = "com.jetbrains.intellij.platform:icons", version.ref = "jewel-icons" }
-androidx-compose-material3-adaptive = { module = "androidx.compose.material3.adaptive:adaptive", version.ref = "adaptiveNavigation" }
-androidx-compose-material3-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "adaptiveNavigation" }
-androidx-compose-material3-adaptive-navigation-suite = { module = "androidx.compose.material3:material3-adaptive-navigation-suite", version.ref = "adaptiveNavigationSuite" }
-androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
-androidx-ui-tooling-preview-desktop = { group = "androidx.compose.ui", name = "ui-tooling-preview-desktop", version.ref = "uiToolingPreviewDesktop" }
-#Data store
-datastore-core = { module = "androidx.datastore:datastore", version.ref = "datastoreVersion" }
-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastoreVersion" }
+
+
+
 
 
 [plugins]
@@ -97,7 +79,6 @@ multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotl
 android-library = { id = "com.android.library", version.ref = "agp" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.30.0" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 vannitktech-maven-publish = {id = "com.vanniktech.maven.publish", version.ref = "vanniktech"}
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
