@@ -124,7 +124,9 @@ kotlin {
 
             //UI
             implementation(libs.composables.core)
-            implementation("io.github.dokar3:sonner:0.3.8")
+            implementation("io.github.dokar3:sonner:0.3.9") //from my fork, need to upload it on mavenlocal
+            implementation("com.github.alorma.compose-settings:ui-tiles:2.6.0")
+
         }
 
 
@@ -180,6 +182,7 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.ui)
                 implementation(libs.ktor.client.js)
+
             }
         }
 

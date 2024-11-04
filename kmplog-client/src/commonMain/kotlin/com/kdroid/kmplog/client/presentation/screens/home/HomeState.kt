@@ -10,13 +10,15 @@ data class HomeState(
     val connectionStatus : Boolean,
     val logMessages: List<LogMessage>,
     val fontSize : Int,
-    val uiMessageToasterState: UiMessageToasterState
+    val uiMessageToasterState: UiMessageToasterState,
+    val isSettingsVisible : Boolean,
     ) {
     companion object {
         val previewState = HomeState(
             connectionStatus = true,
             fontSize = 14,
             uiMessageToasterState = UiMessageToasterState.preview,
+            isSettingsVisible = false,
             logMessages = listOf(
                 LogMessage(
                     priority = INFO,
@@ -110,6 +112,7 @@ fun rememberHomeScreenState(
         connectionStatus = vm.isConnected.collectAsStateWithLifecycle().value,
         fontSize = vm.fontSize.collectAsState().value,
         logMessages = vm.logMessages,
+        isSettingsVisible = vm.isSettingsVisible.collectAsStateWithLifecycle().value,
         uiMessageToasterState = vm.uiMessageToasterState.collectAsStateWithLifecycle().value
     )
 }

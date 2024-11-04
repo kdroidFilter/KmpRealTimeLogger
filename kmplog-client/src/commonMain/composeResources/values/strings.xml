@@ -9,4 +9,6 @@
     <string name="connected_successfully">Connected successfully</string>
     <string name="disconnected">Disconnected</string>
     <string name="dismiss">Dismiss</string>
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
 </resources>

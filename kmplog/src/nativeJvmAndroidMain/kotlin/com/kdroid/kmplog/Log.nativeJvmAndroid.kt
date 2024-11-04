@@ -3,6 +3,7 @@
 package com.kdroid.kmplog
 
 import com.kdroid.kmplog.core.LogMessage
+import com.kdroid.kmplog.core.SERVICE_PORT
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
@@ -33,7 +34,7 @@ internal val mutex = Mutex()
 
 actual fun startServer() {
     GlobalScope.launch {
-        embeddedServer(CIO, port = 8080, host = "0.0.0.0") {
+        embeddedServer(CIO, port = SERVICE_PORT, host = "0.0.0.0") {
 
             install(CORS) {
                 anyHost()

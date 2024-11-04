@@ -9,6 +9,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogState
+import androidx.compose.ui.window.DialogWindow
 import com.composables.core.ScrollAreaScope
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.*
 import com.kdroid.kmplog.client.presentation.icons.Clear
@@ -60,7 +62,7 @@ actual fun ControlsRow(
             }
         }
         Row {
-            Tooltip({ Text(stringResource(Res.string.clear_logs)) }){
+            Tooltip({ Text(stringResource(Res.string.clear_logs)) }) {
                 IconButton({
                     onEvent(HomeEvents.clearLogs)
                 }) {
@@ -92,5 +94,17 @@ actual fun ScrollAreaScope.Scrollbar(
         modifier = modifier,
         scrollState = scrollbarState,
         style = JewelTheme.scrollbarStyle
+    )
+}
+
+@Composable
+actual fun SettingsWindows(onEvent: (HomeEvents) -> Unit, content: @Composable () -> Unit) {
+    DialogWindow(
+        onCloseRequest = { onEvent(HomeEvents.closeSettings) },
+        title = stringResource(Res.string.settings_title),
+        state = DialogState(width = 400.dp, height = 400.dp),
+        content = {
+            content()
+        },
     )
 }

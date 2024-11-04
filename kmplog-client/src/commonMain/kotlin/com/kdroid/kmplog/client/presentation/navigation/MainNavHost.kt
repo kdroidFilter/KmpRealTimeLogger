@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kdroid.kmplog.client.presentation.screens.home.Home
+import com.kdroid.kmplog.client.presentation.screens.settings.SettingsScreen
 import org.koin.compose.koinInject
 
 @Composable
@@ -37,7 +38,7 @@ fun MainNavHost() {
             composable<Destination.Home> { Home() }
 
             composable<Destination.Settings> {
-
+                SettingsScreen()
             }
 
         }

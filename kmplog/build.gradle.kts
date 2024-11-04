@@ -83,6 +83,7 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.protobuf)
             implementation(libs.ktor.server.content.negotiation)
 
+
         }
 
         commonTest.dependencies {

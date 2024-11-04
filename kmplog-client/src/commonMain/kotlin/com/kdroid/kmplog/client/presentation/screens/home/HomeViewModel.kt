@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
 import com.kdroid.kmplog.client.data.network.WebSocketManager
 import com.kdroid.kmplog.client.domain.PreferencesRepository
-import com.kdroid.kmplog.client.presentation.navigation.Destination
 import com.kdroid.kmplog.client.presentation.navigation.Navigator
 import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToasterViewModel
 import com.kdroid.kmplog.core.LogMessage
@@ -22,6 +21,9 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
     private val client = HttpClient(engine) {
         install(WebSockets)
     }
+
+    private val _isSettingsVisible = MutableStateFlow(false)
+    val isSettingsVisible: StateFlow<Boolean> get() = _isSettingsVisible
 
     private val _messages = mutableStateListOf<LogMessage>()
     val logMessages: List<LogMessage> get() = _messages
@@ -56,7 +58,7 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
 
     fun navigateToSettings() {
         viewModelScope.launch {
-            navigator.navigate(Destination.Settings)
+            navigateToSettings(navigator)
         }
     }
 
@@ -68,8 +70,12 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
             is HomeEvents.onSearchClear -> TODO()
             HomeEvents.zoomIn -> incrementFontSize()
             HomeEvents.zoomOut -> decrementFontSize()
-            HomeEvents.onSettingsClick -> navigateToSettings()
+            HomeEvents.onSettingsClick -> {
+                navigateToSettings()
+                _isSettingsVisible.value = true
+            }
             is HomeEvents.removeUiMessageById -> removeUiMessageById(events.id)
+            HomeEvents.closeSettings -> _isSettingsVisible.value = false
         }
     }
 
@@ -98,3 +104,5 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
         observeConnection()
     }
 }
+
+expect suspend fun navigateToSettings(navigator: Navigator)

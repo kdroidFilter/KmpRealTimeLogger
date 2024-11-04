@@ -19,6 +19,9 @@ import androidx.compose.ui.unit.sp
 import com.composables.core.ScrollArea
 import com.composables.core.ScrollAreaScope
 import com.composables.core.rememberScrollAreaState
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.jetbrains_mono_bold
+import com.kdroid.kmplog.client.presentation.screens.settings.SettingsScreen
 import com.kdroid.kmplog.client.presentation.theme.backgroundColor
 import com.kdroid.kmplog.client.presentation.theme.getTerminalTextColor
 import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToaster
@@ -26,6 +29,7 @@ import com.kdroid.kmplog.core.formatMessage
 import com.kdroid.kmplog.core.formatTag
 import com.kdroid.kmplog.core.getPriorityChar
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.Font
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -88,7 +92,7 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
                                 Text(
                                     text = "${logMessage.timestamp} $formatedTag ${getPriorityChar(logMessage.priority)} $formatedMsg",
                                     color = getTerminalTextColor(logMessage.priority),
-                                    fontFamily = FontFamily.Monospace,
+                                    fontFamily = FontFamily(Font(Res.font.jetbrains_mono_bold)),
                                     fontSize = fontSize.sp,
                                     modifier = Modifier.fillMaxWidth()
                                 )
@@ -109,14 +113,18 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
         messages = homeState.uiMessageToasterState.uiMessageToasters,
         onRemoveMessage = {onEvent(HomeEvents.removeUiMessageById(it))}
     )
+    if (homeState.isSettingsVisible) {
+        SettingsWindows(onEvent = {onEvent(it)}, {SettingsScreen()})
+    }
 }
 
 @Composable
 expect fun ControlsRow(modifier: Modifier = Modifier, onEvent: (HomeEvents) -> Unit)
 
 @Composable
-expect fun  ScrollAreaScope.Scrollbar(modifier: Modifier, scrollbarState: LazyListState)
+expect fun ScrollAreaScope.Scrollbar(modifier: Modifier, scrollbarState: LazyListState)
 
-
+@Composable
+expect fun SettingsWindows(onEvent: (HomeEvents) -> Unit, content : @Composable () -> Unit)
 
 
