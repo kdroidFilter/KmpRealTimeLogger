@@ -14,7 +14,7 @@ import androidx.compose.ui.window.DialogWindow
 import com.composables.core.ScrollAreaScope
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.*
 import com.kdroid.kmplog.client.presentation.icons.Clear
-import com.kdroid.kmplog.client.presentation.icons.SettingsGear
+import com.kdroid.kmplog.client.presentation.icons.Settings
 import com.kdroid.kmplog.client.presentation.icons.ZoomIn
 import com.kdroid.kmplog.client.presentation.icons.ZoomOut
 import com.kdroid.kmplog.client.presentation.theme.iconColor
@@ -76,7 +76,7 @@ actual fun ControlsRow(
                 IconButton({
                     onEvent(HomeEvents.onSettingsClick)
                 }) {
-                    Icon(SettingsGear, stringResource(Res.string.settings), tint = iconColor())
+                    Icon(Settings, stringResource(Res.string.settings), tint = iconColor())
                 }
             }
         }
@@ -101,7 +101,7 @@ actual fun ScrollAreaScope.Scrollbar(
 actual fun SettingsWindows(onEvent: (HomeEvents) -> Unit, content: @Composable () -> Unit) {
     DialogWindow(
         onCloseRequest = { onEvent(HomeEvents.closeSettings) },
-        title = stringResource(Res.string.settings_title),
+        title = stringResource(Res.string.settings),
         state = DialogState(width = 400.dp, height = 400.dp),
         content = {
             content()

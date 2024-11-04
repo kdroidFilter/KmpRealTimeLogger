@@ -99,7 +99,7 @@ actual fun ControlsRow(
                 IconButton({
                     onEvent(HomeEvents.onSettingsClick)
                 }) {
-                    Icon(SettingsGear, stringResource(Res.string.settings), tint = iconColor())
+                    Icon(Settings, stringResource(Res.string.settings), tint = iconColor())
                 }
             }
 

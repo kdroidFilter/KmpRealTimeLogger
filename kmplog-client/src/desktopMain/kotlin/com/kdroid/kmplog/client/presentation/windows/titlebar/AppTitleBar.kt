@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.kdroid.kmplog.client.data.network.WebSocketManager
 import com.kdroid.kmplog.client.presentation.icons.ConnexionStatusIcon
 import com.kdroid.kmplog.client.presentation.icons.Github
+import com.kdroid.kmplog.client.presentation.theme.iconColor
 import org.jetbrains.jewel.ui.component.Icon
 import org.jetbrains.jewel.ui.component.IconButton
 import org.jetbrains.jewel.ui.component.Text
@@ -35,7 +36,7 @@ fun DecoratedWindowScope.AppTitleBar() {
             Spacer(Modifier.weight(1f))
 
             IconButton(onClick = { /* Action à définir */ }) {
-                Icon(imageVector = Github, contentDescription = "GitHub")
+                Icon(imageVector = Github, contentDescription = "GitHub", tint = iconColor())
             }
 
         }

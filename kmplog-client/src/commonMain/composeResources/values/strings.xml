@@ -10,5 +10,8 @@
     <string name="disconnected">Disconnected</string>
     <string name="dismiss">Dismiss</string>
     <!-- Settings -->
-    <string name="settings_title">Settings</string>
+    <string name="host_configuration">Host Configuration</string>
+    <string name="automatic_detection">Automatic Detection</string>
+    <string name="ip_address">IP Address</string>
+    <string name="port">Port</string>
 </resources>

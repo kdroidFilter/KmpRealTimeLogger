@@ -13,7 +13,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.*
 import com.kdroid.kmplog.core.SERVICE_PORT
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.foundation.theme.LocalTextStyle
 import org.jetbrains.jewel.ui.component.*
@@ -35,7 +37,7 @@ actual fun SettingsScreen() {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             GroupHeader(
-                text = "Host Configuration",
+                text = stringResource(Res.string.host_configuration),
                 modifier = Modifier.fillMaxWidth()
             )
             Column(
@@ -45,7 +47,7 @@ actual fun SettingsScreen() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 CustomTriStateCheckboxRow(
-                    text = "Détection automatique",
+                    text = stringResource(Res.string.automatic_detection),
                     state = checkboxState,
                     onClick = {
                         checkboxState = when (checkboxState) {
@@ -58,7 +60,7 @@ actual fun SettingsScreen() {
                 )
 
                 SettingsTextFieldRow(
-                    label = "Address IP",
+                    label = stringResource(Res.string.ip_address),
                     state = addressIpState,
                     placeholder = "192.168.xxx.xxx",
                     enabled = checkboxState != ToggleableState.On,
@@ -66,7 +68,7 @@ actual fun SettingsScreen() {
                 )
 
                 SettingsTextFieldRow(
-                    label = "Port",
+                    label = stringResource(Res.string.port),
                     state = portState,
                     placeholder = SERVICE_PORT.toString(),
                     enabled = checkboxState != ToggleableState.On,
