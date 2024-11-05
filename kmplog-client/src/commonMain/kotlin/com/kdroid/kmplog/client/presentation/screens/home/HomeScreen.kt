@@ -21,7 +21,7 @@ import com.composables.core.ScrollAreaScope
 import com.composables.core.rememberScrollAreaState
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.jetbrains_mono_bold
-import com.kdroid.kmplog.client.presentation.screens.settings.SettingsScreen
+import com.kdroid.kmplog.client.presentation.screens.settings.Settings
 import com.kdroid.kmplog.client.presentation.theme.backgroundColor
 import com.kdroid.kmplog.client.presentation.theme.getTerminalTextColor
 import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToaster
@@ -114,7 +114,7 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
         onRemoveMessage = {onEvent(HomeEvents.removeUiMessageById(it))}
     )
     if (homeState.isSettingsVisible) {
-        SettingsWindows(onEvent = {onEvent(it)}, {SettingsScreen()})
+        SettingsWindows(onEvent = {onEvent(it)}, {Settings()})
     }
 }
 

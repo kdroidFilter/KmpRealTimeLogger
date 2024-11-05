@@ -22,10 +22,24 @@ import org.jetbrains.jewel.ui.component.*
 import org.jetbrains.jewel.ui.component.Typography.labelTextSize
 
 @Composable
-actual fun SettingsScreen() {
-    var checkboxState by remember { mutableStateOf(ToggleableState.On) }
-    val addressIpState = rememberTextFieldState("")
-    val portState = rememberTextFieldState("")
+actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit) {
+
+    var checkboxState by remember {
+        mutableStateOf(
+            when (state.automaticDetection) {
+                true -> ToggleableState.On
+                false -> ToggleableState.Off
+            }
+        )
+    }
+    LaunchedEffect(state.automaticDetection) {
+        checkboxState = when (state.automaticDetection) {
+            true -> ToggleableState.On
+            false -> ToggleableState.Off
+        }
+    }
+    val addressIpState = rememberTextFieldState(state.customIpAdress)
+    val portState = rememberTextFieldState(state.customPort)
 
     Scaffold { paddingValues ->
         Column(
@@ -50,11 +64,11 @@ actual fun SettingsScreen() {
                     text = stringResource(Res.string.automatic_detection),
                     state = checkboxState,
                     onClick = {
-                        checkboxState = when (checkboxState) {
-                            ToggleableState.On -> ToggleableState.Off
-                            ToggleableState.Off -> ToggleableState.Indeterminate
-                            ToggleableState.Indeterminate -> ToggleableState.On
-                        }
+                        onEvent(SettingsEvent.OnAutomaticDetectionChange(when (checkboxState) {
+                            ToggleableState.On -> false
+                            ToggleableState.Off, ToggleableState.Indeterminate -> true
+                        }))
+
                     },
                     enabledText = checkboxState == ToggleableState.On,
                 )
@@ -62,7 +76,7 @@ actual fun SettingsScreen() {
                 SettingsTextFieldRow(
                     label = stringResource(Res.string.ip_address),
                     state = addressIpState,
-                    placeholder = "192.168.xxx.xxx",
+                    placeholder = stringResource(Res.string.ip_placeholder),
                     enabled = checkboxState != ToggleableState.On,
                     modifier = Modifier.fillMaxWidth()
                 )

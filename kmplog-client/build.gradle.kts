@@ -125,7 +125,6 @@ kotlin {
             //UI
             implementation(libs.composables.core)
             implementation("io.github.dokar3:sonner:0.3.9") //from my fork, need to upload it on mavenlocal
-            implementation("com.github.alorma.compose-settings:ui-tiles:2.6.0")
 
         }
 
@@ -143,21 +142,19 @@ kotlin {
                 //Jewel
                 implementation(libs.jewel)
                 implementation(libs.jewel.decorated)
-                implementation(libs.jewel.markdown.core)
-                implementation(libs.jewel.markdown.intUiStandaloneStyling)
-                implementation(libs.jewel.markdown.extension.autolink)
-                implementation(libs.jewel.markdown.extension.gfmalerts)
+
                 implementation(libs.jewel.foundation)
-                implementation(libs.jewel.icons)
+                    //  implementation(libs.jewel.icons)
                 //
                 implementation(libs.jmdns)
                 implementation(libs.ktor.client.cio)
-
-
             }
         }
         val androidWasmMain by creating {
             dependsOn(commonMain.get())
+            dependencies {
+                implementation(libs.ui.tiles)
+            }
         }
 
         val androidMain by getting {
@@ -194,7 +191,9 @@ kotlin {
 compose.desktop {
     application {
         mainClass = "com.kdroid.kmplog.client.MainKt"
-
+        buildTypes.release.proguard {
+            configurationFiles.from(project.file("compose-desktop.pro"))
+        }
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.kdroid.kmplog.client.MainKt"

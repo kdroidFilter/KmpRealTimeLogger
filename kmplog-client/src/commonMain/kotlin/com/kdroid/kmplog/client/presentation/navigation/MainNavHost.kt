@@ -8,8 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.kdroid.kmplog.client.presentation.navigation.NavTransition.enterTransition
+import com.kdroid.kmplog.client.presentation.navigation.NavTransition.exitTransition
+import com.kdroid.kmplog.client.presentation.navigation.NavTransition.popEnterTransition
+import com.kdroid.kmplog.client.presentation.navigation.NavTransition.popExitTransition
 import com.kdroid.kmplog.client.presentation.screens.home.Home
-import com.kdroid.kmplog.client.presentation.screens.settings.SettingsScreen
+import com.kdroid.kmplog.client.presentation.screens.settings.Settings
 import org.koin.compose.koinInject
 
 @Composable
@@ -26,6 +30,7 @@ fun MainNavHost() {
                 ) {
                     action.navOptions(this)
                 }
+
                 NavigationAction.NavigateUp -> navController.navigateUp()
             }
         }
@@ -33,12 +38,17 @@ fun MainNavHost() {
         NavHost(
             navController = navController,
             startDestination = navigator.startDestination,
-            modifier = Modifier.padding(innerPadding)) {
+            modifier = Modifier.padding(innerPadding),
+            popEnterTransition = popEnterTransition,
+            popExitTransition = popExitTransition,
+            exitTransition = exitTransition,
+            enterTransition = enterTransition
+        ) {
 
             composable<Destination.Home> { Home() }
 
             composable<Destination.Settings> {
-                SettingsScreen()
+                Settings()
             }
 
         }

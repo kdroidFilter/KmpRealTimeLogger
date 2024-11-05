@@ -13,6 +13,7 @@ multiplatformSettingsNoArg = "1.2.0"
 navigationCompose = "2.8.0-alpha10"
 testng = "7.1.0"
 junitKtx = "1.2.1"
+uiTiles = "2.6.0"
 vanniktech = "0.30.0"
 compose-plugin = "1.7.0"
 android-compileSdk = "34"
@@ -70,6 +71,7 @@ jewel-markdown-extension-autolink = { group =  "org.jetbrains.jewel", name ="jew
 jewel-markdown-extension-gfmalerts = { group =  "org.jetbrains.jewel", name ="jewel-markdown-extension-gfm-alerts-242", version.ref = "jewel"}
 jewel-foundation = { group =  "org.jetbrains.jewel", name ="jewel-foundation-242", version.ref = "jewel"}
 jewel-icons = { module = "com.jetbrains.intellij.platform:icons", version.ref = "jewel-icons" }
+ui-tiles = { module = "com.github.alorma.compose-settings:ui-tiles", version.ref = "uiTiles" }
 
 
 
