@@ -114,7 +114,7 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
         onRemoveMessage = {onEvent(HomeEvents.removeUiMessageById(it))}
     )
     if (homeState.isSettingsVisible) {
-        SettingsWindows(onEvent = {onEvent(it)}, {Settings()})
+        SettingsWindows(onHomeEvent = {onEvent(it)}, {Settings()})
     }
 }
 
@@ -125,6 +125,6 @@ expect fun ControlsRow(modifier: Modifier = Modifier, onEvent: (HomeEvents) -> U
 expect fun ScrollAreaScope.Scrollbar(modifier: Modifier, scrollbarState: LazyListState)
 
 @Composable
-expect fun SettingsWindows(onEvent: (HomeEvents) -> Unit, content : @Composable () -> Unit)
+expect fun SettingsWindows(onHomeEvent: (HomeEvents) -> Unit, content: @Composable () -> Unit)
 
 

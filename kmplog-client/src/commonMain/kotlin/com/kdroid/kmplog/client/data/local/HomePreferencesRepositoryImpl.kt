@@ -1,9 +1,9 @@
 package com.kdroid.kmplog.client.data.local
 
-import com.kdroid.kmplog.client.domain.PreferencesRepository
+import com.kdroid.kmplog.client.domain.HomePreferencesRepository
 import com.russhwolf.settings.Settings
 
-class PreferencesRepositoryImpl(private val settings: Settings) : PreferencesRepository {
+class HomePreferencesRepositoryImpl(private val settings: Settings) : HomePreferencesRepository {
 
     // Clé pour la taille de police
     private val fontSizeKey = "fontSize"
@@ -22,4 +22,5 @@ class PreferencesRepositoryImpl(private val settings: Settings) : PreferencesRep
     override fun clearFontSize() {
         settings.remove(fontSizeKey)
     }
+
 }

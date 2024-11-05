@@ -1,8 +1,10 @@
 package com.kdroid.kmplog.client.framework.di
 
-import com.kdroid.kmplog.client.data.local.PreferencesRepositoryImpl
+import com.kdroid.kmplog.client.data.local.HomePreferencesRepositoryImpl
+import com.kdroid.kmplog.client.data.local.SettinsPreferencesRepositoryImpl
 import com.kdroid.kmplog.client.data.network.engine
-import com.kdroid.kmplog.client.domain.PreferencesRepository
+import com.kdroid.kmplog.client.domain.HomePreferencesRepository
+import com.kdroid.kmplog.client.domain.SettingsPreferencesRepository
 import com.kdroid.kmplog.client.presentation.navigation.DefaultNavigator
 import com.kdroid.kmplog.client.presentation.navigation.Destination
 import com.kdroid.kmplog.client.presentation.navigation.Navigator
@@ -18,10 +20,11 @@ val appModule = module {
     single<Navigator> { DefaultNavigator(startDestination = Destination.Home) }
 
     single { Settings() }
-    single<PreferencesRepository> { PreferencesRepositoryImpl(get()) }
+    single<HomePreferencesRepository> { HomePreferencesRepositoryImpl(settings = get()) }
+    single<SettingsPreferencesRepository>{ SettinsPreferencesRepositoryImpl(settings = get()) }
 
-    viewModel { HomeViewModel(engine, navigator= get(), preferencesRepository = get()) }
-    viewModel { SettingsViewModel(preferencesRepository = get(), navigator = get()) }
+    viewModel { HomeViewModel(engine, navigator= get(), repository = get()) }
+    viewModel { SettingsViewModel(repository = get(), navigator = get()) }
 
 
 }

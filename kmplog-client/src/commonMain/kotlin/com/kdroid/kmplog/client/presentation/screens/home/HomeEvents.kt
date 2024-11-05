@@ -9,6 +9,6 @@ sealed class HomeEvents {
     data object clearLogs : HomeEvents()
 
     data object onSettingsClick : HomeEvents()
-    data object closeSettings : HomeEvents()
+    data object OnCloseSettings : HomeEvents()
     data class removeUiMessageById(val id: Long) : HomeEvents()
 }

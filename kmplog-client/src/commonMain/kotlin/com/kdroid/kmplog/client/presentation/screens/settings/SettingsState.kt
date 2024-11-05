@@ -21,7 +21,7 @@ data class SettingsState(
 fun rememberSettingsState(vm : SettingsViewModel) : SettingsState {
     return SettingsState(
         automaticDetection = vm.autoDetection.collectAsStateWithLifecycle().value,
-        customIpAdress = vm.ip.collectAsStateWithLifecycle().value,
+        customIpAdress = vm.customIp.collectAsStateWithLifecycle().value,
         customPort = vm.port.collectAsStateWithLifecycle().value,
     )
 }

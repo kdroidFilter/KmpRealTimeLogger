@@ -108,5 +108,5 @@ actual fun ControlsRow(
 }
 
 @Composable
-actual fun SettingsWindows(onEvent: (HomeEvents) -> Unit, content : @Composable () -> Unit) {
+actual fun SettingsWindows(onHomeEvent: (HomeEvents) -> Unit, content: @Composable () -> Unit) {
 }

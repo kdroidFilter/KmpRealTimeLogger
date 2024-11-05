@@ -98,9 +98,14 @@ actual fun ScrollAreaScope.Scrollbar(
 }
 
 @Composable
-actual fun SettingsWindows(onEvent: (HomeEvents) -> Unit, content: @Composable () -> Unit) {
+actual fun SettingsWindows(
+    onHomeEvent: (HomeEvents) -> Unit,
+    content: @Composable () -> Unit
+) {
     DialogWindow(
-        onCloseRequest = { onEvent(HomeEvents.closeSettings) },
+        onCloseRequest = {
+            onHomeEvent(HomeEvents.OnCloseSettings)
+        },
         title = stringResource(Res.string.settings),
         state = DialogState(width = 400.dp, height = 400.dp),
         content = {

@@ -2,9 +2,11 @@ package com.kdroid.kmplog.client.presentation.screens.home
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
+import com.kdroid.kmplog.client.core.HomeSettingsEventDispatcher
 import com.kdroid.kmplog.client.data.network.WebSocketManager
-import com.kdroid.kmplog.client.domain.PreferencesRepository
+import com.kdroid.kmplog.client.domain.HomePreferencesRepository
 import com.kdroid.kmplog.client.presentation.navigation.Navigator
+import com.kdroid.kmplog.client.presentation.screens.settings.SettingsEvent
 import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToasterViewModel
 import com.kdroid.kmplog.core.LogMessage
 import io.ktor.client.*
@@ -16,7 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
-class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, private val preferencesRepository: PreferencesRepository) : UiMessageToasterViewModel() {
+class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, private val repository: HomePreferencesRepository) : UiMessageToasterViewModel() {
 
     private val client = HttpClient(engine) {
         install(WebSockets)
@@ -31,7 +33,7 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
     val isConnected: StateFlow<Boolean> get() = WebSocketManager.isConnected
     private var wasConnectedPreviously: Boolean = false
 
-    private var _fontSize = MutableStateFlow(preferencesRepository.getFontSize())
+    private var _fontSize = MutableStateFlow(repository.getFontSize())
     val fontSize = _fontSize.asStateFlow()
 
     private fun observeMessages() {
@@ -75,13 +77,18 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
                 _isSettingsVisible.value = true
             }
             is HomeEvents.removeUiMessageById -> removeUiMessageById(events.id)
-            HomeEvents.closeSettings -> _isSettingsVisible.value = false
+            HomeEvents.OnCloseSettings -> {
+                viewModelScope.launch {
+                    HomeSettingsEventDispatcher.emit(SettingsEvent.OnCloseSettings)
+                }
+                _isSettingsVisible.value = false
+            }
         }
     }
 
     private fun setFontSize(size: Int) {
         _fontSize.value = size
-        preferencesRepository.saveFontSize(size)
+        repository.saveFontSize(size)
     }
 
     private fun incrementFontSize() {

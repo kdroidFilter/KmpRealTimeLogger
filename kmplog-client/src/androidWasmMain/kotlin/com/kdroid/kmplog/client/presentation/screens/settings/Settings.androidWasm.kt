@@ -62,8 +62,8 @@ actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit
                         )
                     )
                     OutlinedTextField(
-                        value = state.customPort,
-                        onValueChange = { onEvent(SettingsEvent.OnPortChange(it)) },
+                        value = state.customPort.toString(),
+                        onValueChange = { onEvent(SettingsEvent.OnPortChange(port = it)) },
                         label = { Text(stringResource(Res.string.port)) },
                         modifier = Modifier.fillMaxWidth(),
                         textStyle = MaterialTheme.typography.bodyLarge,
