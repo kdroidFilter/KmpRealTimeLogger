@@ -11,13 +11,23 @@ import kotlinx.coroutines.launch
 
 class SettingsViewModel(private val navigator: Navigator, private val repository: SettingsPreferencesRepository) : ViewModel() {
 
+
     private var _autoDetection = MutableStateFlow(repository.getAutomaticDetectionState())
     val autoDetection = _autoDetection.asStateFlow()
     private var _customIp = MutableStateFlow(repository.getCustomIpAddress(""))
     val customIp = _customIp.asStateFlow()
-    private var _port = MutableStateFlow(repository.getCustomPort(""))
-    val port = _port.asStateFlow()
+    private var _customPort = MutableStateFlow(repository.getCustomPort(""))
+    val customPort = _customPort.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            HomeSettingsEventDispatcher.events.collect { event ->
+                    onEvent(event)
+                println(event.toString())
+
+            }
+        }
+    }
 
     fun onEvent(events: SettingsEvent) {
         when (events) {
@@ -35,31 +45,22 @@ class SettingsViewModel(private val navigator: Navigator, private val repository
                 _customIp.value = events.ip
             }
             is SettingsEvent.OnPortChange -> {
-                _port.value = events.port
+                _customPort.value = events.port
             }
 
-            SettingsEvent.OnCloseSettings -> {
+            SettingsEvent.OnCloseSettings ->{
                 saveSettings()
+                println(_customPort.value)
             }
+
         }
     }
 
     private fun saveSettings() {
         repository.saveCustomIpAddress(_customIp.value)
-        repository.saveCustomPort(_port.value)
+        repository.saveCustomPort(_customPort.value)
     }
 
-    init {
-        viewModelScope.launch {
-            HomeSettingsEventDispatcher.events.collect { event ->
-                when (event) {
-                    SettingsEvent.OnCloseSettings -> {
-                        saveSettings()
-                    }
-                    else -> Unit
-                }
-            }
-        }
-    }
+
 
 }

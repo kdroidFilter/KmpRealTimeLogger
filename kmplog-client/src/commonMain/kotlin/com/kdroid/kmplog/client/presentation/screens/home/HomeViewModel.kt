@@ -12,10 +12,12 @@ import com.kdroid.kmplog.core.LogMessage
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.websocket.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, private val repository: HomePreferencesRepository) : UiMessageToasterViewModel() {
@@ -79,9 +81,13 @@ class HomeViewModel(engine: HttpClientEngine, private val navigator: Navigator, 
             is HomeEvents.removeUiMessageById -> removeUiMessageById(events.id)
             HomeEvents.OnCloseSettings -> {
                 viewModelScope.launch {
-                    HomeSettingsEventDispatcher.emit(SettingsEvent.OnCloseSettings)
+                    withContext(Dispatchers.Main.immediate) {
+                        HomeSettingsEventDispatcher.emit(SettingsEvent.OnCloseSettings)
+                        println("OnCloseSettings event sent")
+                        _isSettingsVisible.value = false
+                    }
+
                 }
-                _isSettingsVisible.value = false
             }
         }
     }
