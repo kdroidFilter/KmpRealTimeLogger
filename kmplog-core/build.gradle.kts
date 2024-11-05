@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.kdroid.kmplog.core"
-version = "0.5.0"
+version = "0.5.1"
 
 kotlin {
     jvmToolchain(11)

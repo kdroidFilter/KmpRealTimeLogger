@@ -4,6 +4,10 @@ import com.kdroid.kmplog.core.*
 
 object Log {
 
+    init {
+        initializeCrashHandler()
+    }
+
     private var logLevel = DEBUG
     private var isDevelopmentMode = false
     private var isBroadcastingMode = false
@@ -31,6 +35,8 @@ object Log {
     }
 
 }
+
+
 
 
 fun printAndGetLocalLog(priority: Int, tag: String, message: String) : LogMessage {

@@ -7,5 +7,5 @@ data class LogMessage(
     val priority: Int,
     val timestamp: String,
     val tag: String,
-    val message: String
+    val message: String,
 )

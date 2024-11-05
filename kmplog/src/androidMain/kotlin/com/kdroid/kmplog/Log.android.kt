@@ -37,10 +37,11 @@ actual fun Log.e(tag: String, msg: String, throwable: Throwable?) {
     if (isLoggable(tag, ERROR)) {
         if (throwable != null) {
             android.util.Log.e(tag, msg, throwable)
+            sendLog(ERROR, tag, msg + " " + throwable.localizedMessage)
         } else {
             android.util.Log.e(tag, msg)
+            sendLog(ERROR, tag, msg)
         }
-        sendLog(ERROR, tag, msg) //TODO Implement Throwable
     }
 }
 
@@ -59,8 +60,9 @@ actual fun printAndSendLog(priority: Int, tag: String, msg: String) {
 
 }
 
-private fun sendLog(priority: Int, tag: String, msg: String){
-    CoroutineScope(Dispatchers.IO).launch {
+private fun sendLog(priority: Int, tag: String, msg: String, throwable: String? = null){
+    CoroutineScope(Dispatchers.Main.immediate).launch {
         sendMessageToWebSocket(LogMessage(priority = priority, tag = tag, timestamp = getCurrentDateTime(), message = msg))
     }
 }
+
