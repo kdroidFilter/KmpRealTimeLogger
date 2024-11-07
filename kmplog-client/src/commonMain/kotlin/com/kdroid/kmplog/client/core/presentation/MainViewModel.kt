@@ -17,6 +17,7 @@ class MainViewModel(private val webSocketManager: WebSocketManager) : UiMessageT
     fun onEvent(events: MainEvents) {
         when (events) {
             is MainEvents.removeUiMessageById -> removeUiMessageById(events.id)
+            MainEvents.openGithubPage -> openGithubPage()
         }
     }
 
@@ -34,5 +35,4 @@ class MainViewModel(private val webSocketManager: WebSocketManager) : UiMessageT
             }
         }
     }
-
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogState
 import androidx.compose.ui.window.DialogWindow
 import com.composables.core.ScrollAreaScope
+import com.kdroid.kmplog.client.core.presentation.MainEvents
 import com.kdroid.kmplog.client.core.presentation.icons.Clear
 import com.kdroid.kmplog.client.core.presentation.icons.Settings
 import com.kdroid.kmplog.client.core.presentation.icons.ZoomIn
@@ -27,7 +28,7 @@ import org.jetbrains.jewel.ui.theme.scrollbarStyle
 @androidx.compose.desktop.ui.tooling.preview.Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(homeState = HomeState.previewState, onEvent = {})
+    HomeScreen(homeState = HomeState.previewState, onEvent = {}, {})
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -35,6 +36,7 @@ fun HomeScreenPreview() {
 actual fun ControlsRow(
     modifier: Modifier,
     onEvent: (HomeEvents) -> Unit,
+    onMainEvents: (MainEvents) -> Unit,
     state: HomeState,
     ) {
     Row(

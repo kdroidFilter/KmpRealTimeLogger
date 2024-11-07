@@ -37,9 +37,13 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun Home() {
-    val mainViewModel : MainViewModel = koinViewModel()
+    val mainViewModel: MainViewModel = koinViewModel()
     val homeViewModel: HomeViewModel = koinViewModel()
-    HomeScreen(homeState = rememberHomeScreenState(homeViewModel = homeViewModel, mainViewModel = mainViewModel), onEvent = homeViewModel::onEvent, onMainEvents = mainViewModel::onEvent)
+    HomeScreen(
+        homeState = rememberHomeScreenState(homeViewModel = homeViewModel, mainViewModel = mainViewModel),
+        onEvent = homeViewModel::onEvent,
+        onMainEvents = mainViewModel::onEvent
+    )
 }
 
 @Composable
@@ -54,7 +58,7 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit, onMainEvents
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            ControlsRow(onEvent = { onEvent(it) }, modifier = Modifier.fillMaxWidth(), state = homeState)
+            ControlsRow(onEvent = { onEvent(it) }, onMainEvents = {onMainEvents(it)}, modifier = Modifier.fillMaxWidth(), state = homeState)
         },
         contentWindowInsets = WindowInsets(0),
     ) { innerPadding ->
@@ -122,7 +126,10 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit, onMainEvents
 }
 
 @Composable
-expect fun ControlsRow(modifier: Modifier = Modifier, onEvent: (HomeEvents) -> Unit, state: HomeState)
+expect fun ControlsRow(
+    modifier: Modifier = Modifier, onEvent: (HomeEvents) -> Unit, onMainEvents: (MainEvents) -> Unit,
+    state: HomeState
+)
 
 @Composable
 expect fun ScrollAreaScope.Scrollbar(modifier: Modifier, scrollbarState: LazyListState)

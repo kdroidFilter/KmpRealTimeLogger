@@ -29,6 +29,7 @@ kotlinx-coroutines = "1.9.0"
 uiToolingPreviewAndroid = "1.7.5"
 uiToolingPreviewDesktop = "1.7.0"
 koin-edited = "4.0.2"
+core-splashscreen = "1.1.0-rc01"
 
 [libraries]
 composables-core = { module = "com.composables:core", version.ref = "composablecore" }
@@ -59,6 +60,7 @@ multiplatform-settings-no-arg = { module = "com.russhwolf:multiplatform-settings
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version = "2.0.16" }
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
 
 activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityKtx" }

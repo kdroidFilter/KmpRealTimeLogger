@@ -1,4 +1,4 @@
-package com.kdroid.kmplog.client.core.domain
+package com.kdroid.kmplog.client.core.domain.repository
 
 interface SettingsPreferencesRepository {
     fun saveAutomaticDetectionState(state: Boolean)

@@ -5,6 +5,7 @@
     <string name="zoom_out">Zoom Out</string>
     <string name="clear_logs">Clear logs</string>
     <string name="settings">Settings</string>
+    <string name="open_github_page">View the source code on Github</string>
     <!--Toast Message-->
     <string name="connected_successfully">Connected successfully</string>
     <string name="disconnected">Disconnected</string>

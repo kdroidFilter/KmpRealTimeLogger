@@ -12,7 +12,7 @@ import com.kdroid.kmplog.client.core.di.initKoin
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.app_name
 import com.kdroid.kmplog.client.core.presentation.theme.isSystemInDarkTheme
-import com.kdroid.kmplog.client.features.screens.windowstitlebar.AppTitleBar
+import com.kdroid.kmplog.client.features.screens.windowstitlebar.WindowTitleBar
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
@@ -43,7 +43,7 @@ fun main() {
                 title = stringResource(Res.string.app_name),
                 state = getCenteredWindowState(800, 600),
                 content = {
-                    AppTitleBar()
+                    WindowTitleBar()
                     CompositionLocalProvider(LocalDensity provides Density(density = 0.75f, fontScale = 1.0f)) {
                         App()
                     }

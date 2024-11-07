@@ -1,6 +1,6 @@
-package com.kdroid.kmplog.client.core.data.local
+package com.kdroid.kmplog.client.core.data.local.repository
 
-import com.kdroid.kmplog.client.core.domain.SettingsPreferencesRepository
+import com.kdroid.kmplog.client.core.domain.repository.SettingsPreferencesRepository
 import com.russhwolf.settings.Settings
 
 class SettinsPreferencesRepositoryImpl(private val settings: Settings) : SettingsPreferencesRepository {

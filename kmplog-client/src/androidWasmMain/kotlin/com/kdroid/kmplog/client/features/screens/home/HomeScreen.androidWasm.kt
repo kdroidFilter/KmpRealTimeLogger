@@ -11,12 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.composables.core.Icon
 import com.composables.core.ScrollAreaScope
 import com.composables.core.Thumb
 import com.composables.core.ThumbVisibility
 import com.composables.core.VerticalScrollbar
+import com.kdroid.kmplog.client.core.presentation.MainEvents
 import com.kdroid.kmplog.client.core.presentation.icons.*
 import com.kdroid.kmplog.client.core.presentation.theme.TOP_APP_BAR_HEIGHT
 import com.kdroid.kmplog.client.core.presentation.theme.TOP_APP_BAR_TEXT_SIZE
@@ -56,6 +58,7 @@ fun appBarBackgroundColor(): Color {
 actual fun ControlsRow(
     modifier: Modifier,
     onEvent: (HomeEvents) -> Unit,
+    onMainEvents: (MainEvents) -> Unit,
     state: HomeState,
 ) {
     TopAppBar(
@@ -65,11 +68,12 @@ actual fun ControlsRow(
         windowInsets = WindowInsets(0),
         expandedHeight = TOP_APP_BAR_HEIGHT,
         title = {
-
             Text(
                 text = stringResource(Res.string.app_name),
                 fontSize = TOP_APP_BAR_TEXT_SIZE,
                 modifier = Modifier.padding(start = 16.dp),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
             )
         },
         navigationIcon = {
@@ -93,7 +97,9 @@ actual fun ControlsRow(
                     Icon(ZoomIn, stringResource(Res.string.zoom_in), tint = iconColor())
                 }
 
-                Spacer(Modifier.width(16.dp))
+                IconButton(onClick = { onMainEvents(MainEvents.openGithubPage) }) {
+                    Icon(imageVector = Github, contentDescription = "GitHub", tint = iconColor())
+                }
                 IconButton({
                     onEvent(HomeEvents.onSettingsClick)
                 }) {

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kdroid.kmplog.client.core.data.local.HomeSettingsEventDispatcher
 import com.kdroid.kmplog.client.core.data.network.WebSocketManager
-import com.kdroid.kmplog.client.core.domain.HomePreferencesRepository
+import com.kdroid.kmplog.client.core.domain.repository.HomePreferencesRepository
 import com.kdroid.kmplog.client.core.presentation.navigation.Navigator
 import com.kdroid.kmplog.client.features.screens.settings.SettingsEvent
 import com.kdroid.kmplog.core.LogMessage
