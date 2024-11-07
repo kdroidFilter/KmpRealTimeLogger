@@ -17,11 +17,11 @@ import com.composables.core.ScrollAreaScope
 import com.composables.core.Thumb
 import com.composables.core.ThumbVisibility
 import com.composables.core.VerticalScrollbar
+import com.kdroid.kmplog.client.core.presentation.icons.*
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.*
-import com.kdroid.kmplog.client.presentation.icons.*
 import com.kdroid.kmplog.client.presentation.theme.TOP_APP_BAR_HEIGHT
 import com.kdroid.kmplog.client.presentation.theme.TOP_APP_BAR_TEXT_SIZE
-import com.kdroid.kmplog.client.presentation.theme.iconColor
+import com.kdroid.kmplog.client.core.presentation.theme.iconColor
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Duration
 

@@ -9,9 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kdroid.kmplog.client.core.presentation.MainViewModel
-import com.kdroid.kmplog.client.presentation.icons.ConnexionStatusIcon
-import com.kdroid.kmplog.client.presentation.icons.Github
-import com.kdroid.kmplog.client.presentation.theme.iconColor
+import com.kdroid.kmplog.client.core.presentation.icons.ConnexionStatusIcon
+import com.kdroid.kmplog.client.core.presentation.icons.Github
+import com.kdroid.kmplog.client.core.presentation.theme.iconColor
 import org.jetbrains.jewel.ui.component.Icon
 import org.jetbrains.jewel.ui.component.IconButton
 import org.jetbrains.jewel.ui.component.Text

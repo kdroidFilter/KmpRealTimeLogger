@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kdroid.kmplog.client.core.presentation.MainViewModel
-import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToasterState
+import com.kdroid.kmplog.client.core.presentation.uimessagetoaster.UiMessageToasterState
 import com.kdroid.kmplog.core.*
 
 data class HomeState(

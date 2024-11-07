@@ -13,11 +13,11 @@ import androidx.compose.ui.window.DialogState
 import androidx.compose.ui.window.DialogWindow
 import com.composables.core.ScrollAreaScope
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.*
-import com.kdroid.kmplog.client.presentation.icons.Clear
-import com.kdroid.kmplog.client.presentation.icons.Settings
-import com.kdroid.kmplog.client.presentation.icons.ZoomIn
-import com.kdroid.kmplog.client.presentation.icons.ZoomOut
-import com.kdroid.kmplog.client.presentation.theme.iconColor
+import com.kdroid.kmplog.client.core.presentation.icons.Clear
+import com.kdroid.kmplog.client.core.presentation.icons.Settings
+import com.kdroid.kmplog.client.core.presentation.icons.ZoomIn
+import com.kdroid.kmplog.client.core.presentation.icons.ZoomOut
+import com.kdroid.kmplog.client.core.presentation.theme.iconColor
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.ui.Orientation

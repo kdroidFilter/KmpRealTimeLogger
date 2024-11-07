@@ -2,7 +2,7 @@ package com.kdroid.kmplog.client.core.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.kdroid.kmplog.client.core.data.network.WebSocketManager
-import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToasterViewModel
+import com.kdroid.kmplog.client.core.presentation.uimessagetoaster.UiMessageToasterViewModel
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val webSocketManager: WebSocketManager) : UiMessageToasterViewModel() {

@@ -7,9 +7,9 @@ import com.kdroid.kmplog.client.core.data.network.engine
 import com.kdroid.kmplog.client.core.presentation.MainViewModel
 import com.kdroid.kmplog.client.core.domain.HomePreferencesRepository
 import com.kdroid.kmplog.client.core.domain.SettingsPreferencesRepository
-import com.kdroid.kmplog.client.presentation.navigation.DefaultNavigator
-import com.kdroid.kmplog.client.presentation.navigation.Destination
-import com.kdroid.kmplog.client.presentation.navigation.Navigator
+import com.kdroid.kmplog.client.core.presentation.navigation.DefaultNavigator
+import com.kdroid.kmplog.client.core.presentation.navigation.Destination
+import com.kdroid.kmplog.client.core.presentation.navigation.Navigator
 import com.kdroid.kmplog.client.presentation.screens.home.HomeViewModel
 import com.kdroid.kmplog.client.presentation.screens.settings.SettingsViewModel
 import com.russhwolf.settings.Settings

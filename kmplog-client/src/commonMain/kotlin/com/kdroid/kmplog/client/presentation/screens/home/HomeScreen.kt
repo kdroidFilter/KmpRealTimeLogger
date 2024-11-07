@@ -20,12 +20,12 @@ import com.composables.core.ScrollArea
 import com.composables.core.ScrollAreaScope
 import com.composables.core.rememberScrollAreaState
 import com.kdroid.kmplog.client.core.presentation.MainViewModel
+import com.kdroid.kmplog.client.core.presentation.theme.backgroundColor
+import com.kdroid.kmplog.client.core.presentation.theme.getTerminalTextColor
+import com.kdroid.kmplog.client.core.presentation.uimessagetoaster.UiMessageToaster
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.jetbrains_mono_bold
 import com.kdroid.kmplog.client.presentation.screens.settings.Settings
-import com.kdroid.kmplog.client.presentation.theme.backgroundColor
-import com.kdroid.kmplog.client.presentation.theme.getTerminalTextColor
-import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToaster
 import com.kdroid.kmplog.core.formatMessage
 import com.kdroid.kmplog.core.formatTag
 import com.kdroid.kmplog.core.getPriorityChar

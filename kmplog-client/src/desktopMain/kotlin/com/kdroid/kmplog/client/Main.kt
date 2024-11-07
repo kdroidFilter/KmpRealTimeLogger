@@ -11,7 +11,7 @@ import androidx.compose.ui.window.application
 import com.kdroid.kmplog.client.core.di.initKoin
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.app_name
-import com.kdroid.kmplog.client.presentation.theme.isSystemInDarkTheme
+import com.kdroid.kmplog.client.core.presentation.theme.isSystemInDarkTheme
 import com.kdroid.kmplog.client.presentation.windows.titlebar.AppTitleBar
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme

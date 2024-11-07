@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.kdroid.kmplog.client.core.data.local.HomeSettingsEventDispatcher
 import com.kdroid.kmplog.client.core.data.network.WebSocketManager
 import com.kdroid.kmplog.client.core.domain.HomePreferencesRepository
-import com.kdroid.kmplog.client.presentation.navigation.Navigator
+import com.kdroid.kmplog.client.core.presentation.navigation.Navigator
 import com.kdroid.kmplog.client.presentation.screens.settings.SettingsEvent
-import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToasterViewModel
+import com.kdroid.kmplog.client.core.presentation.uimessagetoaster.UiMessageToasterViewModel
 import com.kdroid.kmplog.core.LogMessage
 import io.ktor.client.*
 import io.ktor.client.engine.*
