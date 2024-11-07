@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.composables.core.ScrollArea
 import com.composables.core.ScrollAreaScope
 import com.composables.core.rememberScrollAreaState
+import com.kdroid.kmplog.client.core.presentation.MainViewModel
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.jetbrains_mono_bold
 import com.kdroid.kmplog.client.presentation.screens.settings.Settings
@@ -35,8 +36,9 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun Home() {
+    val mainViewModel : MainViewModel = koinViewModel()
     val homeViewModel: HomeViewModel = koinViewModel()
-    HomeScreen(homeState = rememberHomeScreenState(vm = homeViewModel), onEvent = homeViewModel::onEvent)
+    HomeScreen(homeState = rememberHomeScreenState(homeViewModel = homeViewModel, mainViewModel = mainViewModel), onEvent = homeViewModel::onEvent)
 }
 
 @Composable

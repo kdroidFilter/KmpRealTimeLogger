@@ -3,6 +3,7 @@ package com.kdroid.kmplog.client.presentation.screens.home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kdroid.kmplog.client.core.presentation.MainViewModel
 import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToasterState
 import com.kdroid.kmplog.core.*
 
@@ -106,14 +107,15 @@ data class HomeState(
 
 @Composable
 fun rememberHomeScreenState(
-    vm: HomeViewModel,
+    homeViewModel: HomeViewModel,
+    mainViewModel: MainViewModel
 ): HomeState {
     return HomeState(
-        isConnected = vm.isConnected.collectAsStateWithLifecycle().value,
-        fontSize = vm.fontSize.collectAsState().value,
-        logMessages = vm.logMessages,
-        isSettingsVisible = vm.isSettingsVisible.collectAsStateWithLifecycle().value,
-        uiMessageToasterState = vm.uiMessageToasterState.collectAsStateWithLifecycle().value
+        isConnected = mainViewModel.isConnected.collectAsStateWithLifecycle().value,
+        fontSize = homeViewModel.fontSize.collectAsState().value,
+        logMessages = homeViewModel.logMessages,
+        isSettingsVisible = homeViewModel.isSettingsVisible.collectAsStateWithLifecycle().value,
+        uiMessageToasterState = homeViewModel.uiMessageToasterState.collectAsStateWithLifecycle().value
     )
 }
 
