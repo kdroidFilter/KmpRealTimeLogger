@@ -8,7 +8,7 @@ import com.kdroid.kmplog.client.features.screens.home.HomeState
 @PreviewLightDark
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(homeState = HomeState.previewState, {})
+    HomeScreen(homeState = HomeState.previewState, {}, {})
 }
 
 

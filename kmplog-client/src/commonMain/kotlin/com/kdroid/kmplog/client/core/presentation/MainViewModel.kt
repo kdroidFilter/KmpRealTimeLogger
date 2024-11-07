@@ -14,8 +14,14 @@ class MainViewModel(private val webSocketManager: WebSocketManager) : UiMessageT
         webSocketManager.startWebSocket()
 
     }
+    fun onEvent(events: MainEvents) {
+        when (events) {
+            is MainEvents.removeUiMessageById -> removeUiMessageById(events.id)
+        }
+    }
 
-    private fun observeConnectionStatus() {
+
+        private fun observeConnectionStatus() {
         viewModelScope.launch {
             isConnected.collect { connected ->
                 if (connected) {

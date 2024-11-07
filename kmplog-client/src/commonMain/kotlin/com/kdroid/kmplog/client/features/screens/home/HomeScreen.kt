@@ -19,13 +19,14 @@ import androidx.compose.ui.unit.sp
 import com.composables.core.ScrollArea
 import com.composables.core.ScrollAreaScope
 import com.composables.core.rememberScrollAreaState
+import com.kdroid.kmplog.client.core.presentation.MainEvents
 import com.kdroid.kmplog.client.core.presentation.MainViewModel
 import com.kdroid.kmplog.client.core.presentation.theme.backgroundColor
 import com.kdroid.kmplog.client.core.presentation.theme.getTerminalTextColor
 import com.kdroid.kmplog.client.core.presentation.uimessagetoaster.UiMessageToaster
+import com.kdroid.kmplog.client.features.screens.settings.Settings
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.jetbrains_mono_bold
-import com.kdroid.kmplog.client.features.screens.settings.Settings
 import com.kdroid.kmplog.core.formatMessage
 import com.kdroid.kmplog.core.formatTag
 import com.kdroid.kmplog.core.getPriorityChar
@@ -38,11 +39,11 @@ import org.koin.compose.viewmodel.koinViewModel
 fun Home() {
     val mainViewModel : MainViewModel = koinViewModel()
     val homeViewModel: HomeViewModel = koinViewModel()
-    HomeScreen(homeState = rememberHomeScreenState(homeViewModel = homeViewModel, mainViewModel = mainViewModel), onEvent = homeViewModel::onEvent)
+    HomeScreen(homeState = rememberHomeScreenState(homeViewModel = homeViewModel, mainViewModel = mainViewModel), onEvent = homeViewModel::onEvent, onMainEvents = mainViewModel::onEvent)
 }
 
 @Composable
-fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
+fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit, onMainEvents: (MainEvents) -> Unit) {
     var size by remember { mutableStateOf(IntSize.Zero) }
 
     val logMessages = homeState.logMessages
@@ -57,7 +58,7 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
         },
         contentWindowInsets = WindowInsets(0),
     ) { innerPadding ->
-        // Défiler vers le bas automatiquement chaque fois que la liste de messages change
+        // Automatically scroll down whenever the message list changes
         LaunchedEffect(logMessages.size) {
             if (logMessages.isNotEmpty()) {
                 coroutineScope.launch {
@@ -113,7 +114,7 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
     }
     UiMessageToaster(
         messages = homeState.uiMessageToasterState.uiMessageToasters,
-        onRemoveMessage = { onEvent(HomeEvents.removeUiMessageById(it)) }
+        onRemoveMessage = { onMainEvents(MainEvents.removeUiMessageById(it)) }
     )
     if (homeState.isSettingsVisible) {
         SettingsWindows(onHomeEvent = { onEvent(it) }, { Settings() })

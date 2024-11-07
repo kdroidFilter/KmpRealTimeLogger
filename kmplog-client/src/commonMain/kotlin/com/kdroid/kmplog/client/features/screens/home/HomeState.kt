@@ -115,7 +115,7 @@ fun rememberHomeScreenState(
         fontSize = homeViewModel.fontSize.collectAsState().value,
         logMessages = homeViewModel.logMessages,
         isSettingsVisible = homeViewModel.isSettingsVisible.collectAsStateWithLifecycle().value,
-        uiMessageToasterState = homeViewModel.uiMessageToasterState.collectAsStateWithLifecycle().value
+        uiMessageToasterState = mainViewModel.uiMessageToasterState.collectAsStateWithLifecycle().value
     )
 }
 

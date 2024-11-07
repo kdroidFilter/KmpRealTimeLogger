@@ -1,13 +1,13 @@
 package com.kdroid.kmplog.client.features.screens.home
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kdroid.kmplog.client.core.data.local.HomeSettingsEventDispatcher
 import com.kdroid.kmplog.client.core.data.network.WebSocketManager
 import com.kdroid.kmplog.client.core.domain.HomePreferencesRepository
 import com.kdroid.kmplog.client.core.presentation.navigation.Navigator
 import com.kdroid.kmplog.client.features.screens.settings.SettingsEvent
-import com.kdroid.kmplog.client.core.presentation.uimessagetoaster.UiMessageToasterViewModel
 import com.kdroid.kmplog.core.LogMessage
 import io.ktor.client.*
 import io.ktor.client.engine.*
@@ -23,7 +23,7 @@ class HomeViewModel(
     private val navigator: Navigator,
     private val repository: HomePreferencesRepository,
     private val webSocketManager: WebSocketManager
-) : UiMessageToasterViewModel() {
+) : ViewModel() {
 
     private val client = HttpClient(engine) {
         install(WebSockets)
@@ -36,7 +36,6 @@ class HomeViewModel(
     private val _messages = mutableStateListOf<LogMessage>()
     val logMessages: List<LogMessage> get() = _messages
 
-    val isConnected: StateFlow<Boolean> get() = webSocketManager.isConnected
 
     private var _fontSize = MutableStateFlow(repository.getFontSize())
     val fontSize = _fontSize.asStateFlow()
@@ -70,7 +69,6 @@ class HomeViewModel(
                 _isSettingsVisible.value = true
             }
 
-            is HomeEvents.removeUiMessageById -> removeUiMessageById(events.id)
             HomeEvents.OnCloseSettings -> {
                 viewModelScope.launch {
                     HomeSettingsEventDispatcher.emit(SettingsEvent.OnCloseSettings)
