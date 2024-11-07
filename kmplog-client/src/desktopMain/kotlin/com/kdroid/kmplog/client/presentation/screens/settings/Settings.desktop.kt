@@ -21,6 +21,7 @@ import org.jetbrains.jewel.foundation.theme.LocalTextStyle
 import org.jetbrains.jewel.ui.component.*
 import org.jetbrains.jewel.ui.component.Typography.labelTextSize
 
+
 @Composable
 actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit) {
 
@@ -78,7 +79,8 @@ actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit
                     state = addressIpState,
                     placeholder = stringResource(Res.string.ip_placeholder),
                     enabled = checkboxState != ToggleableState.On,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    onTextChanged = {onEvent(SettingsEvent.OnIpChange(addressIpState.text.toString()))}
                 )
 
                 SettingsTextFieldRow(
@@ -87,7 +89,9 @@ actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit
                     placeholder = SERVICE_PORT.toString(),
                     enabled = checkboxState != ToggleableState.On,
                     modifier = Modifier.fillMaxWidth(),
-                    fieldWidth = 80.dp
+                    fieldWidth = 80.dp,
+                    onTextChanged = {onEvent(SettingsEvent.OnPortChange(portState.text.toString()))}
+
                 )
             }
         }
@@ -101,7 +105,8 @@ fun SettingsTextFieldRow(
     placeholder: String,
     enabled: Boolean,
     modifier: Modifier = Modifier,
-    fieldWidth: Dp = 0.dp
+    fieldWidth: Dp = 0.dp,
+    onTextChanged: (String) -> Unit,
 ) {
     Row(
         horizontalArrangement = if (fieldWidth > 0.dp) Arrangement.SpaceBetween else Arrangement.spacedBy(8.dp),
@@ -132,6 +137,9 @@ fun SettingsTextFieldRow(
             enabled = enabled,
             textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End)
         )
+    }
+    LaunchedEffect(state.text) {
+        onTextChanged(state.text.toString())
     }
 }
 

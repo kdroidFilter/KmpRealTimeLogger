@@ -131,6 +131,9 @@ kotlin {
         androidMain {
             dependsOn(nativeJvmAndroidMain)
             dependsOn(jvmAndroidMain)
+            dependencies {
+                implementation("io.github.kdroidfilter:androidcontextprovider:1.0.0")
+            }
         }
 
 

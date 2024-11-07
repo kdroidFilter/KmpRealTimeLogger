@@ -3,6 +3,7 @@ package com.kdroid.kmplog
 import android.content.Context
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
+import com.kdroid.androidcontextprovider.ContextProvider
 import com.kdroid.kmplog.core.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
