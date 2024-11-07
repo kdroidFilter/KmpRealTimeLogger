@@ -18,10 +18,7 @@ import com.composables.core.Thumb
 import com.composables.core.ThumbVisibility
 import com.composables.core.VerticalScrollbar
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.*
-import com.kdroid.kmplog.client.presentation.icons.Clear
-import com.kdroid.kmplog.client.presentation.icons.Settings
-import com.kdroid.kmplog.client.presentation.icons.ZoomIn
-import com.kdroid.kmplog.client.presentation.icons.ZoomOut
+import com.kdroid.kmplog.client.presentation.icons.*
 import com.kdroid.kmplog.client.presentation.theme.TOP_APP_BAR_HEIGHT
 import com.kdroid.kmplog.client.presentation.theme.TOP_APP_BAR_TEXT_SIZE
 import com.kdroid.kmplog.client.presentation.theme.iconColor
@@ -58,7 +55,8 @@ fun appBarBackgroundColor(): Color {
 @Composable
 actual fun ControlsRow(
     modifier: Modifier,
-    onEvent: (HomeEvents) -> Unit
+    onEvent: (HomeEvents) -> Unit,
+    state: HomeState,
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors().copy(
@@ -75,7 +73,7 @@ actual fun ControlsRow(
             )
         },
         navigationIcon = {
-           // ConnexionStatusIcon(WebSocketManager.isConnected.collectAsStateWithLifecycle().value)
+            ConnexionStatusIcon(state.isConnected)
         },
         actions = {
             Row {

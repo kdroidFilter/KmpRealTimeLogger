@@ -1,4 +1,4 @@
-package com.kdroid.kmplog.client.data.network
+package com.kdroid.kmplog.client.core.data.network
 
 import android.content.Context
 import android.net.nsd.NsdManager

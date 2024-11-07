@@ -1,6 +1,6 @@
 package com.kdroid.kmplog.client.core.data.network
 
-import com.kdroid.kmplog.client.domain.SettingsPreferencesRepository
+import com.kdroid.kmplog.client.core.domain.SettingsPreferencesRepository
 import com.kdroid.kmplog.core.LogMessage
 import com.kdroid.kmplog.core.SERVICE_PATH
 import com.kdroid.kmplog.core.SERVICE_PORT

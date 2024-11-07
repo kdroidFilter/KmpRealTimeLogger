@@ -1,6 +1,6 @@
 package com.kdroid.kmplog.client.presentation.uimessagetoaster
 
-import com.kdroid.kmplog.client.domain.UiMessageToaster
+import com.kdroid.kmplog.client.core.domain.UiMessageToaster
 
 data class UiMessageToasterState(
     val isLoading: Boolean = false,

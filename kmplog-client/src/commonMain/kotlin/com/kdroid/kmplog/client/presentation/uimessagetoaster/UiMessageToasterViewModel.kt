@@ -2,7 +2,7 @@ package com.kdroid.kmplog.client.presentation.uimessagetoaster
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kdroid.kmplog.client.domain.UiMessageToaster
+import com.kdroid.kmplog.client.core.domain.UiMessageToaster
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.connected_successfully
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.disconnected
@@ -17,7 +17,7 @@ open class UiMessageToasterViewModel() : ViewModel(){
     private val _uiMessageToasterState = MutableStateFlow(UiMessageToasterState())
     open val uiMessageToasterState: StateFlow<UiMessageToasterState> = _uiMessageToasterState
 
-    fun connected() = viewModelScope.launch {
+    fun displayConnectedToast() = viewModelScope.launch {
         _uiMessageToasterState.update { it.copy(isLoading = true) }
         _uiMessageToasterState.update {
             val messages = it.uiMessageToasters.toMutableList()
@@ -27,7 +27,7 @@ open class UiMessageToasterViewModel() : ViewModel(){
         }
     }
 
-    fun disconnected() = viewModelScope.launch {
+    fun displayDisconnectedToast() = viewModelScope.launch {
         _uiMessageToasterState.update { it.copy(isLoading = true) }
         _uiMessageToasterState.update {
             val messages = it.uiMessageToasters.toMutableList()

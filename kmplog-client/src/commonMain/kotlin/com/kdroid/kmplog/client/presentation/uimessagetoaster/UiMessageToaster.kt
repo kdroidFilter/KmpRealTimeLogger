@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import com.dokar.sonner.*
-import com.kdroid.kmplog.client.domain.UiMessageToaster
+import com.kdroid.kmplog.client.core.domain.UiMessageToaster
 import com.kdroid.kmplog.client.presentation.theme.isSystemInDarkTheme
 
 

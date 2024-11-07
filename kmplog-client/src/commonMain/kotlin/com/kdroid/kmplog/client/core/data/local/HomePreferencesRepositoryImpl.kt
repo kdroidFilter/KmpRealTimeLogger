@@ -1,6 +1,6 @@
 package com.kdroid.kmplog.client.core.data.local
 
-import com.kdroid.kmplog.client.domain.HomePreferencesRepository
+import com.kdroid.kmplog.client.core.domain.HomePreferencesRepository
 import com.russhwolf.settings.Settings
 
 class HomePreferencesRepositoryImpl(private val settings: Settings) : HomePreferencesRepository {

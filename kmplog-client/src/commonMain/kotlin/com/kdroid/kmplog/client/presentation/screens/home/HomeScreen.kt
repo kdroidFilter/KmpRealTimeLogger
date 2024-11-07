@@ -51,10 +51,10 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            ControlsRow(onEvent = { onEvent(it) }, modifier = Modifier.fillMaxWidth())
+            ControlsRow(onEvent = { onEvent(it) }, modifier = Modifier.fillMaxWidth(), state = homeState)
         },
         contentWindowInsets = WindowInsets(0),
-        ) { innerPadding ->
+    ) { innerPadding ->
         // Défiler vers le bas automatiquement chaque fois que la liste de messages change
         LaunchedEffect(logMessages.size) {
             if (logMessages.isNotEmpty()) {
@@ -111,15 +111,15 @@ fun HomeScreen(homeState: HomeState, onEvent: (HomeEvents) -> Unit) {
     }
     UiMessageToaster(
         messages = homeState.uiMessageToasterState.uiMessageToasters,
-        onRemoveMessage = {onEvent(HomeEvents.removeUiMessageById(it))}
+        onRemoveMessage = { onEvent(HomeEvents.removeUiMessageById(it)) }
     )
     if (homeState.isSettingsVisible) {
-        SettingsWindows(onHomeEvent = {onEvent(it)}, {Settings()})
+        SettingsWindows(onHomeEvent = { onEvent(it) }, { Settings() })
     }
 }
 
 @Composable
-expect fun ControlsRow(modifier: Modifier = Modifier, onEvent: (HomeEvents) -> Unit)
+expect fun ControlsRow(modifier: Modifier = Modifier, onEvent: (HomeEvents) -> Unit, state: HomeState)
 
 @Composable
 expect fun ScrollAreaScope.Scrollbar(modifier: Modifier, scrollbarState: LazyListState)

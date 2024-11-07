@@ -1,4 +1,4 @@
-package com.kdroid.kmplog.client.data.network
+package com.kdroid.kmplog.client.core.data.network
 
 import com.kdroid.kmplog.core.SERVICE_TYPE
 import io.ktor.client.engine.*

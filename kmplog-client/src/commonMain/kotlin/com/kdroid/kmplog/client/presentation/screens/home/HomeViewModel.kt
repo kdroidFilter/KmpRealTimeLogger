@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
 import com.kdroid.kmplog.client.core.data.local.HomeSettingsEventDispatcher
 import com.kdroid.kmplog.client.core.data.network.WebSocketManager
-import com.kdroid.kmplog.client.domain.HomePreferencesRepository
+import com.kdroid.kmplog.client.core.domain.HomePreferencesRepository
 import com.kdroid.kmplog.client.presentation.navigation.Navigator
 import com.kdroid.kmplog.client.presentation.screens.settings.SettingsEvent
 import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToasterViewModel
@@ -37,7 +37,6 @@ class HomeViewModel(
     val logMessages: List<LogMessage> get() = _messages
 
     val isConnected: StateFlow<Boolean> get() = webSocketManager.isConnected
-    private var wasConnectedPreviously: Boolean = false
 
     private var _fontSize = MutableStateFlow(repository.getFontSize())
     val fontSize = _fontSize.asStateFlow()
@@ -50,19 +49,7 @@ class HomeViewModel(
         }
     }
 
-    private fun observeConnection() {
-        viewModelScope.launch {
-            isConnected.collect { connected ->
-                if (connected) {
-                    connected()
-                    wasConnectedPreviously = true
-                } else if (wasConnectedPreviously) {
-                    disconnected()
-                    wasConnectedPreviously = false
-                }
-            }
-        }
-    }
+
 
     private fun navigateToSettings() {
         viewModelScope.launch {
@@ -114,9 +101,7 @@ class HomeViewModel(
     }
 
     init {
-        webSocketManager.startWebSocket()
         observeMessages()
-        observeConnection()
     }
 }
 

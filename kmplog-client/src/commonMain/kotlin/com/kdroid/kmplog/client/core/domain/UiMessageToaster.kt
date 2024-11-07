@@ -1,4 +1,4 @@
-package com.kdroid.kmplog.client.domain
+package com.kdroid.kmplog.client.core.domain
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone

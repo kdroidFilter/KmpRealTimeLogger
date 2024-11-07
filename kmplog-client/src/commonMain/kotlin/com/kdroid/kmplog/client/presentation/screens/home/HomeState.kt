@@ -7,7 +7,7 @@ import com.kdroid.kmplog.client.presentation.uimessagetoaster.UiMessageToasterSt
 import com.kdroid.kmplog.core.*
 
 data class HomeState(
-    val connectionStatus : Boolean,
+    val isConnected : Boolean,
     val logMessages: List<LogMessage>,
     val fontSize : Int,
     val uiMessageToasterState: UiMessageToasterState,
@@ -15,7 +15,7 @@ data class HomeState(
     ) {
     companion object {
         val previewState = HomeState(
-            connectionStatus = true,
+            isConnected = true,
             fontSize = 14,
             uiMessageToasterState = UiMessageToasterState.preview,
             isSettingsVisible = false,
@@ -109,7 +109,7 @@ fun rememberHomeScreenState(
     vm: HomeViewModel,
 ): HomeState {
     return HomeState(
-        connectionStatus = vm.isConnected.collectAsStateWithLifecycle().value,
+        isConnected = vm.isConnected.collectAsStateWithLifecycle().value,
         fontSize = vm.fontSize.collectAsState().value,
         logMessages = vm.logMessages,
         isSettingsVisible = vm.isSettingsVisible.collectAsStateWithLifecycle().value,

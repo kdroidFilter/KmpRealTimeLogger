@@ -34,8 +34,9 @@ fun HomeScreenPreview() {
 @Composable
 actual fun ControlsRow(
     modifier: Modifier,
-    onEvent: (HomeEvents) -> Unit
-) {
+    onEvent: (HomeEvents) -> Unit,
+    state: HomeState,
+    ) {
     Row(
         modifier = modifier
             .background(JewelTheme.globalColors.panelBackground)

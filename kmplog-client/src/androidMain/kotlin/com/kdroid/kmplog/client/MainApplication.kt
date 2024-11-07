@@ -1,7 +1,7 @@
 package com.kdroid.kmplog.client
 
 import android.app.Application
-import com.kdroid.kmplog.client.framework.di.appModule
+import com.kdroid.kmplog.client.core.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

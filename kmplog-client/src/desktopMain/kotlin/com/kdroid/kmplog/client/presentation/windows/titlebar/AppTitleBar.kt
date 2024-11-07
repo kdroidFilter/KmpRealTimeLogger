@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.kdroid.kmplog.client.core.presentation.MainViewModel
+import com.kdroid.kmplog.client.presentation.icons.ConnexionStatusIcon
 import com.kdroid.kmplog.client.presentation.icons.Github
 import com.kdroid.kmplog.client.presentation.theme.iconColor
 import org.jetbrains.jewel.ui.component.Icon
@@ -15,10 +17,17 @@ import org.jetbrains.jewel.ui.component.IconButton
 import org.jetbrains.jewel.ui.component.Text
 import org.jetbrains.jewel.window.DecoratedWindowScope
 import org.jetbrains.jewel.window.TitleBar
-
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DecoratedWindowScope.AppTitleBar() {
+    val mainViewModel : MainViewModel = koinViewModel()
+    val state = rememberAppTitleBarState(mainViewModel)
+    AppTitleBarComponent(state)
+}
+
+@Composable
+fun DecoratedWindowScope.AppTitleBarComponent(state: AppTitleBarState) {
     TitleBar() {
         Row(
             modifier = Modifier
@@ -26,7 +35,7 @@ fun DecoratedWindowScope.AppTitleBar() {
                 .padding(start = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            //ConnexionStatusIcon(WebSocketManager.isConnected.collectAsState().value)
+            ConnexionStatusIcon(state.isConnected)
 
             Text(text = title, modifier = Modifier.padding(start = 8.dp))
 
