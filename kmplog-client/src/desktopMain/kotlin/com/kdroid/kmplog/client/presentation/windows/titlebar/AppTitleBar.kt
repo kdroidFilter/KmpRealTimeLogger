@@ -5,12 +5,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.kdroid.kmplog.client.data.network.WebSocketManager
-import com.kdroid.kmplog.client.presentation.icons.ConnexionStatusIcon
 import com.kdroid.kmplog.client.presentation.icons.Github
 import com.kdroid.kmplog.client.presentation.theme.iconColor
 import org.jetbrains.jewel.ui.component.Icon
@@ -29,7 +26,7 @@ fun DecoratedWindowScope.AppTitleBar() {
                 .padding(start = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ConnexionStatusIcon(WebSocketManager.isConnected.collectAsState().value)
+            //ConnexionStatusIcon(WebSocketManager.isConnected.collectAsState().value)
 
             Text(text = title, modifier = Modifier.padding(start = 8.dp))
 

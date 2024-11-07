@@ -1,5 +1,6 @@
 package com.kdroid.kmplog.client.data.network
 
+import com.kdroid.kmplog.client.domain.SettingsPreferencesRepository
 import com.kdroid.kmplog.core.LogMessage
 import com.kdroid.kmplog.core.SERVICE_PATH
 import com.kdroid.kmplog.core.SERVICE_PORT
@@ -19,7 +20,9 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
 
-object WebSocketManager {
+class WebSocketManager(
+    private val settingsRepository: SettingsPreferencesRepository
+) {
     private val client = HttpClient(engine) {
         install(WebSockets)
     }
@@ -32,13 +35,16 @@ object WebSocketManager {
     @OptIn(ExperimentalSerializationApi::class)
     fun startWebSocket() {
         CoroutineScope(Dispatchers.Default).launch {
-            val host = getIpService()
+            val isAutoDetection = settingsRepository.getAutomaticDetectionState()
+            val host = if (isAutoDetection) getIpService() else settingsRepository.getCustomIpAddress("localhost")
+            val port = if (isAutoDetection) SERVICE_PORT else settingsRepository.getCustomPort().toInt()
+
             while (true) {
                 try {
                     client.webSocket(
                         method = HttpMethod.Get,
                         host = host,
-                        port = SERVICE_PORT,
+                        port = port,
                         path = SERVICE_PATH
                     ) {
                         _isConnected.value = true

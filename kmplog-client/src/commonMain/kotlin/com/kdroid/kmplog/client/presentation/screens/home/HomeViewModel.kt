@@ -21,12 +21,14 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     engine: HttpClientEngine,
     private val navigator: Navigator,
-    private val repository: HomePreferencesRepository
+    private val repository: HomePreferencesRepository,
+    private val webSocketManager: WebSocketManager
 ) : UiMessageToasterViewModel() {
 
     private val client = HttpClient(engine) {
         install(WebSockets)
     }
+
 
     private val _isSettingsVisible = MutableStateFlow(false)
     val isSettingsVisible: StateFlow<Boolean> get() = _isSettingsVisible
@@ -34,7 +36,7 @@ class HomeViewModel(
     private val _messages = mutableStateListOf<LogMessage>()
     val logMessages: List<LogMessage> get() = _messages
 
-    val isConnected: StateFlow<Boolean> get() = WebSocketManager.isConnected
+    val isConnected: StateFlow<Boolean> get() = webSocketManager.isConnected
     private var wasConnectedPreviously: Boolean = false
 
     private var _fontSize = MutableStateFlow(repository.getFontSize())
@@ -42,7 +44,7 @@ class HomeViewModel(
 
     private fun observeMessages() {
         viewModelScope.launch {
-            WebSocketManager.messages.collect { message ->
+            webSocketManager.messages.collect { message ->
                 _messages.add(message)
             }
         }
@@ -112,7 +114,7 @@ class HomeViewModel(
     }
 
     init {
-        WebSocketManager.startWebSocket()
+        webSocketManager.startWebSocket()
         observeMessages()
         observeConnection()
     }
