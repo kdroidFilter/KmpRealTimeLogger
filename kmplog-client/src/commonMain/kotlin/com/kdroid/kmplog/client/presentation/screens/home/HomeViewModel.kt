@@ -52,17 +52,17 @@ class HomeViewModel(
         viewModelScope.launch {
             isConnected.collect { connected ->
                 if (connected) {
-                    loadToSuccess()
+                    connected()
                     wasConnectedPreviously = true
                 } else if (wasConnectedPreviously) {
-                    loadToFailure()
+                    disconnected()
                     wasConnectedPreviously = false
                 }
             }
         }
     }
 
-    fun navigateToSettings() {
+    private fun navigateToSettings() {
         viewModelScope.launch {
             navigateToSettings(navigator)
         }

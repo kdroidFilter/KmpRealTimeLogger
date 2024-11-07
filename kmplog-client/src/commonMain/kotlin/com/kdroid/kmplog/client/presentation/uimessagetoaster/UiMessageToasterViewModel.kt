@@ -17,7 +17,7 @@ open class UiMessageToasterViewModel() : ViewModel(){
     private val _uiMessageToasterState = MutableStateFlow(UiMessageToasterState())
     open val uiMessageToasterState: StateFlow<UiMessageToasterState> = _uiMessageToasterState
 
-    fun loadToSuccess() = viewModelScope.launch {
+    fun connected() = viewModelScope.launch {
         _uiMessageToasterState.update { it.copy(isLoading = true) }
         _uiMessageToasterState.update {
             val messages = it.uiMessageToasters.toMutableList()
@@ -27,7 +27,7 @@ open class UiMessageToasterViewModel() : ViewModel(){
         }
     }
 
-    fun loadToFailure() = viewModelScope.launch {
+    fun disconnected() = viewModelScope.launch {
         _uiMessageToasterState.update { it.copy(isLoading = true) }
         _uiMessageToasterState.update {
             val messages = it.uiMessageToasters.toMutableList()
