@@ -10,8 +10,8 @@ import com.kdroid.kmplog.client.core.domain.SettingsPreferencesRepository
 import com.kdroid.kmplog.client.core.presentation.navigation.DefaultNavigator
 import com.kdroid.kmplog.client.core.presentation.navigation.Destination
 import com.kdroid.kmplog.client.core.presentation.navigation.Navigator
-import com.kdroid.kmplog.client.presentation.screens.home.HomeViewModel
-import com.kdroid.kmplog.client.presentation.screens.settings.SettingsViewModel
+import com.kdroid.kmplog.client.features.screens.home.HomeViewModel
+import com.kdroid.kmplog.client.features.screens.settings.SettingsViewModel
 import com.russhwolf.settings.Settings
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module

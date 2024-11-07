@@ -12,8 +12,8 @@ import com.kdroid.kmplog.client.core.presentation.navigation.NavTransition.enter
 import com.kdroid.kmplog.client.core.presentation.navigation.NavTransition.exitTransition
 import com.kdroid.kmplog.client.core.presentation.navigation.NavTransition.popEnterTransition
 import com.kdroid.kmplog.client.core.presentation.navigation.NavTransition.popExitTransition
-import com.kdroid.kmplog.client.presentation.screens.home.Home
-import com.kdroid.kmplog.client.presentation.screens.settings.Settings
+import com.kdroid.kmplog.client.features.screens.home.Home
+import com.kdroid.kmplog.client.features.screens.settings.Settings
 import org.koin.compose.koinInject
 
 @Composable

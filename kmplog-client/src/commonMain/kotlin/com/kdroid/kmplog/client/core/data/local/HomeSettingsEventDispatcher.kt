@@ -1,6 +1,6 @@
 package com.kdroid.kmplog.client.core.data.local
 
-import com.kdroid.kmplog.client.presentation.screens.settings.SettingsEvent
+import com.kdroid.kmplog.client.features.screens.settings.SettingsEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
