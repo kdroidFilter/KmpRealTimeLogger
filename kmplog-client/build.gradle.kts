@@ -196,9 +196,21 @@ compose.desktop {
             configurationFiles.from(project.file("compose-desktop.pro"))
         }
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.kdroid.kmplog.client.MainKt"
-            packageVersion = "1.0.0"
+            targetFormats(TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "Kmp RealTime Logger"
+            packageVersion = version.toString()
+            description = "A client application for real-time display and monitoring of logs across multiple platforms"
+            copyright = "© 2024 KdroidFilter. All rights reserved."
+            licenseFile.set(rootProject.file("LICENSE"))
+            windows {
+                dirChooser = true
+                perUserInstall = true
+                iconFile.set(rootProject.file("assets/logo.ico"))
+            }
+            linux {
+                iconFile.set(rootProject.file("assets/logo.png"))
+
+            }
         }
     }
 }

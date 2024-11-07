@@ -9,10 +9,12 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import com.kdroid.kmplog.client.core.di.initKoin
-import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
-import com.kdroid.kmplog.client.kmplog_client.generated.resources.app_name
 import com.kdroid.kmplog.client.core.presentation.theme.isSystemInDarkTheme
 import com.kdroid.kmplog.client.features.screens.windowstitlebar.WindowTitleBar
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.app_name
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.logo
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
@@ -41,6 +43,7 @@ fun main() {
             DecoratedWindow(
                 onCloseRequest = { exitApplication() },
                 title = stringResource(Res.string.app_name),
+                icon = painterResource(Res.drawable.logo),
                 state = getCenteredWindowState(800, 600),
                 content = {
                     WindowTitleBar()
