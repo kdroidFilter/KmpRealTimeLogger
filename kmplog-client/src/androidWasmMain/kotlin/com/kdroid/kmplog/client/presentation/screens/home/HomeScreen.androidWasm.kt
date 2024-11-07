@@ -11,18 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.composables.core.Icon
 import com.composables.core.ScrollAreaScope
 import com.composables.core.Thumb
 import com.composables.core.ThumbVisibility
 import com.composables.core.VerticalScrollbar
-import com.kdroid.kmplog.client.data.network.WebSocketManager
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.*
-import com.kdroid.kmplog.client.presentation.icons.*
+import com.kdroid.kmplog.client.presentation.icons.Clear
+import com.kdroid.kmplog.client.presentation.icons.Settings
+import com.kdroid.kmplog.client.presentation.icons.ZoomIn
+import com.kdroid.kmplog.client.presentation.icons.ZoomOut
+import com.kdroid.kmplog.client.presentation.theme.TOP_APP_BAR_HEIGHT
+import com.kdroid.kmplog.client.presentation.theme.TOP_APP_BAR_TEXT_SIZE
 import com.kdroid.kmplog.client.presentation.theme.iconColor
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Duration
@@ -64,18 +65,17 @@ actual fun ControlsRow(
             containerColor = appBarBackgroundColor()
         ),
         windowInsets = WindowInsets(0),
-        expandedHeight = 48.dp,
+        expandedHeight = TOP_APP_BAR_HEIGHT,
         title = {
 
             Text(
                 text = stringResource(Res.string.app_name),
-                fontFamily = FontFamily.Monospace,
-                fontSize = 16.sp,
+                fontSize = TOP_APP_BAR_TEXT_SIZE,
                 modifier = Modifier.padding(start = 16.dp),
             )
         },
         navigationIcon = {
-            ConnexionStatusIcon(WebSocketManager.isConnected.collectAsStateWithLifecycle().value)
+           // ConnexionStatusIcon(WebSocketManager.isConnected.collectAsStateWithLifecycle().value)
         },
         actions = {
             Row {

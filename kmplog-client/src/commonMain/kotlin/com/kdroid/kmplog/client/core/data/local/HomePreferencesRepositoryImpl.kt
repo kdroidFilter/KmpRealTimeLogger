@@ -1,4 +1,4 @@
-package com.kdroid.kmplog.client.data.local
+package com.kdroid.kmplog.client.core.data.local
 
 import com.kdroid.kmplog.client.domain.HomePreferencesRepository
 import com.russhwolf.settings.Settings

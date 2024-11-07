@@ -1,9 +1,9 @@
 package com.kdroid.kmplog.client.framework.di
 
-import com.kdroid.kmplog.client.data.local.HomePreferencesRepositoryImpl
-import com.kdroid.kmplog.client.data.local.SettinsPreferencesRepositoryImpl
-import com.kdroid.kmplog.client.data.network.WebSocketManager
-import com.kdroid.kmplog.client.data.network.engine
+import com.kdroid.kmplog.client.core.data.local.HomePreferencesRepositoryImpl
+import com.kdroid.kmplog.client.core.data.local.SettinsPreferencesRepositoryImpl
+import com.kdroid.kmplog.client.core.data.network.WebSocketManager
+import com.kdroid.kmplog.client.core.data.network.engine
 import com.kdroid.kmplog.client.domain.HomePreferencesRepository
 import com.kdroid.kmplog.client.domain.SettingsPreferencesRepository
 import com.kdroid.kmplog.client.presentation.navigation.DefaultNavigator

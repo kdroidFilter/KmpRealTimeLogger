@@ -2,8 +2,8 @@ package com.kdroid.kmplog.client.presentation.screens.home
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
-import com.kdroid.kmplog.client.core.HomeSettingsEventDispatcher
-import com.kdroid.kmplog.client.data.network.WebSocketManager
+import com.kdroid.kmplog.client.core.data.local.HomeSettingsEventDispatcher
+import com.kdroid.kmplog.client.core.data.network.WebSocketManager
 import com.kdroid.kmplog.client.domain.HomePreferencesRepository
 import com.kdroid.kmplog.client.presentation.navigation.Navigator
 import com.kdroid.kmplog.client.presentation.screens.settings.SettingsEvent

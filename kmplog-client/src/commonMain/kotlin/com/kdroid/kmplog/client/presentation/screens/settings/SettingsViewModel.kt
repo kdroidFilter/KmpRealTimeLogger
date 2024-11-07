@@ -2,7 +2,7 @@ package com.kdroid.kmplog.client.presentation.screens.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kdroid.kmplog.client.core.HomeSettingsEventDispatcher
+import com.kdroid.kmplog.client.core.data.local.HomeSettingsEventDispatcher
 import com.kdroid.kmplog.client.domain.SettingsPreferencesRepository
 import com.kdroid.kmplog.client.presentation.navigation.Navigator
 import kotlinx.coroutines.flow.MutableStateFlow
