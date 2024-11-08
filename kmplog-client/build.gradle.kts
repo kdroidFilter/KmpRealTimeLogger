@@ -94,6 +94,15 @@ kotlin {
             implementation(libs.ktor.client.websockets)
             implementation(libs.ktor.ktor.client.core)
 
+            //Ktor Serveur
+            implementation(libs.ktor.server.core)
+            implementation(libs.ktor.server.websockets)
+            implementation(libs.ktor.server.cors)
+            implementation(libs.ktor.serialization.kotlinx.protobuf)
+            implementation(libs.ktor.server.content.negotiation)
+            implementation(libs.ktor.server.cio)
+
+
             implementation(libs.kotlinx.serialization.protobuf)
 
             //Navigation
