@@ -13,10 +13,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.kdroid.kmplog.client.features.screens.settings.SettingsEvent
-import com.kdroid.kmplog.client.features.screens.settings.SettingsState
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.*
-import com.kdroid.kmplog.core.SERVICE_PORT
+import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.foundation.theme.LocalTextStyle
@@ -89,7 +87,7 @@ actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit
                 SettingsTextFieldRow(
                     label = stringResource(Res.string.port),
                     state = portState,
-                    placeholder = SERVICE_PORT.toString(),
+                    placeholder = DEFAULT_SERVICE_PORT.toString(),
                     enabled = checkboxState != ToggleableState.On,
                     modifier = Modifier.fillMaxWidth(),
                     fieldWidth = 80.dp,

@@ -4,7 +4,7 @@ import com.kdroid.kmplog.core.LogMessage
 
 //Wasm platform cannot start server
 //TODO Implement server in the client side for wasm platform
-actual fun startServer() {}
+actual fun startServer(port : Int) {}
 actual fun publishMdnsService() {}
 
 

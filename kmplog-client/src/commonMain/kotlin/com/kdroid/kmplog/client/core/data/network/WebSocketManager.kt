@@ -3,7 +3,7 @@ package com.kdroid.kmplog.client.core.data.network
 import com.kdroid.kmplog.client.core.domain.repository.SettingsPreferencesRepository
 import com.kdroid.kmplog.core.LogMessage
 import com.kdroid.kmplog.core.SERVICE_PATH
-import com.kdroid.kmplog.core.SERVICE_PORT
+import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.http.*
@@ -43,7 +43,7 @@ class WebSocketManager(
         CoroutineScope(Dispatchers.Default).launch {
             val isAutoDetection = settingsRepository.getAutomaticDetectionState()
             val host = if (isAutoDetection) getIpService() else settingsRepository.getCustomIpAddress("localhost")
-            val port = if (isAutoDetection) SERVICE_PORT else settingsRepository.getCustomPort().toInt()
+            val port = if (isAutoDetection) DEFAULT_SERVICE_PORT else settingsRepository.getCustomPort().toInt()
 
             while (true) {
                 try {

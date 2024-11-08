@@ -3,7 +3,6 @@
 package com.kdroid.kmplog
 
 import com.kdroid.kmplog.core.LogMessage
-import com.kdroid.kmplog.core.SERVICE_PORT
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
@@ -32,9 +31,10 @@ internal var webSocketChannel: SendChannel<Frame>? = null
 internal val connections = mutableSetOf<DefaultWebSocketServerSession>()
 internal val mutex = Mutex()
 
-actual fun startServer() {
+@OptIn(ExperimentalSerializationApi::class)
+actual fun startServer(port : Int) {
     GlobalScope.launch {
-        embeddedServer(CIO, port = SERVICE_PORT, host = "0.0.0.0") {
+        embeddedServer(CIO, port = port, host = "0.0.0.0") {
 
             install(CORS) {
                 anyHost()

@@ -25,10 +25,10 @@ object Log {
         isDevelopmentMode = isDevelopment
     }
 
-    fun enableBroadcastingMode() {
+    fun enableBroadcastingMode(port: Int = DEFAULT_SERVICE_PORT) {
         isBroadcastingMode = true
         if (!isServerRunning) {
-            startServer()
+            startServer(port)
             publishMdnsService()
         }
         isServerRunning = true
@@ -52,7 +52,7 @@ fun printAndGetLocalLog(priority: Int, tag: String, message: String) : LogMessag
 
 expect fun printAndSendLog(priority: Int, tag: String, msg: String)
 
-expect fun startServer()
+expect fun startServer(port : Int)
 
 expect fun Log.v(tag: String, msg: String)
 expect fun Log.d(tag: String, msg: String)

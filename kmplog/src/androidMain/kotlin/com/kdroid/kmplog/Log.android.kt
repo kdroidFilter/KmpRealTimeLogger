@@ -78,7 +78,7 @@ actual fun publishMdnsService() {
     val serviceInfo = NsdServiceInfo().apply {
         serviceName = SERVICE_NAME
         serviceType = ANDROID_SERVICE_TYPE
-        port = SERVICE_PORT
+        port = DEFAULT_SERVICE_PORT
     }
 
     val registrationListener = object : NsdManager.RegistrationListener {

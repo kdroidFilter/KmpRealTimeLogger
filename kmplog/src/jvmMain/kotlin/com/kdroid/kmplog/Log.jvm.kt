@@ -2,7 +2,7 @@ package com.kdroid.kmplog
 
 import com.kdroid.kmplog.core.SERICE_DESCRIPTION
 import com.kdroid.kmplog.core.SERVICE_NAME
-import com.kdroid.kmplog.core.SERVICE_PORT
+import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import com.kdroid.kmplog.core.SERVICE_TYPE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,10 +24,10 @@ actual fun publishMdnsService() {
         val ipAddress = getLocalIpAddress()
         val jmdns = JmDNS.create(InetAddress.getByName(ipAddress))
 
-        val serviceInfo = ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, SERVICE_PORT, "description=$SERICE_DESCRIPTION")
+        val serviceInfo = ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, DEFAULT_SERVICE_PORT, "description=$SERICE_DESCRIPTION")
 
         jmdns.registerService(serviceInfo)
-        println("Service mDNS enregistré : $SERVICE_NAME sur $ipAddress:$SERVICE_PORT")
+        println("Service mDNS enregistré : $SERVICE_NAME sur $ipAddress:$DEFAULT_SERVICE_PORT")
 
 
     } catch (e: Exception) {
