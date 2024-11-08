@@ -2,8 +2,6 @@ package com.kdroid.kmplog.client.features.screens.windowstitlebar
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +21,7 @@ import org.jetbrains.jewel.ui.component.Text
 import org.jetbrains.jewel.ui.component.Tooltip
 import org.jetbrains.jewel.window.DecoratedWindowScope
 import org.jetbrains.jewel.window.TitleBar
+import org.jetbrains.jewel.window.newFullscreenControls
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -34,23 +33,25 @@ fun DecoratedWindowScope.WindowTitleBar() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun DecoratedWindowScope.WindowTitleBarComponent(state: WindowTitleBarState, onEvent: (MainEvents) -> Unit) {
+private fun DecoratedWindowScope.WindowTitleBarComponent(state: WindowTitleBarState, onEvent : (MainEvents) -> Unit) {
     TitleBar() {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.newFullscreenControls()
+                .padding(start = 8.dp)
+                .align(Alignment.Start),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            ConnexionStatusIcon(state.isConnected)
+            Row(Modifier.align(Alignment.Start)) {
+                ConnexionStatusIcon(state.isConnected)
 
-            Text(text = title, modifier = Modifier.padding(start = 8.dp))
+                Text(text = title, modifier = Modifier.padding(start = 8.dp))
+            }
+            Row(Modifier.padding(start = 32.dp).align(Alignment.End)) {
 
-            Spacer(Modifier.weight(1f))
-
-            Tooltip({ Text(stringResource(Res.string.open_github_page)) }) {
-                IconButton(onClick = { onEvent(MainEvents.openGithubPage) }) {
-                    Icon(imageVector = Github, contentDescription = "GitHub", tint = iconColor())
+                Tooltip({ Text(stringResource(Res.string.open_github_page)) }) {
+                    IconButton(onClick = { onEvent(MainEvents.openGithubPage) }) {
+                        Icon(imageVector = Github, contentDescription = "GitHub", tint = iconColor())
+                    }
                 }
             }
 
