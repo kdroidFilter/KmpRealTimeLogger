@@ -27,7 +27,7 @@ import kotlinx.serialization.protobuf.ProtoBuf
 import kotlin.time.Duration.Companion.seconds
 
 
-// Variables globales pour gérer les connexions WebSocket
+// Global variables to manage WebSocket connections
 internal var webSocketChannel: SendChannel<Frame>? = null
 internal val connections = mutableSetOf<DefaultWebSocketServerSession>()
 internal val mutex = Mutex()
@@ -57,28 +57,28 @@ actual fun startServer() {
                 webSocket("/log") {
                     webSocketChannel = this.outgoing
 
-                    // Ajouter la nouvelle connexion au set
+                    // Add the new connection to the set
                     mutex.withLock {
                         connections += this
                     }
 
                     try {
-                        // Écouter les frames entrants
+                        // Listen for incoming frames
                         for (frame in incoming) {
                             if (frame is Frame.Binary) {
-                                // Désérialiser le message Protobuf
+                                // Deserialize the Protobuf message
                                 val logMessage = ProtoBuf.decodeFromByteArray<LogMessage>(frame.readBytes())
 
-                                // Diffuser le message reçu à tous les clients connectés
+                                // Broadcast the received message to all connected clients
                                 mutex.withLock {
                                     connections.forEach { session ->
                                         launch {
                                             try {
-                                                // Sérialiser le message en Protobuf pour diffusion
+                                                // Serialize the message to Protobuf for broadcast
                                                 val serializedMessage = ProtoBuf.encodeToByteArray(logMessage)
                                                 session.outgoing.send(Frame.Binary(true, serializedMessage))
                                             } catch (e: Exception) {
-                                                // Gérer les exceptions d'envoi
+                                                // TODO Handle sending exceptions
                                             }
                                         }
                                     }
@@ -86,11 +86,11 @@ actual fun startServer() {
                             }
                         }
                     } catch (e: ClosedReceiveChannelException) {
-                        // Client déconnecté
+                        // Client disconnected
                     } catch (e: Exception) {
-                        // Gérer d'autres exceptions
+                        // Handle other exceptions
                     } finally {
-                        // Supprimer la connexion lorsqu'elle se ferme
+                        // Delete the connection when it closes
                         mutex.withLock {
                             connections -= this
                         }
@@ -101,7 +101,7 @@ actual fun startServer() {
     }
 }
 
-// Fonction pour envoyer un message en Protobuf à tous les clients WebSocket connectés
+// Function to send a message in Protobuf to all connected WebSocket clients
 @OptIn(ExperimentalSerializationApi::class)
 actual suspend fun sendMessageToWebSocket(logMessage: LogMessage) {
     val serializedMessage = ProtoBuf.encodeToByteArray(logMessage)
@@ -110,7 +110,7 @@ actual suspend fun sendMessageToWebSocket(logMessage: LogMessage) {
             try {
                 session.outgoing.send(Frame.Binary(true, serializedMessage))
             } catch (e: Exception) {
-                // Gérer les exceptions d'envoi
+                // TODO Handle sending exceptions
             }
         }
     }
