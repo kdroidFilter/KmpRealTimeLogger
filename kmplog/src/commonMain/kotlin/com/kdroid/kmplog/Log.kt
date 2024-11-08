@@ -28,8 +28,7 @@ object Log {
     fun enableBroadcastingMode(port: Int = DEFAULT_SERVICE_PORT) {
         isBroadcastingMode = true
         if (!isServerRunning) {
-            startServer(port)
-            publishMdnsService()
+
         }
         isServerRunning = true
     }
@@ -52,7 +51,6 @@ fun printAndGetLocalLog(priority: Int, tag: String, message: String) : LogMessag
 
 expect fun printAndSendLog(priority: Int, tag: String, msg: String)
 
-expect fun startServer(port : Int)
 
 expect fun Log.v(tag: String, msg: String)
 expect fun Log.d(tag: String, msg: String)
@@ -62,6 +60,4 @@ expect fun Log.e(tag: String, msg: String, throwable: Throwable? = null)
 expect fun Log.wtf(tag: String, msg: String)
 expect fun Log.println(priority: Int, tag: String, msg: String)
 
-expect suspend fun sendMessageToWebSocket(logMessage: LogMessage)
 
-expect fun publishMdnsService()

@@ -2,82 +2,39 @@ package com.kdroid.kmplog.websocket
 
 import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import com.kdroid.kmplog.core.LogMessage
-import com.kdroid.kmplog.core.SERVICE_PATH
+import com.kdroid.kmplog.core.SERVER_PATH
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.http.*
-import io.ktor.websocket.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import io.ktor.serialization.kotlinx.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
 
-class WebSocketManager(
-) {
-    private val client = HttpClient(engine) {
-        install(WebSockets)
+
+@OptIn(ExperimentalSerializationApi::class)
+val client = HttpClient(engine) {
+    install(WebSockets) {
+        contentConverter = KotlinxWebsocketSerializationConverter(ProtoBuf)
     }
+}
 
-    private var isWebSocketStarted = false
-
-
-    private var _isConnected = MutableStateFlow(false)
-    val isConnected: StateFlow<Boolean> get() = _isConnected
-
-    private val _messages = MutableSharedFlow<LogMessage>()
-    val messages: SharedFlow<LogMessage> get() = _messages
-
-    @OptIn(ExperimentalSerializationApi::class)
-    fun startWebSocket() {
-        if (isWebSocketStarted) return
-        isWebSocketStarted = true
-        CoroutineScope(Dispatchers.Default).launch {
-            val isAutoDetection = true // TODO
-            val host = if (isAutoDetection) getIpService() else TODO()
-            val port = if (isAutoDetection) DEFAULT_SERVICE_PORT else TODO()
-
-            while (true) {
-                try {
-                    client.webSocket(
-                        method = HttpMethod.Get,
-                        host = host,
-                        port = port,
-                        path = SERVICE_PATH
-                    ) {
-                        _isConnected.value = true
-                        for (frame in incoming) {
-                            if (frame is Frame.Binary) {
-                                val logMessage = ProtoBuf.decodeFromByteArray<LogMessage>(frame.readBytes())
-                                _messages.emit(logMessage)
-                            }
-                        }
-                    }
-                } catch (e: Exception) {
-                    _isConnected.value = false
-                    delay(1000)
-                }
+@OptIn(DelicateCoroutinesApi::class)
+fun sendMessageToWebSocket(logMessage: LogMessage) {
+    GlobalScope.launch {
+        try {
+            client.webSocket(
+                method = HttpMethod.Get,
+                host = "0.0.0.0",
+                port = DEFAULT_SERVICE_PORT,
+                path = SERVER_PATH
+            ) {
+                sendSerialized(logMessage)
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
-
-    fun closeConnection() {
-        client.close()
-        _isConnected.value = false
-    }
-
-    fun restartWebSocket() {
-        if (isWebSocketStarted) {
-            closeConnection()
-            isWebSocketStarted = false
-        }
-        startWebSocket()
-    }
-
 }

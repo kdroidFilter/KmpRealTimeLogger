@@ -2,6 +2,7 @@
 
 package com.kdroid.kmplog
 
+import com.kdroid.kmplog.websocket.sendMessageToWebSocket
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -14,6 +15,3 @@ actual fun printAndSendLog(priority: Int, tag: String, msg: String) {
     }
 }
 
-actual fun publishMdnsService() {
-    //TODO
-}

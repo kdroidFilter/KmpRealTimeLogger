@@ -2,6 +2,7 @@ package com.kdroid.kmplog.client.core.data.network
 
 import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import com.kdroid.kmplog.core.LogMessage
+import com.kdroid.kmplog.core.SERVER_PATH
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
@@ -21,7 +22,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromByteArray
-import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
 import kotlin.time.Duration.Companion.seconds
 
@@ -56,7 +56,7 @@ fun startServer(port : Int = DEFAULT_SERVICE_PORT) {
             }
 
             routing {
-                webSocket("/log") {
+                webSocket(SERVER_PATH) {
                     webSocketChannel = this.outgoing
 
                     // Add the new connection to the set
@@ -74,20 +74,7 @@ fun startServer(port : Int = DEFAULT_SERVICE_PORT) {
                                 // Emit the message to the flow
                                 logMessagesFlow.emit(logMessage)
 
-                                // Broadcast the received message to all connected clients
-                                mutex.withLock {
-                                    connections.forEach { session ->
-                                        launch {
-                                            try {
-                                                // Serialize the message to Protobuf for broadcast
-                                                val serializedMessage = ProtoBuf.encodeToByteArray(logMessage)
-                                                session.outgoing.send(Frame.Binary(true, serializedMessage))
-                                            } catch (e: Exception) {
-                                                // TODO Handle sending exceptions
-                                            }
-                                        }
-                                    }
-                                }
+
                             }
                         }
                     } catch (e: ClosedReceiveChannelException) {

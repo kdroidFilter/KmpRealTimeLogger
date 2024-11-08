@@ -5,6 +5,7 @@ import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import com.kdroid.androidcontextprovider.ContextProvider
 import com.kdroid.kmplog.core.*
+import com.kdroid.kmplog.websocket.sendMessageToWebSocket
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -70,34 +71,3 @@ private fun sendLog(priority: Int, tag: String, msg: String, throwable: String? 
     }
 }
 
-actual fun publishMdnsService() {
-    val context = ContextProvider.getContext()
-
-    val nsdManager = context.getSystemService(Context.NSD_SERVICE) as NsdManager
-
-    val serviceInfo = NsdServiceInfo().apply {
-        serviceName = SERVICE_NAME
-        serviceType = ANDROID_SERVICE_TYPE
-        port = DEFAULT_SERVICE_PORT
-    }
-
-    val registrationListener = object : NsdManager.RegistrationListener {
-        override fun onServiceRegistered(nsdServiceInfo: NsdServiceInfo) {
-            println("Service mDNS enregistré : ${nsdServiceInfo.serviceName} sur le port ${nsdServiceInfo.port}")
-        }
-
-        override fun onRegistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
-            println("Échec de l'enregistrement du service : erreur $errorCode")
-        }
-
-        override fun onServiceUnregistered(nsdServiceInfo: NsdServiceInfo) {
-            println("Service mDNS désenregistré : ${nsdServiceInfo.serviceName}")
-        }
-
-        override fun onUnregistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
-            println("Échec du désenregistrement du service : erreur $errorCode")
-        }
-    }
-
-    nsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
-}

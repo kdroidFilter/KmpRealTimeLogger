@@ -7,7 +7,7 @@ const val SERVICE_TYPE = "_websocket._tcp.local."
 const val ANDROID_SERVICE_TYPE = "_websocket._tcp."
 const val SERVICE_NAME = "KmpLog"
 const val DEFAULT_SERVICE_PORT = 8180
-const val SERVICE_PATH = "/log"
+const val SERVER_PATH = "/log"
 const val SERICE_DESCRIPTION = "KmpLog Websocket Service"
 
 //Priority

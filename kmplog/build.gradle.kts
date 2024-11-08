@@ -80,6 +80,7 @@ kotlin {
             //Ktor client
             implementation(libs.ktor.client.websockets)
             implementation(libs.ktor.ktor.client.core)
+            implementation("io.ktor:ktor-serialization-kotlinx-protobuf:3.0.0")
 
 
         }
@@ -97,6 +98,7 @@ kotlin {
         val jsWasmJsMain by creating {
             dependsOn(commonMain.get())
             dependencies {
+                implementation(libs.ktor.client.js)
             }
         }
 
@@ -112,7 +114,6 @@ kotlin {
         val nativeJvmWasmMain by creating {
             dependsOn(commonMain.get())
             dependencies {
-                api(libs.ktor.client.js)
 
             }
         }
@@ -184,7 +185,6 @@ kotlin {
 
         }
         jsMain {
-            dependsOn(nativeJvmWasmMain)
             dependsOn(jsWasmJsMain)
 
         }
