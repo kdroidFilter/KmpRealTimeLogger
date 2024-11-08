@@ -205,10 +205,11 @@ compose.desktop {
             windows {
                 dirChooser = true
                 perUserInstall = true
-                iconFile.set(rootProject.file("assets/logo.ico"))
+                iconFile.set(rootProject.file("assets/icon.ico"))
+                menuGroup = "start-menu-group"
             }
             linux {
-                iconFile.set(rootProject.file("assets/logo.png"))
+                iconFile.set(rootProject.file("assets/icon.png"))
 
             }
         }

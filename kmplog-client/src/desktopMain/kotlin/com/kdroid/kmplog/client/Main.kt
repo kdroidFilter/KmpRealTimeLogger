@@ -13,7 +13,7 @@ import com.kdroid.kmplog.client.core.presentation.theme.isSystemInDarkTheme
 import com.kdroid.kmplog.client.features.screens.windowstitlebar.WindowTitleBar
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.app_name
-import com.kdroid.kmplog.client.kmplog_client.generated.resources.logo
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.icon
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme
@@ -43,7 +43,7 @@ fun main() {
             DecoratedWindow(
                 onCloseRequest = { exitApplication() },
                 title = stringResource(Res.string.app_name),
-                icon = painterResource(Res.drawable.logo),
+                icon = painterResource(Res.drawable.icon),
                 state = getCenteredWindowState(800, 600),
                 content = {
                     WindowTitleBar()
