@@ -71,7 +71,6 @@ class HomeViewModel(
                 viewModelScope.launch {
                     HomeSettingsEventDispatcher.emit(SettingsEvent.OnCloseSettings)
                     _isSettingsVisible.value = false
-
                 }
             }
         }

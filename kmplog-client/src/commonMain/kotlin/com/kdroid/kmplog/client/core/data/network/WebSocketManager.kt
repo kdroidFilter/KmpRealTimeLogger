@@ -73,4 +73,13 @@ class WebSocketManager(
         client.close()
         _isConnected.value = false
     }
+
+    fun restartWebSocket() {
+        if (isWebSocketStarted) {
+            closeConnection()
+            isWebSocketStarted = false
+        }
+        startWebSocket()
+    }
+
 }

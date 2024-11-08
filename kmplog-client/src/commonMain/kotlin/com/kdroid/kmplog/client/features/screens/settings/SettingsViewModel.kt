@@ -69,6 +69,7 @@ class SettingsViewModel(private val navigator: Navigator, private val repository
             repository.saveCustomIpAddress(_customIp.value)
             repository.saveCustomPort(_customPort.value)
         } else { resetSettings() }
+
     }
 
 
