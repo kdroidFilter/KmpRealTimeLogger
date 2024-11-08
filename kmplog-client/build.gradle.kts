@@ -90,9 +90,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel.navigation)
             implementation(libs.koin.compose)
 
-            //Ktor client
-            implementation(libs.ktor.client.websockets)
-            implementation(libs.ktor.ktor.client.core)
+
 
             //Ktor Serveur
             implementation(libs.ktor.server.core)
@@ -136,7 +134,6 @@ kotlin {
                 implementation(libs.jewel.foundation)
                 //
                 implementation(libs.jmdns)
-                implementation(libs.ktor.client.cio)
             }
         }
 

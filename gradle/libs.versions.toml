@@ -1,5 +1,6 @@
 [versions]
 
+androidcontextprovider = "1.0.1"
 composablecore = "1.19.1"
 jmdns = "3.5.12"
 jsystemthemedetector = "3.7"
@@ -31,6 +32,7 @@ uiToolingPreviewDesktop = "1.7.0"
 core-splashscreen = "1.1.0-rc01"
 
 [libraries]
+androidcontextprovider = { module = "io.github.kdroidfilter:androidcontextprovider", version.ref = "androidcontextprovider" }
 composables-core = { module = "com.composables:core", version.ref = "composablecore" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 jmdns = { module = "org.jmdns:jmdns", version.ref = "jmdns" }

@@ -1,17 +1,16 @@
 package com.kdroid.kmplog.client.core.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.kdroid.kmplog.client.core.data.network.WebSocketManager
 import com.kdroid.kmplog.client.core.presentation.uimessagetoaster.UiMessageToasterViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val webSocketManager: WebSocketManager) : UiMessageToasterViewModel() {
-    val isConnected get() = webSocketManager.isConnected
+class MainViewModel : UiMessageToasterViewModel() {
+    val isConnected = MutableStateFlow(false) //TODO
     private var wasConnectedPreviously: Boolean = false
 
     init {
         observeConnectionStatus()
-        webSocketManager.startWebSocket()
 
     }
     fun onEvent(events: MainEvents) {

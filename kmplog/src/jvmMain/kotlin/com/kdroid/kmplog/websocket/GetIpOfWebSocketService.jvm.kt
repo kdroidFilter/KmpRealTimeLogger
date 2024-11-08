@@ -1,17 +1,12 @@
-package com.kdroid.kmplog.client.core.data.network
+package com.kdroid.kmplog.websocket
 
 import com.kdroid.kmplog.core.SERVICE_TYPE
-import io.ktor.client.engine.*
-import io.ktor.client.engine.cio.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.InetAddress
 import javax.jmdns.JmDNS
 import javax.jmdns.ServiceEvent
 import javax.jmdns.ServiceListener
-
-actual val engine: HttpClientEngine
-    get() = CIO.create()
 
 actual suspend fun getIpService(): String? {
     var ipAddress: String? = null
@@ -56,4 +51,3 @@ actual suspend fun getIpService(): String? {
     }
     return ipAddress
 }
-

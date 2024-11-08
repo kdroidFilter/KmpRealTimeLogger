@@ -1,9 +1,8 @@
-package com.kdroid.kmplog.client.core.data.network
+package com.kdroid.kmplog.websocket
 
-import com.kdroid.kmplog.client.core.domain.repository.SettingsPreferencesRepository
+import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import com.kdroid.kmplog.core.LogMessage
 import com.kdroid.kmplog.core.SERVICE_PATH
-import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.http.*
@@ -21,7 +20,6 @@ import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
 
 class WebSocketManager(
-    private val settingsRepository: SettingsPreferencesRepository
 ) {
     private val client = HttpClient(engine) {
         install(WebSockets)
@@ -41,9 +39,9 @@ class WebSocketManager(
         if (isWebSocketStarted) return
         isWebSocketStarted = true
         CoroutineScope(Dispatchers.Default).launch {
-            val isAutoDetection = settingsRepository.getAutomaticDetectionState()
-            val host = if (isAutoDetection) getIpService() else settingsRepository.getCustomIpAddress("localhost")
-            val port = if (isAutoDetection) DEFAULT_SERVICE_PORT else settingsRepository.getCustomPort().toInt()
+            val isAutoDetection = true // TODO
+            val host = if (isAutoDetection) getIpService() else TODO()
+            val port = if (isAutoDetection) DEFAULT_SERVICE_PORT else TODO()
 
             while (true) {
                 try {

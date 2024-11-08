@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.vannitktech.maven.publish)
 }
 
-val appVersion : String by rootProject.extra
+val appVersion: String by rootProject.extra
 
 group = "com.kdroid.kmplog"
 
@@ -22,18 +22,18 @@ kotlin {
     jvm()
 
     js {
-       browser {
-           webpackTask {
+        browser {
+            webpackTask {
                 mainOutputFileName = "kmplog.js"
             }
-       }
+        }
         binaries.executable()
-   }
+    }
 
     wasmJs {
         browser()
-       binaries.executable()
-       }
+        binaries.executable()
+    }
 
     listOf(
         iosX64(),
@@ -77,12 +77,9 @@ kotlin {
 
             implementation(project(":kmplog-core"))
 
-            //Ktor
-            implementation(libs.ktor.server.core)
-            implementation(libs.ktor.server.websockets)
-            implementation(libs.ktor.server.cors)
-            implementation(libs.ktor.serialization.kotlinx.protobuf)
-            implementation(libs.ktor.server.content.negotiation)
+            //Ktor client
+            implementation(libs.ktor.client.websockets)
+            implementation(libs.ktor.ktor.client.core)
 
 
         }
@@ -97,10 +94,17 @@ kotlin {
         nativeMain.dependencies {
         }
 
+        val jsWasmJsMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+            }
+        }
+
         val nativeJvmAndroidMain by creating {
             dependsOn(commonMain.get())
             dependencies {
                 implementation(libs.ktor.server.cio)
+                implementation(libs.ktor.client.cio)
 
             }
         }
@@ -108,6 +112,8 @@ kotlin {
         val nativeJvmWasmMain by creating {
             dependsOn(commonMain.get())
             dependencies {
+                api(libs.ktor.client.js)
+
             }
         }
 
@@ -128,12 +134,11 @@ kotlin {
         }
 
 
-
         androidMain {
             dependsOn(nativeJvmAndroidMain)
             dependsOn(jvmAndroidMain)
             dependencies {
-                implementation("io.github.kdroidfilter:androidcontextprovider:1.0.0")
+                implementation(libs.androidcontextprovider)
             }
         }
 
@@ -174,8 +179,16 @@ kotlin {
             dependsOn(nativeMain)
         }
         wasmJsMain {
-           dependsOn(nativeJvmWasmMain)
-       }
+            dependsOn(nativeJvmWasmMain)
+            dependsOn(jsWasmJsMain)
+
+        }
+        jsMain {
+            dependsOn(nativeJvmWasmMain)
+            dependsOn(jsWasmJsMain)
+
+        }
+
         jvmMain {
             dependsOn(nativeJvmWasmMain)
             dependsOn(nativeJvmAndroidMain)
@@ -269,7 +282,7 @@ mavenPublishing {
     }
 
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-    
+
     signAllPublications()
 }
 

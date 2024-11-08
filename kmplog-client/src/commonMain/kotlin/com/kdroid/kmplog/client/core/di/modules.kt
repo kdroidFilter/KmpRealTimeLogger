@@ -2,11 +2,9 @@ package com.kdroid.kmplog.client.core.di
 
 import com.kdroid.kmplog.client.core.data.local.repository.HomePreferencesRepositoryImpl
 import com.kdroid.kmplog.client.core.data.local.repository.SettinsPreferencesRepositoryImpl
-import com.kdroid.kmplog.client.core.data.network.WebSocketManager
-import com.kdroid.kmplog.client.core.data.network.engine
-import com.kdroid.kmplog.client.core.presentation.MainViewModel
 import com.kdroid.kmplog.client.core.domain.repository.HomePreferencesRepository
 import com.kdroid.kmplog.client.core.domain.repository.SettingsPreferencesRepository
+import com.kdroid.kmplog.client.core.presentation.MainViewModel
 import com.kdroid.kmplog.client.core.presentation.navigation.DefaultNavigator
 import com.kdroid.kmplog.client.core.presentation.navigation.Destination
 import com.kdroid.kmplog.client.core.presentation.navigation.Navigator
@@ -25,16 +23,12 @@ val appModule = module {
     //Preferences
     single { Settings() }
     single<HomePreferencesRepository> { HomePreferencesRepositoryImpl(settings = get()) }
-    single<SettingsPreferencesRepository>{ SettinsPreferencesRepositoryImpl(settings = get()) }
-
-    //WebSocket
-    single {  WebSocketManager(settingsRepository = get()) }
+    single<SettingsPreferencesRepository> { SettinsPreferencesRepositoryImpl(settings = get()) }
 
     //ViewModels
-    viewModel { MainViewModel(webSocketManager = get()) }
-    viewModel { HomeViewModel(engine, navigator= get(), repository = get(), webSocketManager = get()) }
+    viewModel { MainViewModel() }
+    viewModel { HomeViewModel(navigator = get(), repository = get()) }
     viewModel { SettingsViewModel(repository = get(), navigator = get()) }
-
 
 }
 

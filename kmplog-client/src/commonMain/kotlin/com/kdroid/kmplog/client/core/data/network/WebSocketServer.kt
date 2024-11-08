@@ -1,5 +1,6 @@
 package com.kdroid.kmplog.client.core.data.network
 
+import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import com.kdroid.kmplog.core.LogMessage
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.server.application.*
@@ -14,6 +15,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -28,8 +30,11 @@ internal var webSocketChannel: SendChannel<Frame>? = null
 internal val connections = mutableSetOf<DefaultWebSocketServerSession>()
 internal val mutex = Mutex()
 
+// Global flow to emit received LogMessages
+val logMessagesFlow = MutableSharedFlow<LogMessage>()
+
 @OptIn(ExperimentalSerializationApi::class, DelicateCoroutinesApi::class)
-fun startServer(port : Int) {
+fun startServer(port : Int = DEFAULT_SERVICE_PORT) {
     GlobalScope.launch {
         embeddedServer(CIO, port = port, host = "0.0.0.0") {
 
@@ -66,6 +71,9 @@ fun startServer(port : Int) {
                                 // Deserialize the Protobuf message
                                 val logMessage = ProtoBuf.decodeFromByteArray<LogMessage>(frame.readBytes())
 
+                                // Emit the message to the flow
+                                logMessagesFlow.emit(logMessage)
+
                                 // Broadcast the received message to all connected clients
                                 mutex.withLock {
                                     connections.forEach { session ->
@@ -87,7 +95,7 @@ fun startServer(port : Int) {
                     } catch (e: Exception) {
                         // Handle other exceptions
                     } finally {
-                        // Delete the connection when it closes
+                        // Remove the connection when it closes
                         mutex.withLock {
                             connections -= this
                         }

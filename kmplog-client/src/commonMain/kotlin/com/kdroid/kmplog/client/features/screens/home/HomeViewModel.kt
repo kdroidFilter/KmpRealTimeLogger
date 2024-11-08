@@ -4,14 +4,11 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kdroid.kmplog.client.core.data.local.HomeSettingsEventDispatcher
-import com.kdroid.kmplog.client.core.data.network.WebSocketManager
+import com.kdroid.kmplog.client.core.data.network.logMessagesFlow
 import com.kdroid.kmplog.client.core.domain.repository.HomePreferencesRepository
 import com.kdroid.kmplog.client.core.presentation.navigation.Navigator
 import com.kdroid.kmplog.client.features.screens.settings.SettingsEvent
 import com.kdroid.kmplog.core.LogMessage
-import io.ktor.client.*
-import io.ktor.client.engine.*
-import io.ktor.client.plugins.websocket.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,15 +16,10 @@ import kotlinx.coroutines.launch
 
 
 class HomeViewModel(
-    engine: HttpClientEngine,
     private val navigator: Navigator,
     private val repository: HomePreferencesRepository,
-    private val webSocketManager: WebSocketManager
 ) : ViewModel() {
 
-    private val client = HttpClient(engine) {
-        install(WebSockets)
-    }
 
 
     private val _isSettingsVisible = MutableStateFlow(false)
@@ -41,8 +33,8 @@ class HomeViewModel(
 
     private fun observeMessages() {
         viewModelScope.launch {
-            webSocketManager.messages.collect { message ->
-                _messages.add(message)
+            logMessagesFlow.collect { logMessage ->
+                _messages.add(logMessage)
             }
         }
     }
@@ -89,11 +81,6 @@ class HomeViewModel(
         setFontSize(_fontSize.value - 1)
     }
 
-
-    override fun onCleared() {
-        super.onCleared()
-        client.close()
-    }
 
     init {
         observeMessages()

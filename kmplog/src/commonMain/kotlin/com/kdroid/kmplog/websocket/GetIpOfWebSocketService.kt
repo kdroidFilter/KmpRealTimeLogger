@@ -1,4 +1,4 @@
-package com.kdroid.kmplog.client.core.data.network
+package com.kdroid.kmplog.websocket
 
 import io.ktor.client.engine.*
 

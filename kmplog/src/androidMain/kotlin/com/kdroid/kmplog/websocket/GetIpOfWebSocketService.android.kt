@@ -1,28 +1,22 @@
-package com.kdroid.kmplog.client.core.data.network
+package com.kdroid.kmplog.websocket
 
 import android.content.Context
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.os.Build
+import com.kdroid.androidcontextprovider.ContextProvider
 import com.kdroid.kmplog.core.ANDROID_SERVICE_TYPE
 import com.kdroid.kmplog.core.SERVICE_NAME
-import io.ktor.client.engine.*
-import io.ktor.client.engine.cio.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent.inject
 import java.util.concurrent.Executors
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-
-actual val engine: HttpClientEngine
-    get() = CIO.create()
-
 actual suspend fun getIpService(): String? {
-    val context : Context by inject(Context::class.java)
+    val context : Context = ContextProvider.getContext()
     return withContext(Dispatchers.IO) {
         suspendCoroutine { continuation ->
 
