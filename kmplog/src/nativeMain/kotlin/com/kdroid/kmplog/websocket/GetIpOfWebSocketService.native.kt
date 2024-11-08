@@ -1,5 +1,5 @@
 package com.kdroid.kmplog.websocket
 
-actual suspend fun getIpService(): String? {
+actual suspend fun getIpOfWebSocketService(): String? {
     TODO("Not yet implemented")
 }

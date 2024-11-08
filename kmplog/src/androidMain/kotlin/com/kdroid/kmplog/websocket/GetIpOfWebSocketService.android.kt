@@ -15,7 +15,7 @@ import java.util.concurrent.Executors
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-actual suspend fun getIpService(): String? {
+actual suspend fun getIpOfWebSocketService(): String? {
     val context : Context = ContextProvider.getContext()
     return withContext(Dispatchers.IO) {
         suspendCoroutine { continuation ->
