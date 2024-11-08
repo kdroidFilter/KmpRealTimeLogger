@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KmpLog Client</string>
+    <string name="app_name">Kmp RealTime Logger</string>
     <!--Top App Bar-->
     <string name="zoom_in">Zoom In</string>
     <string name="zoom_out">Zoom Out</string>
