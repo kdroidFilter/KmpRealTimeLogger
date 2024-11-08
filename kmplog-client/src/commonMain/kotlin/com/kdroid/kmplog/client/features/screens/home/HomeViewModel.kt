@@ -36,7 +36,6 @@ class HomeViewModel(
     private val _messages = mutableStateListOf<LogMessage>()
     val logMessages: List<LogMessage> get() = _messages
 
-
     private var _fontSize = MutableStateFlow(repository.getFontSize())
     val fontSize = _fontSize.asStateFlow()
 
@@ -47,7 +46,6 @@ class HomeViewModel(
             }
         }
     }
-
 
 
     private fun navigateToSettings() {

@@ -26,6 +26,10 @@ class WebSocketManager(
     private val client = HttpClient(engine) {
         install(WebSockets)
     }
+
+    private var isWebSocketStarted = false
+
+
     private var _isConnected = MutableStateFlow(false)
     val isConnected: StateFlow<Boolean> get() = _isConnected
 
@@ -34,6 +38,8 @@ class WebSocketManager(
 
     @OptIn(ExperimentalSerializationApi::class)
     fun startWebSocket() {
+        if (isWebSocketStarted) return
+        isWebSocketStarted = true
         CoroutineScope(Dispatchers.Default).launch {
             val isAutoDetection = settingsRepository.getAutomaticDetectionState()
             val host = if (isAutoDetection) getIpService() else settingsRepository.getCustomIpAddress("localhost")

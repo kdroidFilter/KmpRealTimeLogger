@@ -27,14 +27,14 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DecoratedWindowScope.WindowTitleBar() {
-    val mainViewModel : MainViewModel = koinViewModel()
+    val mainViewModel: MainViewModel = koinViewModel()
     val state = rememberWindowTitleBarState(mainViewModel)
     WindowTitleBarComponent(state, onEvent = mainViewModel::onEvent)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun DecoratedWindowScope.WindowTitleBarComponent(state: WindowTitleBarState, onEvent : (MainEvents) -> Unit) {
+private fun DecoratedWindowScope.WindowTitleBarComponent(state: WindowTitleBarState, onEvent: (MainEvents) -> Unit) {
     TitleBar() {
         Row(
             modifier = Modifier
