@@ -18,7 +18,7 @@ val appPackageName = "com.kdroid.kmplog.client"
 group = appPackageName
 
 android {
-    namespace = "com.kdroid.kmplog.client"
+    namespace = appPackageName
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -26,7 +26,7 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = "com.kdroid.kmplog.client"
+        applicationId = appPackageName
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -104,7 +104,9 @@ kotlin {
 
             //UI
             implementation(libs.composables.core)
-            implementation("io.github.dokar3:sonner:0.3.9") //from my fork, need to upload it on mavenlocal
+            implementation("io.github.dokar3:sonner:0.3.8") {
+                exclude(group = "org.jetbrains.compose")
+            }
 
         }
 
