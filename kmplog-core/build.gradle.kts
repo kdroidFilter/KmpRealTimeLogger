@@ -1,12 +1,13 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.serialization)
     alias(libs.plugins.vannitktech.maven.publish)
 }
-
+val appVersion : String by rootProject.extra
 group = "com.kdroid.kmplog.core"
-version = "0.5.1"
 
 kotlin {
     jvmToolchain(11)
@@ -90,4 +91,42 @@ android {
     defaultConfig {
         minSdk = 21
     }
+}
+
+mavenPublishing {
+    coordinates(
+        groupId = "io.github.kdroidfilter",
+        artifactId = "kmplog-core",
+        version = appVersion
+    )
+
+    pom {
+        name.set("KMPLog Core")
+        description.set("Core for Kmp Log library and Client")
+        inceptionYear.set("2024")
+        url.set("https://github.com/kdroidFilter/KMPLog")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+
+        developers {
+            developer {
+                id.set("kdroidfilter")
+                name.set("Elyahou Hadass")
+                email.set("elyahou.hadass@gmail.com")
+            }
+        }
+
+        scm {
+            url.set("https://github.com/kdroidFilter/KMPLog ")
+        }
+    }
+
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
 }

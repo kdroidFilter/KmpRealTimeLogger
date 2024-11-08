@@ -7,8 +7,9 @@ plugins {
     alias(libs.plugins.vannitktech.maven.publish)
 }
 
+val appVersion : String by rootProject.extra
+
 group = "com.kdroid.kmplog"
-version = "0.5.1"
 
 
 kotlin {
@@ -238,10 +239,9 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.kdroidfilter",
         artifactId = "kmplog",
-        version = version.toString()
+        version = appVersion
     )
 
-    // Configure POM metadata for the published artifact
     pom {
         name.set("KMPLog")
         description.set("Logging library that replicates the functionality of Android's Log library")
@@ -255,7 +255,6 @@ mavenPublishing {
             }
         }
 
-        // Specify developers information
         developers {
             developer {
                 id.set("kdroidfilter")
@@ -264,17 +263,13 @@ mavenPublishing {
             }
         }
 
-        // Specify SCM information
         scm {
             url.set("https://github.com/kdroidFilter/KMPLog ")
         }
     }
 
-    // Configure publishing to Maven Central
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-
     
-    // Enable GPG signing for all publications
     signAllPublications()
 }
 

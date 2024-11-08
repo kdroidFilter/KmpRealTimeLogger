@@ -1,8 +1,7 @@
+
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -13,11 +12,10 @@ plugins {
 
 }
 
-val appVersion = "0.5.0"
+val appVersion : String by rootProject.extra
 val appPackageName = "com.kdroid.kmplog.client"
 
 group = appPackageName
-version = appVersion
 
 android {
     namespace = "com.kdroid.kmplog.client"
@@ -61,24 +59,6 @@ dependencies {
 kotlin {
     jvm("desktop")
   //  jvmToolchain(17)
-
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        moduleName = "composeApp"
-        browser {
-            val projectDirPath = project.projectDir.path
-            commonWebpackConfig {
-                outputFileName = "composeApp.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(projectDirPath)
-                    }
-                }
-            }
-        }
-        binaries.executable()
-    }
 
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -142,24 +122,15 @@ kotlin {
                 //Jewel
                 implementation(libs.jewel)
                 implementation(libs.jewel.decorated)
-
                 implementation(libs.jewel.foundation)
-                    //  implementation(libs.jewel.icons)
                 //
                 implementation(libs.jmdns)
                 implementation(libs.ktor.client.cio)
             }
         }
-        val androidWasmMain by creating {
-            dependsOn(commonMain.get())
-            dependencies {
-                implementation(libs.ui.tiles)
-            }
-        }
 
         val androidMain by getting {
             dependsOn(commonMain.get())
-            dependsOn(androidWasmMain)
             dependencies {
                 implementation(libs.activity.ktx)
                 implementation(libs.androidx.appcompat)
@@ -168,22 +139,10 @@ kotlin {
                 implementation(libs.koin.androidx.compose.navigation)
                 implementation(libs.ktor.client.cio)
                 implementation(libs.core.splashscreen)
+                implementation(libs.ui.tiles)
 
             }
         }
-        val wasmJsMain by getting {
-            dependsOn(commonMain.get())
-            dependsOn(androidWasmMain)
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
-                implementation(libs.ktor.client.js)
-
-            }
-        }
-
     }
 
 }
@@ -198,7 +157,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Msi, TargetFormat.Deb)
             packageName = "Kmp RealTime Logger"
-            packageVersion = version.toString()
+            packageVersion = appVersion
             description = "A client application for real-time display and monitoring of logs across multiple platforms"
             copyright = "© 2024 KdroidFilter. All rights reserved."
             licenseFile.set(rootProject.file("LICENSE"))

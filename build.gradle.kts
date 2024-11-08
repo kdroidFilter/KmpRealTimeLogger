@@ -5,3 +5,5 @@ plugins {
     alias(libs.plugins.vannitktech.maven.publish).apply(false)
     alias(libs.plugins.compose.compiler) apply false
 }
+
+extra["appVersion"] = "0.5.2"
