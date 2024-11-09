@@ -51,7 +51,7 @@ Log.setDevelopmentMode(true)
 Logs will only be displayed when development mode is enabled, providing better control over logging during production and development phases.
 
 ### Enabling Broadcasting Mode 📡
-
+⚠️ Note: It is strongly recommended to enable broadcasting only in debug mode, for instance using BuildConfig.DEBUG on Android. Broadcasting logs in production environments could expose sensitive information. ⚠️
 KMPLog allows you to broadcast logs live to another device on the same local network. This can be useful for real-time log monitoring during development or debugging sessions.
 
 To enable broadcasting mode, use the following function:
