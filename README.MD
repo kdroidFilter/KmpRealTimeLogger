@@ -99,14 +99,14 @@ The client application uses mDNS to discover broadcasting devices automatically 
 Below are some screenshots demonstrating the functionality of the client application:
 
 - **Real-Time Log Monitoring**
-  
-  <div align="center">
-    <img src="assets/android_01.png" alt="Android 1" style="max-height: 400px;">
-  </div>
 
-<div align="center">
-  <img src="assets/desktop_01.png" alt="Desktop 1" style="max-height: 400px;">
-</div>
+<p align="center">
+    <img src="assets/android_01.png" alt="Android 1" height="400">
+</p>
+
+<p align="center">
+  <img src="assets/desktop_01.png" alt="Desktop 1" height="400">
+</p>
 
 ### Installation and Setup
 
