@@ -257,10 +257,10 @@ mavenPublishing {
     )
 
     pom {
-        name.set("KMPLog")
-        description.set("Logging library that replicates the functionality of Android's Log library")
+        name.set("Kmp RealTime Logger")
+        description.set("KMP RealTime Logger is a Kotlin Multiplatform logging library that replicates the Android Log API for use across all major platforms. It supports configurable log levels, throwable logging, and real-time log broadcasting to devices on the same local network, making debugging easier and more efficient.")
         inceptionYear.set("2024")
-        url.set("https://github.com/kdroidFilter/KMPLog")
+        url.set("https://github.com/kdroidFilter/KmpRealTimeLogger")
 
         licenses {
             license {
@@ -278,7 +278,7 @@ mavenPublishing {
         }
 
         scm {
-            url.set("https://github.com/kdroidFilter/KMPLog ")
+            url.set("https://github.com/kdroidFilter/KmpRealTimeLogger ")
         }
     }
 

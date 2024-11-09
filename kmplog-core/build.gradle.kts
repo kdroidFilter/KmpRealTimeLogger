@@ -101,10 +101,10 @@ mavenPublishing {
     )
 
     pom {
-        name.set("KMPLog Core")
-        description.set("Core for Kmp Log library and Client")
+        name.set("Kmp RealTime Logger Core")
+        description.set("Core for Kmp RealTime Logger library and Client Application")
         inceptionYear.set("2024")
-        url.set("https://github.com/kdroidFilter/KMPLog")
+        url.set("https://github.com/kdroidFilter/KmpRealTimeLogger")
 
         licenses {
             license {
@@ -122,7 +122,7 @@ mavenPublishing {
         }
 
         scm {
-            url.set("https://github.com/kdroidFilter/KMPLog ")
+            url.set("https://github.com/kdroidFilter/KmpRealTimeLogger")
         }
     }
 
