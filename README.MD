@@ -111,7 +111,7 @@ Below are some screenshots demonstrating the functionality of the client applica
 
 ### Installation and Setup
 
-The client application is available for installation on various platforms. Please refer to the [client app documentation](path/to/client_app_documentation) for more details on installation and usage.
+The client application is available for installation on Android, Windows and Linux. Please download it on the release section.
 
 ## API Reference
 
