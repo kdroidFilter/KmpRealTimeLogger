@@ -229,6 +229,7 @@ kotlin {
         jvmTest {
             dependsOn(nativeJvmWasmTest)
         }
+
     }
 
 

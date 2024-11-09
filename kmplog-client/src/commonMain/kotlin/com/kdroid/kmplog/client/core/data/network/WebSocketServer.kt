@@ -12,11 +12,11 @@ import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
-import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -25,17 +25,14 @@ import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
 import kotlin.time.Duration.Companion.seconds
 
-// Global variables to manage WebSocket connections
-internal var webSocketChannel: SendChannel<Frame>? = null
-internal val connections = mutableSetOf<DefaultWebSocketServerSession>()
-internal val mutex = Mutex()
-
-// Global flow to emit received LogMessages
+private val connections = mutableSetOf<DefaultWebSocketServerSession>()
+private val mutex = Mutex()
+val connectionStatus = MutableStateFlow(false)
 val logMessagesFlow = MutableSharedFlow<LogMessage>()
 
-@OptIn(ExperimentalSerializationApi::class, DelicateCoroutinesApi::class)
-fun startServer(port : Int = DEFAULT_SERVICE_PORT) {
-    GlobalScope.launch {
+@OptIn(ExperimentalSerializationApi::class)
+fun startServer(port: Int = DEFAULT_SERVICE_PORT) {
+    CoroutineScope(Dispatchers.IO).launch {
         embeddedServer(CIO, port = port, host = "0.0.0.0") {
 
             install(CORS) {
@@ -43,9 +40,7 @@ fun startServer(port : Int = DEFAULT_SERVICE_PORT) {
             }
 
             install(ContentNegotiation) {
-                protobuf(ProtoBuf {
-                    encodeDefaults = true
-                })
+                protobuf()
             }
 
             install(WebSockets) {
@@ -57,38 +52,42 @@ fun startServer(port : Int = DEFAULT_SERVICE_PORT) {
 
             routing {
                 webSocket(SERVER_PATH) {
-                    webSocketChannel = this.outgoing
-
-                    // Add the new connection to the set
                     mutex.withLock {
                         connections += this
+                        updateConnectionStatus()
+                        println("New connection: \${this.call.request.origin.remoteHost}")
                     }
 
                     try {
-                        // Listen for incoming frames
                         for (frame in incoming) {
                             if (frame is Frame.Binary) {
-                                // Deserialize the Protobuf message
-                                val logMessage = ProtoBuf.decodeFromByteArray<LogMessage>(frame.readBytes())
-
-                                // Emit the message to the flow
-                                logMessagesFlow.emit(logMessage)
-
-
+                                try {
+                                    val logMessage = ProtoBuf.decodeFromByteArray<LogMessage>(frame.readBytes())
+                                    logMessagesFlow.emit(logMessage)
+                                } catch (e: Exception) {
+                                    println("Error during message deserialization: \${e.message}")
+                                    continue
+                                }
                             }
                         }
+                        println("The 'incoming' loop ended normally.")
                     } catch (e: ClosedReceiveChannelException) {
-                        // Client disconnected
+                        println("Client disconnected: \${e.message}")
                     } catch (e: Exception) {
-                        // Handle other exceptions
+                        println("General exception: \${e.message}")
                     } finally {
-                        // Remove the connection when it closes
                         mutex.withLock {
                             connections -= this
+                            updateConnectionStatus()
+                            println("Connection closed: \${this.call.request.origin.remoteHost}")
                         }
                     }
                 }
             }
         }.start(wait = false)
     }
+}
+
+private fun updateConnectionStatus() {
+    connectionStatus.value = connections.isNotEmpty()
 }

@@ -1,10 +1,14 @@
 package com.kdroid.kmplog
 
 import com.kdroid.kmplog.core.*
+import com.kdroid.kmplog.websocket.WebSocketService
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 object Log {
 
     init {
+        GlobalScope.launch {  WebSocketService.initWebSocketConnection() }
         initializeCrashHandler()
     }
 
