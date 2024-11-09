@@ -40,6 +40,8 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+
         }
     }
     compileOptions {
@@ -159,9 +161,6 @@ kotlin {
 compose.desktop {
     application {
         mainClass = "com.kdroid.kmplog.client.MainKt"
-        buildTypes.release.proguard {
-            configurationFiles.from(project.file("compose-desktop.pro"))
-        }
         nativeDistributions {
             targetFormats(TargetFormat.Msi, TargetFormat.Deb)
             packageName = "Kmp RealTime Logger"
