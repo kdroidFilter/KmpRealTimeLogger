@@ -71,6 +71,8 @@ Log.enableBroadcastingMode("192.168.1.10", 8080)
 
 This will broadcast logs to the device with IP `192.168.1.10` on port `8080`.
 
+⚠️ Note: 
+When using the KMPLog library on an Android emulator, it is important to ensure that the emulator is connected to the Wi-Fi network. This allows the emulator to properly communicate over the local network for broadcasting and receiving logs.
 ### Checking if a Log Level is Loggable 🔍
 
 ```kotlin
