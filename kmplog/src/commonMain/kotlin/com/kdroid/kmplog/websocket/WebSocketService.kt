@@ -77,7 +77,7 @@ internal object WebSocketService {
             try {
                 it.sendSerialized(logMessage)
             } catch (e: Exception) {
-                e.printStackTrace()
+              //  e.printStackTrace()
                 // If an error occurs, the session is closed to allow a new connection attempt
                 session?.close()
                 session = null

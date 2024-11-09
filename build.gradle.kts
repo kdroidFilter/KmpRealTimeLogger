@@ -6,4 +6,4 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
 }
 
-extra["appVersion"] = "0.5.3"
+extra["appVersion"] = "0.6.0"
