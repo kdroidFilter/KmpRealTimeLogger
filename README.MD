@@ -10,10 +10,10 @@ KMP RealTime Logger is a Kotlin Multiplatform logging library that replicates th
 - Platform-specific implementations ⚙️
 - Available on Maven Central 📦
 - Throwable support in `Log.e()` for detailed error logging including stack traces 🐞
-- Development mode setting for controlling logging in production vs development phases 🛠️
-- Live log broadcasting to another device on the same local network 📡
+- Development mode setting for controlling logging in production vs development phases 🚼️
+- Live log broadcasting to another device on the same local network 🛡️
 
-## Installation 🛠️
+## Installation 🚠
 
 Add the following dependency to your `build.gradle.kts` file:
 
@@ -42,7 +42,7 @@ Log.e("MyTag", "This is an error message with exception", throwable)
 Log.setLogLevel(Log.INFO)
 ```
 
-### Setting Development Mode 🛠️
+### Setting Development Mode 🚼️
 
 ```kotlin
 Log.setDevelopmentMode(true)
@@ -50,7 +50,7 @@ Log.setDevelopmentMode(true)
 
 Logs will only be displayed when development mode is enabled, providing better control over logging during production and development phases.
 
-### Enabling Broadcasting Mode 📡
+### Enabling Broadcasting Mode 🛡️
 ⚠️ Note: It is strongly recommended to enable broadcasting only in debug mode, for instance using BuildConfig.DEBUG on Android. Broadcasting logs in production environments could expose sensitive information. ⚠️
 KMPLog allows you to broadcast logs live to another device on the same local network. This can be useful for real-time log monitoring during development or debugging sessions.
 
@@ -95,11 +95,11 @@ The client application uses mDNS to discover broadcasting devices automatically 
 - Real-time log display with filters for different log levels (DEBUG, INFO, WARN, ERROR) 📊
 - Easy setup with minimal configuration required ⚙️
 
-### Screenshots 📸
+### Screenshots 🖼️
 
 Below are some screenshots demonstrating the functionality of the client application:
 
-- **Real-Time Log Monitoring** 📡
+- **Real-Time Log Monitoring** 🛡️
 
 <p align="center">
     <img src="assets/android_01.png" alt="Android 1" height="400">
@@ -113,6 +113,12 @@ Below are some screenshots demonstrating the functionality of the client applica
 
 The client application is available for installation on Android, Windows and Linux. Please download it on the release section.
 
+## Under the Hood 🚀
+
+The client application works by creating a WebSocket server on the local network using Ktor. This server listens for incoming connections from devices broadcasting logs. The server is also published as an mDNS (Multicast DNS) service, making it discoverable by other devices on the same local network without requiring manual configuration.
+
+The KMPLog library itself connects to this WebSocket server using Ktor's WebSocket client capabilities. By leveraging Ktor's lightweight and asynchronous nature, the setup remains efficient and allows real-time log streaming with minimal latency. This architecture enables developers to easily monitor application logs during development or debugging sessions across different platforms.
+
 ## API Reference 📚
 
 - `Log.v(tag: String, msg: String)`: Log a VERBOSE message 🗣️
@@ -122,9 +128,9 @@ The client application is available for installation on Android, Windows and Lin
 - `Log.e(tag: String, msg: String, throwable: Throwable?)`: Log an ERROR message, optionally with a throwable for detailed error logging ❌
 - `Log.wtf(tag: String, msg: String)`: Log a WTF (What a Terrible Failure) message 😱
 - `Log.println(priority: Int, tag: String, msg: String)`: Log a message with custom priority 📝
-- `Log.setDevelopmentMode(isDevelopment: Boolean)`: Enable or disable development mode 🛠️
+- `Log.setDevelopmentMode(isDevelopment: Boolean)`: Enable or disable development mode 🚼️
 - `Log.setLogLevel(level: Int)`: Set the log level 🔧
-- `Log.enableBroadcastingMode(ip: String? = null, port: Int = DEFAULT_SERVICE_PORT)`: Enable broadcasting mode to stream logs to another device on the local network 📡
+- `Log.enableBroadcastingMode(ip: String? = null, port: Int = DEFAULT_SERVICE_PORT)`: Enable broadcasting mode to stream logs to another device on the local network 🛡️
 
 ## Contributing 🤝
 

@@ -122,7 +122,7 @@ mavenPublishing {
         }
 
         scm {
-            url.set("https://github.com/kdroidFilter/KmpRealTimeLogger")
+            url.set("https://github.com/kdroidFilter/KmpRealTimeLogger ")
         }
     }
 
