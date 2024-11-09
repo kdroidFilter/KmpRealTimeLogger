@@ -18,19 +18,30 @@ import kotlinx.serialization.protobuf.ProtoBuf
 internal object WebSocketService {
     private var cachedIp: String? = null
     private var session: DefaultClientWebSocketSession? = null
+    private var customIp: String? = null
+    private var customPort: Int? = null
+
 
     suspend fun getCachedIp(): String? {
-        // Si l'IP est déjà en cache, on la retourne directement
+        // Use custom IP if defined, otherwise use default IP
+        if (customIp != null) return customIp
+
+        // If the IP is already cached, we return it directly
         if (cachedIp != null) return cachedIp
 
-        // Sinon, on effectue une recherche d'IP
+        // Otherwise, we perform an IP search
         cachedIp = getIpOfWebSocketService()
         return cachedIp
     }
 
     fun clearCachedIp() {
-        // Pour forcer une nouvelle recherche de l'IP, on peut appeler cette fonction
+        // To force a new IP lookup we can call this function
         cachedIp = null
+    }
+
+    fun setCustomConnectionParams(ip: String?, port: Int?) {
+        customIp = ip
+        customPort = port
     }
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -48,7 +59,7 @@ internal object WebSocketService {
                     session = client.webSocketSession(
                         method = HttpMethod.Get,
                         host = ipAddress,
-                        port = DEFAULT_SERVICE_PORT,
+                        port = customPort ?: DEFAULT_SERVICE_PORT,
                         path = SERVER_PATH
                     )
                 } catch (e: Exception) {
@@ -67,7 +78,7 @@ internal object WebSocketService {
                 it.sendSerialized(logMessage)
             } catch (e: Exception) {
                 e.printStackTrace()
-                // Si une erreur survient, on ferme la session pour permettre une nouvelle tentative de connexion
+                // If an error occurs, the session is closed to allow a new connection attempt
                 session?.close()
                 session = null
             }

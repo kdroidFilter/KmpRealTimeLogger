@@ -85,7 +85,8 @@ actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit
                         enabled = true,
                         keyboardOptions = KeyboardOptions.Default.copy(
                             keyboardType = KeyboardType.Number
-                        )
+                        ),
+                        singleLine = true,
                     )
                 }
             }

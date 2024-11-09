@@ -15,7 +15,6 @@ object Log {
     private var logLevel = DEBUG
     private var isDevelopmentMode = false
     private var isBroadcastingMode = false
-    private var isServerRunning = false
 
     fun isLoggable(tag: String, level: Int): Boolean {
         return isDevelopmentMode && level >= logLevel
@@ -29,12 +28,9 @@ object Log {
         isDevelopmentMode = isDevelopment
     }
 
-    fun enableBroadcastingMode(port: Int = DEFAULT_SERVICE_PORT) {
+    fun enableBroadcastingMode(ip: String? = null, port: Int = DEFAULT_SERVICE_PORT) {
         isBroadcastingMode = true
-        if (!isServerRunning) {
-
-        }
-        isServerRunning = true
+        WebSocketService.setCustomConnectionParams(ip, port)
     }
 
 }
