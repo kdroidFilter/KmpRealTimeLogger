@@ -81,9 +81,10 @@ if (Log.isLoggable("MyTag", Log.DEBUG)) {
 
 ## Client Application
 
-<div align="center">
-  <img src="assets/icon.png" alt="Desktop 1" style="max-height: 150px;">
-</div>
+<p align="center">
+    <img src="assets/icon.png" alt="Android 1" height="150">
+</p>
+
 To facilitate real-time log monitoring, we have also developed a client application that listens to the logs broadcasted over the local network.
 
 The client application uses mDNS to discover broadcasting devices automatically and display the logs in real-time. Note that automatic detection using mDNS only works from an Android or JVM application.
