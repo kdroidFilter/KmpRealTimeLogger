@@ -11,10 +11,9 @@
     <string name="disconnected">Disconnected</string>
     <string name="dismiss">Dismiss</string>
     <!-- Settings -->
-    <string name="host_configuration">Host Configuration</string>
-    <string name="automatic_detection">Automatic Detection</string>
-    <string name="ip_address">IP Address</string>
+    <string name="server_configuration">Server Configuration</string>
     <string name="port">Port</string>
-    <string name="ip_placeholder">192.168.xxx.xxx</string>
+    <string name="restart_app_message">Restart the application so that the changes take effect.</string>
+
 
 </resources>

@@ -3,6 +3,7 @@ package com.kdroid.kmplog.client.core.data.network
 import android.content.Context
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
+import com.kdroid.kmplog.client.core.domain.repository.SettingsPreferencesRepository
 import com.kdroid.kmplog.core.ANDROID_SERVICE_TYPE
 import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import com.kdroid.kmplog.core.SERVICE_NAME
@@ -10,14 +11,15 @@ import org.koin.java.KoinJavaComponent.inject
 import java.net.NetworkInterface
 import java.net.SocketException
 
-actual fun publishMdnsService() {
+actual fun publishMdnsService(repository: SettingsPreferencesRepository) {
     val context : Context by inject(Context::class.java)
     val nsdManager = context.getSystemService(Context.NSD_SERVICE) as NsdManager
 
     val serviceInfo = NsdServiceInfo().apply {
         serviceName = SERVICE_NAME
         serviceType = ANDROID_SERVICE_TYPE
-        port = DEFAULT_SERVICE_PORT
+        port = repository.getCustomPort().toIntOrNull() ?: DEFAULT_SERVICE_PORT
+
     }
 
     val registrationListener = object : NsdManager.RegistrationListener {

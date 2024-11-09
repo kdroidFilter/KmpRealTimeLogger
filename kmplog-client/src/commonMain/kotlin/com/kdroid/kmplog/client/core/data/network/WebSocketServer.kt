@@ -1,5 +1,6 @@
 package com.kdroid.kmplog.client.core.data.network
 
+import com.kdroid.kmplog.client.core.domain.repository.SettingsPreferencesRepository
 import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import com.kdroid.kmplog.core.LogMessage
 import com.kdroid.kmplog.core.SERVER_PATH
@@ -31,7 +32,8 @@ val connectionStatus = MutableStateFlow(false)
 val logMessagesFlow = MutableSharedFlow<LogMessage>()
 
 @OptIn(ExperimentalSerializationApi::class)
-fun startServer(port: Int = DEFAULT_SERVICE_PORT) {
+fun startServer(repository: SettingsPreferencesRepository) {
+    val port = repository.getCustomPort().toIntOrNull() ?: DEFAULT_SERVICE_PORT
     CoroutineScope(Dispatchers.IO).launch {
         embeddedServer(CIO, port = port, host = "0.0.0.0") {
 

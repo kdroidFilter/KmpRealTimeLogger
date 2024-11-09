@@ -1,5 +1,6 @@
 package com.kdroid.kmplog.client.core.data.network
 
+import com.kdroid.kmplog.client.core.domain.repository.SettingsPreferencesRepository
 import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import com.kdroid.kmplog.core.SERICE_DESCRIPTION
 import com.kdroid.kmplog.core.SERVICE_NAME
@@ -9,15 +10,16 @@ import java.net.NetworkInterface
 import javax.jmdns.JmDNS
 import javax.jmdns.ServiceInfo
 
-actual fun publishMdnsService() {
+actual fun publishMdnsService(repository: SettingsPreferencesRepository) {
     try {
         val ipAddress = getLocalIpAddress()
         val jmdns = JmDNS.create(InetAddress.getByName(ipAddress))
+        val port = repository.getCustomPort().toIntOrNull() ?: DEFAULT_SERVICE_PORT
 
-        val serviceInfo = ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, DEFAULT_SERVICE_PORT, "description=$SERICE_DESCRIPTION")
+        val serviceInfo = ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, port, "description=$SERICE_DESCRIPTION")
 
         jmdns.registerService(serviceInfo)
-        println("Service mDNS enregistré : $SERVICE_NAME sur $ipAddress:$DEFAULT_SERVICE_PORT")
+        println("Registered mDNS service: $SERVICE_NAME sur $ipAddress:$port")
 
 
     } catch (e: Exception) {

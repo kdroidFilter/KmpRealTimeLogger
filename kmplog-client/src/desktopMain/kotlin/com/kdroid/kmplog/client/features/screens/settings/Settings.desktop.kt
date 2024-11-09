@@ -10,13 +10,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
-import com.kdroid.kmplog.client.kmplog_client.generated.resources.host_configuration
 import com.kdroid.kmplog.client.kmplog_client.generated.resources.port
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.restart_app_message
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.server_configuration
 import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme
@@ -40,8 +43,15 @@ actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             GroupHeader(
-                text = stringResource(Res.string.host_configuration),
+                text = stringResource(Res.string.server_configuration),
                 modifier = Modifier.fillMaxWidth()
+            )
+            Text(
+                stringResource(Res.string.restart_app_message),
+                color = JewelTheme.globalColors.text.disabled,
+                fontSize = 12.sp,
+                fontStyle = FontStyle.Italic,
+                modifier = Modifier.padding(start = 8.dp)
             )
             Column(
                 modifier = Modifier
@@ -50,7 +60,6 @@ actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
 
-
                 SettingsTextFieldRow(
                     label = stringResource(Res.string.port),
                     state = portState,
@@ -58,7 +67,7 @@ actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit
                     enabled = true,
                     modifier = Modifier.fillMaxWidth(),
                     fieldWidth = 80.dp,
-                    onTextChanged = {onEvent(SettingsEvent.OnPortChange(portState.text.toString()))}
+                    onTextChanged = { onEvent(SettingsEvent.OnPortChange(portState.text.toString())) }
 
                 )
             }
