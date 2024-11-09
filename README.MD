@@ -138,6 +138,8 @@ The KMPLog library itself connects to this WebSocket server using Ktor's WebSock
 
 Contributions are welcome! Please feel free to submit a Pull Request. 💡
 
+The desktop version of the client application uses the Jewel theme, which requires the JetBrains JDK to build the application. Please ensure that you have the JetBrains JDK installed and properly configured when building the desktop client.
+
 ## License 📄
 
 KMPLog is released under the MIT License. See the [LICENSE](LICENSE) file for details.
