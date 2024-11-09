@@ -5,7 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.state.ToggleableState
@@ -13,7 +14,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.kdroid.kmplog.client.kmplog_client.generated.resources.*
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.Res
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.host_configuration
+import com.kdroid.kmplog.client.kmplog_client.generated.resources.port
 import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme
@@ -25,21 +28,6 @@ import org.jetbrains.jewel.ui.component.Typography.labelTextSize
 @Composable
 actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit) {
 
-    var checkboxState by remember {
-        mutableStateOf(
-            when (state.automaticDetection) {
-                true -> ToggleableState.On
-                false -> ToggleableState.Off
-            }
-        )
-    }
-    LaunchedEffect(state.automaticDetection) {
-        checkboxState = when (state.automaticDetection) {
-            true -> ToggleableState.On
-            false -> ToggleableState.Off
-        }
-    }
-    val addressIpState = rememberTextFieldState(state.customIpAdress)
     val portState = rememberTextFieldState(state.customPort)
 
     Scaffold { paddingValues ->
@@ -61,34 +49,13 @@ actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit
                     .padding(start = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                CustomTriStateCheckboxRow(
-                    text = stringResource(Res.string.automatic_detection),
-                    state = checkboxState,
-                    onClick = {
-                        onEvent(
-                            SettingsEvent.OnAutomaticDetectionChange(when (checkboxState) {
-                            ToggleableState.On -> false
-                            ToggleableState.Off, ToggleableState.Indeterminate -> true
-                        }))
 
-                    },
-                    enabledText = checkboxState == ToggleableState.On,
-                )
-
-                SettingsTextFieldRow(
-                    label = stringResource(Res.string.ip_address),
-                    state = addressIpState,
-                    placeholder = stringResource(Res.string.ip_placeholder),
-                    enabled = checkboxState != ToggleableState.On,
-                    modifier = Modifier.fillMaxWidth(),
-                    onTextChanged = {onEvent(SettingsEvent.OnIpChange(addressIpState.text.toString()))}
-                )
 
                 SettingsTextFieldRow(
                     label = stringResource(Res.string.port),
                     state = portState,
                     placeholder = DEFAULT_SERVICE_PORT.toString(),
-                    enabled = checkboxState != ToggleableState.On,
+                    enabled = true,
                     modifier = Modifier.fillMaxWidth(),
                     fieldWidth = 80.dp,
                     onTextChanged = {onEvent(SettingsEvent.OnPortChange(portState.text.toString()))}
@@ -100,7 +67,7 @@ actual fun SettingsScreen(state: SettingsState, onEvent: (SettingsEvent) -> Unit
 }
 
 @Composable
-fun SettingsTextFieldRow(
+private fun SettingsTextFieldRow(
     label: String,
     state: TextFieldState,
     placeholder: String,
@@ -145,7 +112,7 @@ fun SettingsTextFieldRow(
 }
 
 @Composable
-fun CustomTriStateCheckboxRow(
+private fun CustomTriStateCheckboxRow(
     text: String,
     state: ToggleableState,
     onClick: () -> Unit,

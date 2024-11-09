@@ -1,14 +1,11 @@
 package com.kdroid.kmplog.client.core.domain.repository
 
-interface SettingsPreferencesRepository {
-    fun saveAutomaticDetectionState(state: Boolean)
-    fun getAutomaticDetectionState(defaultState: Boolean = true): Boolean
+import com.kdroid.kmplog.core.DEFAULT_SERVICE_PORT
 
-    fun saveCustomIpAddress(ip: String)
-    fun getCustomIpAddress(defaultIp: String = ""): String
+interface SettingsPreferencesRepository {
 
     fun saveCustomPort(port: String)
-    fun getCustomPort(defaultPort: String = ""): String
+    fun getCustomPort(defaultPort: String = DEFAULT_SERVICE_PORT.toString()): String
 
     fun clearAll()
 }

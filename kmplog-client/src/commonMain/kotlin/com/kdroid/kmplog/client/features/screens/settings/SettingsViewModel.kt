@@ -13,10 +13,6 @@ class SettingsViewModel(private val navigator: Navigator, private val repository
     ViewModel() {
 
 
-    private var _autoDetection = MutableStateFlow(repository.getAutomaticDetectionState())
-    val autoDetection = _autoDetection.asStateFlow()
-    private var _customIp = MutableStateFlow(repository.getCustomIpAddress())
-    val customIp = _customIp.asStateFlow()
     private var _customPort = MutableStateFlow(repository.getCustomPort())
     val customPort = _customPort.asStateFlow()
 
@@ -30,20 +26,12 @@ class SettingsViewModel(private val navigator: Navigator, private val repository
 
     fun onEvent(events: SettingsEvent) {
         when (events) {
-            is SettingsEvent.OnAutomaticDetectionChange -> {
-                _autoDetection.value = events.automaticDetection
-                repository.saveAutomaticDetectionState(events.automaticDetection)
-            }
 
             SettingsEvent.OnBackClick -> {
                 saveSettings()
                 viewModelScope.launch {
                     navigator.navigateUp()
                 }
-            }
-
-            is SettingsEvent.OnIpChange -> {
-                _customIp.value = events.ip
             }
 
             is SettingsEvent.OnPortChange -> {
@@ -58,18 +46,12 @@ class SettingsViewModel(private val navigator: Navigator, private val repository
     }
 
     private fun resetSettings() {
-        repository.saveCustomIpAddress("")
-        _customIp.value = ""
         repository.saveCustomPort("")
         _customPort.value = ""
     }
 
     private fun saveSettings() {
-        if (!_autoDetection.value) {
-            repository.saveCustomIpAddress(_customIp.value)
-            repository.saveCustomPort(_customPort.value)
-        } else { resetSettings() }
-
+        repository.saveCustomPort(_customPort.value)
     }
 
 
