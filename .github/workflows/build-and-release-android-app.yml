@@ -1,3 +1,6 @@
+name: Build and Release Android APK
+
+
 on:
   push:
     tags:
@@ -77,6 +80,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: /*.apk
+          files: |
+            com.kdroid.kmplog.client-*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
