@@ -162,7 +162,7 @@ compose.desktop {
     application {
         mainClass = "com.kdroid.kmplog.client.MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Dmg)
             packageName = "Kmp RealTime Logger"
             packageVersion = appVersion
             description = "A client application for real-time display and monitoring of logs across multiple platforms"
@@ -177,6 +177,10 @@ compose.desktop {
             linux {
                 iconFile.set(rootProject.file("assets/icon.png"))
 
+            }
+            macOS {
+                packageVersion = "1.6.1"
+                iconFile.set(rootProject.file("assets/icon.icns"))
             }
         }
     }
