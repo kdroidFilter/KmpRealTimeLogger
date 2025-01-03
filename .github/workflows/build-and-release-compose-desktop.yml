@@ -43,21 +43,21 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: linux-deb
-          path: KMPLog/kmplog-client/build/compose/binaries/main/deb
+          path: kmplog-client/build/compose/binaries/main/deb
 
       - name: Upload macOS artifact
         if: matrix.os == 'macos-latest'
         uses: actions/upload-artifact@v3
         with:
           name: macos-dmg
-          path: KMPLog/kmplog-client/build/compose/binaries/main/dmg
+          path: kmplog-client/build/compose/binaries/main/dmg
 
       - name: Upload Windows artifact
         if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v3
         with:
           name: windows-msi
-          path: KMPLog/kmplog-client/build/compose/binaries/main/msi
+          path: kmplog-client/build/compose/binaries/main/msi
 
   release:
     runs-on: ubuntu-latest
