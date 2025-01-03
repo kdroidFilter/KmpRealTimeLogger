@@ -23,6 +23,8 @@ jobs:
         with:
           distribution: 'jetbrains'
           java-version: '17'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
 
       # 3. Configure Gradle with cache
       - name: Set up Gradle
