@@ -13,11 +13,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-      # 1. Check out the source code
       - name: Checkout source
         uses: actions/checkout@v4
 
-      # 2. Set up JetBrains JDK
       - name: Set up JetBrains JDK
         uses: actions/setup-java@v4
         with:
@@ -25,49 +23,45 @@ jobs:
           java-version: '17'
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3. Configure Gradle with cache
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: '8.12'
 
-      # 4. Build the application
       - name: Build with Gradle
-        shell: bash
         run: ./gradlew packageDistributionForCurrentOS
 
-      # 5. Upload OS-specific artifacts
       - name: Upload Linux artifact
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v3
         with:
           name: linux-deb
-          path: kmplog-client/build/compose/binaries/main/deb
+          path: kmplog-client/build/compose/binaries/main/deb/*.deb
 
       - name: Upload macOS artifact
         if: matrix.os == 'macos-latest'
         uses: actions/upload-artifact@v3
         with:
           name: macos-dmg
-          path: kmplog-client/build/compose/binaries/main/dmg
+          path: kmplog-client/build/compose/binaries/main/dmg/*.dmg
 
       - name: Upload Windows artifact
         if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v3
         with:
           name: windows-msi
-          path: kmplog-client/build/compose/binaries/main/msi
+          path: kmplog-client/build/compose/binaries/main/msi/*.msi
 
   release:
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      contents: write  # nécessaire pour publier sur GitHub Release
 
     steps:
-      # 1. Check out the source code
       - name: Checkout source
         uses: actions/checkout@v4
 
-      # 2. Download artifacts from all platforms
       - name: Download Linux artifact
         uses: actions/download-artifact@v3
         with:
@@ -83,11 +77,6 @@ jobs:
         with:
           name: windows-msi
 
-      # 3. Verify downloaded files
-      - name: List downloaded files
-        run: ls -R
-
-      # 4. Create a GitHub Release
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
