@@ -18,7 +18,7 @@ KMP RealTime Logger is a Kotlin Multiplatform logging library that replicates th
 Add the following dependency to your `build.gradle.kts` file:
 
 ```kotlin
-implementation("io.github.kdroidfilter:kmplog:0.6.0")
+implementation("io.github.kdroidfilter:kmplog:0.6.1")
 ```
 
 KMPLog is available on Maven Central, ensuring easy integration into your projects.
