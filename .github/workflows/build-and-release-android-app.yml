@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release-apk
-          path: ${{ env.APK_PATH }}
+          path: kmplog-client/build/outputs/apk/release/*.apk
 
   release:
     runs-on: ubuntu-latest
