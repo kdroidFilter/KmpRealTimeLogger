@@ -33,21 +33,21 @@ jobs:
 
       - name: Upload Linux artifact
         if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: linux-deb
           path: kmplog-client/build/compose/binaries/main/deb/*.deb
 
       - name: Upload macOS artifact
         if: matrix.os == 'macos-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: macos-dmg
           path: kmplog-client/build/compose/binaries/main/dmg/*.dmg
 
       - name: Upload Windows artifact
         if: matrix.os == 'windows-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: windows-msi
           path: kmplog-client/build/compose/binaries/main/msi/*.msi
@@ -63,19 +63,22 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download Linux artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: linux-deb
 
       - name: Download macOS artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: macos-dmg
 
       - name: Download Windows artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: windows-msi
+
+      - name: Check downloaded artifacts
+        run: ls -R
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
