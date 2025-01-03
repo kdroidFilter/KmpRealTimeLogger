@@ -8,6 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
     steps:
       # 1. Vérifier le code source
@@ -24,13 +29,13 @@ jobs:
       # 3. Décoder le keystore
       - name: Decode keystore
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > keystore
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > keystore
 
-      # 4. Définir les variables d'environnement pour la signature
-      - name: Set environment variables
+      # 4. Définir la variable d'environnement pour le chemin du keystore
+      - name: Set keystore path
         run: echo "ANDROID_KEYSTORE_PATH=$(pwd)/keystore" >> $GITHUB_ENV
 
-      # 5. Construire l'APK
+      # 5. Construire l'APK avec la configuration de signature
       - name: Build APK
         run: ./gradlew :kmplog-client:assembleRelease
 
@@ -40,7 +45,7 @@ jobs:
         run: |
           apk_path=$(find kmplog-client/build/outputs/apk/release -name "*.apk" | head -n 1)
           echo "APK_PATH=${apk_path}" >> $GITHUB_ENV
-          echo "::set-output name=apk_path::${apk_path}"
+          echo "apk_path=${apk_path}" >> $GITHUB_OUTPUT
 
       # 7. Télécharger l'APK en tant qu'artefact
       - name: Upload APK artifact
