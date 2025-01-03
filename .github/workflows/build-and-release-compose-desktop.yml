@@ -31,7 +31,6 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: '8.12'
-          cache-enabled: true
 
       # 4. Build the application
       - name: Build with Gradle
