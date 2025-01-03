@@ -18,8 +18,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'  # Utilise Temurin JDK
-          java-version: '11'        # Version de Java
+          distribution: 'temurin'
+          java-version: '17'
 
       # 3. Décoder le keystore
       - name: Decode keystore
