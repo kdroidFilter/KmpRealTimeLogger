@@ -1,9 +1,7 @@
-name: Build and Release APK
-
 on:
   push:
     tags:
-      - 'v*'  # Déclenche le workflow sur les tags commençant par 'v'
+      - 'v*'  # Trigger workflow on tags starting with 'v'
 
 jobs:
   build:
@@ -15,31 +13,31 @@ jobs:
       ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
     steps:
-      # 1. Vérifier le code source
+      # 1. Check out the source code
       - name: Checkout source
         uses: actions/checkout@v3
 
-      # 2. Configurer le JDK
+      # 2. Set up the JDK
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # 3. Décoder le keystore
+      # 3. Decode the keystore
       - name: Decode keystore
         run: |
           echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > keystore
 
-      # 4. Définir la variable d'environnement pour le chemin du keystore
+      # 4. Set the environment variable for the keystore path
       - name: Set keystore path
         run: echo "ANDROID_KEYSTORE_PATH=$(pwd)/keystore" >> $GITHUB_ENV
 
-      # 5. Construire l'APK avec la configuration de signature
+      # 5. Build the APK with the signing configuration
       - name: Build APK
         run: ./gradlew :kmplog-client:assembleRelease
 
-      # 6. Identifier le chemin exact de l'APK généré
+      # 6. Identify the exact path of the generated APK
       - name: Find APK
         id: find_apk
         run: |
@@ -47,7 +45,7 @@ jobs:
           echo "APK_PATH=${apk_path}" >> $GITHUB_ENV
           echo "apk_path=${apk_path}" >> $GITHUB_OUTPUT
 
-      # 7. Télécharger l'APK en tant qu'artefact
+      # 7. Upload the APK as an artifact
       - name: Upload APK artifact
         uses: actions/upload-artifact@v3
         with:
@@ -58,28 +56,27 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     permissions:
-      contents: write  # Nécessaire pour publier sur GitHub Release
+      contents: write  # Required to publish on GitHub Release
 
     steps:
-      # 1. Vérifier le code source
+      # 1. Check out the source code
       - name: Checkout source
         uses: actions/checkout@v3
 
-      # 2. Télécharger l'artefact APK
+      # 2. Download the APK artifact
       - name: Download APK artifact
         uses: actions/download-artifact@v3
         with:
           name: release-apk
 
-      # 3. Vérifier les artefacts téléchargés (optionnel)
+      # 3. Verify the downloaded artifacts (optional)
       - name: Check downloaded artifacts
         run: ls -R
 
-      # 4. Créer la release GitHub en conservant le nom de l'APK
+      # 4. Create the GitHub release while retaining the APK name
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            $(find release-apk -name "*.apk")
+          files: release-apk/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
