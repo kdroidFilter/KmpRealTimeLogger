@@ -10,14 +10,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       # 1. Check out the source code
       - name: Checkout source
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       # 2. Set up JetBrains JDK
       - name: Set up JetBrains JDK
@@ -34,12 +32,8 @@ jobs:
 
       # 4. Build the application
       - name: Build with Gradle
-        run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            ./gradlew.bat packageDistributionForCurrentOS
-          else
-            ./gradlew packageDistributionForCurrentOS
-          fi
+        shell: bash
+        run: ./gradlew packageDistributionForCurrentOS
 
       # 5. Upload OS-specific artifacts
       - name: Upload Linux artifact
@@ -71,8 +65,6 @@ jobs:
       # 1. Check out the source code
       - name: Checkout source
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       # 2. Download artifacts from all platforms
       - name: Download Linux artifact
