@@ -25,7 +25,6 @@ jobs:
           java-version: '17'
           token: ${{ secrets.GITHUB_TOKEN }}
 
-
       # 3. Configure Gradle with cache
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
@@ -84,13 +83,17 @@ jobs:
         with:
           name: windows-msi
 
-      # 3. Create a GitHub Release
+      # 3. Verify downloaded files
+      - name: List downloaded files
+        run: ls -R
+
+      # 4. Create a GitHub Release
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            linux-deb/**
-            macos-dmg/**
-            windows-msi/**
+            linux-deb/*
+            macos-dmg/*
+            windows-msi/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
