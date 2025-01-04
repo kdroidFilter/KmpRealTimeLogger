@@ -93,8 +93,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            kmp-realtime-logger_*.deb
-            Kmp RealTime Logger-*.dmg
-            Kmp RealTime Logger-*.msi
+            *.deb
+            *.dmg
+            *.msi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
