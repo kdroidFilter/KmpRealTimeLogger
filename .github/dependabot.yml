@@ -5,5 +5,5 @@ updates:
     schedule:
       interval: "daily"
     ignore:
-      - dependency-name: "com.github.Dansoftowner:jSystemThemeDetector"
-        versions: ["*"]
+      - dependency-name: "com.github.Dansoftowner:jSystemThemeDetector" # Nom complet de la dépendance
+        versions: [">3.7"]
