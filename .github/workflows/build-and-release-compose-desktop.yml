@@ -17,15 +17,18 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      # 2. Set up JetBrains JDK
+      # 2. Set up JetBrains JDK with proper authentication
       - name: Set up JetBrains JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'jetbrains'
           java-version: '17'
           token: ${{ secrets.GITHUB_TOKEN }}
+          # Remove unnecessary configurations that might cause conflicts
+          java-package: 'jdk'
+          cache: 'gradle'  # Enable Gradle caching
 
-      # 3. Configure Gradle with cache
+      # 3. Configure Gradle
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
         with:
@@ -58,10 +61,10 @@ jobs:
           path: kmplog-client/build/compose/binaries/main/msi/*.msi
 
   release:
-    runs-on: ubuntu-latest
     needs: build
+    runs-on: ubuntu-latest
     permissions:
-      contents: write  # Nécessaire pour publier sur GitHub Release
+      contents: write
 
     steps:
       # 1. Check out the source code
@@ -84,11 +87,11 @@ jobs:
         with:
           name: windows-msi
 
-      # 3. Vérifier la présence des fichiers téléchargés (optionnel mais recommandé pour le débogage)
+      # 3. List downloaded artifacts
       - name: Check downloaded artifacts
         run: ls -R
 
-      # 4. Create GitHub Release avec les patterns adaptés
+      # 4. Create GitHub Release
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
