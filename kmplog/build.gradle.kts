@@ -80,7 +80,7 @@ kotlin {
             //Ktor client
             implementation(libs.ktor.client.websockets)
             implementation(libs.ktor.ktor.client.core)
-            implementation("io.ktor:ktor-serialization-kotlinx-protobuf:3.1.0")
+            implementation("io.ktor:ktor-serialization-kotlinx-protobuf:3.1.1")
 
 
         }
