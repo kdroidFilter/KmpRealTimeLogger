@@ -59,7 +59,7 @@ ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktor-server-websockets = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
 multiplatform-settings-no-arg = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatformSettingsNoArg" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-slf4j-simple = { module = "org.slf4j:slf4j-simple", version = "2.0.16" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version = "2.0.17" }
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
 
