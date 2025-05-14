@@ -1,7 +1,7 @@
 [versions]
 
 androidcontextprovider = "1.0.1"
-composablecore = "1.29.0"
+composablecore = "1.31.0"
 jmdns = "3.6.1"
 jsystemthemedetector = "3.7"
 kotlin = "2.1.20"
